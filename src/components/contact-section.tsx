@@ -15,43 +15,47 @@ const LinkedinIcon = () => (
   </svg>
 );
 
-const links = [
+const contactLinks = [
   {
-    icon: () => <Mail className="w-4 h-4" />,
+    Icon: () => <Mail className="w-4 h-4" />,
     label: "Email",
     href: "mailto:jenishvpatel4995@gmail.com",
     display: "jenishvpatel4995@gmail.com",
   },
   {
-    icon: GithubIcon,
+    Icon: GithubIcon,
     label: "GitHub",
     href: "https://github.com/JenishPatel20",
     display: "github.com/JenishPatel20",
   },
   {
-    icon: LinkedinIcon,
+    Icon: LinkedinIcon,
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/jenish--patel",
     display: "linkedin.com/in/jenish--patel",
   },
 ];
 
-export function Contact() {
+export function ContactSection() {
   return (
-    <footer id="contact" className="bg-[#050508] border-t border-white/5">
-      <div className="max-w-6xl mx-auto px-6 py-20">
+    <section id="contact" className="pt-24 pb-16" style={{ backgroundColor: "#09090f" }}>
+      <div className="section-container">
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.55 }}
           className="text-center mb-12"
         >
-          <p className="text-sm font-semibold text-blue-400 uppercase tracking-widest mb-3">
-            Get in touch
-          </p>
-          <h2 className="text-4xl font-bold text-white mb-4">Let&apos;s talk</h2>
-          <p className="text-slate-400 max-w-md mx-auto">
+          <p className="section-label mb-3">Get in touch</p>
+          <h2
+            className="text-3xl sm:text-4xl font-bold tracking-tight mb-4"
+            style={{ color: "var(--color-pg-text-1)" }}
+          >
+            Let&apos;s talk
+          </h2>
+          <p className="max-w-md mx-auto text-sm leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>
             Open to internship offers, research collaborations, and interesting engineering
             conversations.
           </p>
@@ -62,28 +66,42 @@ export function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3"
         >
-          {links.map(({ icon: Icon, label, href, display }) => (
+          {contactLinks.map(({ Icon, label, href, display }) => (
             <a
               key={label}
               href={href}
               target={label !== "Email" ? "_blank" : undefined}
               rel="noopener noreferrer"
-              className="group flex items-center gap-3 px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all duration-200"
+              className="group flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-200"
+              style={{
+                background: "var(--pg-surface)",
+                border: "1px solid var(--pg-border)",
+                color: "var(--color-pg-text-2)",
+              }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget;
+                el.style.background = "var(--pg-surface-hover)";
+                el.style.borderColor = "var(--pg-border-hover)";
+                el.style.color = "var(--color-pg-text-1)";
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget;
+                el.style.background = "var(--pg-surface)";
+                el.style.borderColor = "var(--pg-border)";
+                el.style.color = "var(--color-pg-text-2)";
+              }}
             >
-              <span className="text-blue-400"><Icon /></span>
+              <span style={{ color: "var(--color-pg-blue)" }}>
+                <Icon />
+              </span>
               <span className="text-sm">{display}</span>
-              <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-60 transition-opacity" />
             </a>
           ))}
         </motion.div>
-
-        <div className="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600">
-          <span>© 2025 Jenish Patel</span>
-          <span>Built with Next.js · Tailwind CSS · Motion · Deployed on Vercel</span>
-        </div>
       </div>
-    </footer>
+    </section>
   );
 }
