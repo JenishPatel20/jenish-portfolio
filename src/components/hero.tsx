@@ -11,7 +11,6 @@ interface HeroProps {
 export function Hero({ onRecruiterMode }: HeroProps) {
   const handleRecruiterMode = () => {
     onRecruiterMode();
-    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
