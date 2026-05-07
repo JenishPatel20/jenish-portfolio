@@ -8,6 +8,7 @@ import { Hero } from "@/components/hero";
 import { RecruiterModeBanner, RecruiterModeSection } from "@/components/recruiter-mode";
 import { FeaturedProjects } from "@/components/featured-projects";
 import { SkillsBento } from "@/components/skills-bento";
+import { ExperienceSection } from "@/components/experience-section";
 import { ContactSection } from "@/components/contact-section";
 
 export default function Home() {
@@ -61,6 +62,7 @@ export default function Home() {
         </AnimatePresence>
 
         <FeaturedProjects recruiterMode={recruiterMode} />
+        <ExperienceSection />
         <SkillsBento />
         <ContactSection />
       </main>

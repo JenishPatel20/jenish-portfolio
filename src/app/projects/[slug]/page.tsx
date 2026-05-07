@@ -113,9 +113,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           {/* Case study body */}
           <div className="space-y-10">
             {[
-              { heading: "Overview",            body: project.description },
-              { heading: "Technical Approach",  body: null },
-              { heading: "Results",             body: project.highlight ?? null },
+              { heading: "Overview",           body: project.overview ?? project.description },
+              { heading: "Technical Approach", body: project.approach ?? null },
+              { heading: "Results",            body: project.results ?? project.highlight ?? null },
             ].map(({ heading, body }) => (
               <div key={heading}>
                 <h2 className="text-xl font-semibold mb-3 text-pg-text-1">{heading}</h2>
