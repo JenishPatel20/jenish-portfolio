@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { Hero } from "@/components/hero";
 import { RecruiterModeBanner, RecruiterModeSection } from "@/components/recruiter-mode";
 import { FeaturedProjects } from "@/components/featured-projects";
+import { RoleMatcher } from "@/components/role-matcher";
 import { SkillsBento } from "@/components/skills-bento";
 import { ExperienceSection } from "@/components/experience-section";
 import { ContactSection } from "@/components/contact-section";
@@ -62,6 +63,7 @@ export default function Home() {
         </AnimatePresence>
 
         <FeaturedProjects recruiterMode={recruiterMode} />
+        <RoleMatcher />
         <ExperienceSection />
         <SkillsBento />
         <ContactSection />
