@@ -29,7 +29,7 @@ interface ProjectCardProps {
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <article
-      className="group relative flex flex-col rounded-2xl p-5 transition-all duration-300 hover:-translate-y-0.5"
+      className="group relative flex flex-col rounded-2xl p-5 transition-all duration-300"
       style={{
         background: "var(--pg-surface)",
         border: "1px solid var(--pg-border)",
@@ -37,12 +37,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
       onMouseEnter={(e) => {
         const el = e.currentTarget;
         el.style.background = "var(--pg-surface-hover)";
-        el.style.borderColor = "var(--pg-border-hover)";
+        el.style.borderColor = "rgba(126,184,247,0.35)";
+        el.style.boxShadow = "0 0 28px rgba(126,184,247,0.08)";
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget;
         el.style.background = "var(--pg-surface)";
         el.style.borderColor = "var(--pg-border)";
+        el.style.boxShadow = "none";
       }}
     >
       {/* Featured indicator */}
@@ -154,7 +156,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <Link
           href={`/projects/${project.id}`}
           className="ml-auto flex items-center gap-1 text-xs font-medium transition-colors duration-200"
-          style={{ color: "var(--color-pg-blue)" }}
+          style={{ color: "var(--color-pg-accent)" }}
         >
           Case Study
           <ArrowUpRight className="w-3.5 h-3.5" />

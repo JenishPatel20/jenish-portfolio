@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { Hero } from "@/components/hero";
 import { RecruiterModeBanner, RecruiterModeSection } from "@/components/recruiter-mode";
 import { FeaturedProjects } from "@/components/featured-projects";
-import { RoleMatcher } from "@/components/role-matcher";
+import { LiveDemoLab } from "@/components/live-demo-lab";
 import { SkillsBento } from "@/components/skills-bento";
 import { ExperienceSection } from "@/components/experience-section";
 import { ContactSection } from "@/components/contact-section";
@@ -29,7 +29,7 @@ export default function Home() {
 
   return (
     <>
-      <SiteHeader onRecruiterMode={toggleRecruiterMode} />
+      <SiteHeader onRecruiterMode={toggleRecruiterMode} recruiterMode={recruiterMode} />
 
       <AnimatePresence>
         {recruiterMode && (
@@ -63,7 +63,7 @@ export default function Home() {
         </AnimatePresence>
 
         <FeaturedProjects recruiterMode={recruiterMode} />
-        <RoleMatcher />
+        <LiveDemoLab />
         <ExperienceSection />
         <SkillsBento />
         <ContactSection />

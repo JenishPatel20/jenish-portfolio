@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Mail, ArrowUpRight } from "lucide-react";
+import { Mail, MapPin, Send, FileText, ArrowUpRight } from "lucide-react";
 
 const GithubIcon = () => (
   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -17,90 +17,207 @@ const LinkedinIcon = () => (
 
 const contactLinks = [
   {
-    Icon: () => <Mail className="w-4 h-4" />,
+    Icon: () => <Mail className="w-5 h-5" />,
     label: "Email",
-    href: "mailto:jenishvpatel4995@gmail.com",
     display: "jenishvpatel4995@gmail.com",
+    href: "mailto:jenishvpatel4995@gmail.com",
   },
   {
     Icon: GithubIcon,
     label: "GitHub",
-    href: "https://github.com/JenishPatel20",
     display: "github.com/JenishPatel20",
+    href: "https://github.com/JenishPatel20",
   },
   {
     Icon: LinkedinIcon,
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/jenish--patel",
     display: "linkedin.com/in/jenish--patel",
+    href: "https://www.linkedin.com/in/jenish--patel",
+  },
+  {
+    Icon: () => <MapPin className="w-5 h-5" />,
+    label: "Location",
+    display: "New Brunswick, NJ",
+    href: null,
   },
 ];
 
+const inputCls = [
+  "w-full px-4 py-3 rounded-xl text-sm text-white placeholder-zinc-600",
+  "outline-none transition-all duration-200",
+  "bg-white/[0.04] border border-white/[0.09]",
+  "focus:border-[rgba(126,184,247,0.45)] focus:ring-2 focus:ring-[rgba(126,184,247,0.08)]",
+].join(" ");
+
 export function ContactSection() {
   return (
-    <section id="contact" className="pt-24 pb-16" style={{ backgroundColor: "#09090f" }}>
+    <section
+      id="contact"
+      className="py-24"
+      style={{ backgroundColor: "#040404", borderTop: "1px solid rgba(255,255,255,0.04)" }}
+    >
       <div className="section-container">
 
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.55 }}
-          className="text-center mb-12"
+          className="mb-12"
         >
           <p className="section-label mb-3">Get in touch</p>
-          <h2
-            className="text-3xl sm:text-4xl font-bold tracking-tight mb-4"
-            style={{ color: "var(--color-pg-text-1)" }}
-          >
-            Let&apos;s talk
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+            Let&apos;s Connect
           </h2>
-          <p className="max-w-md mx-auto text-sm leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>
-            Open to internship offers, research collaborations, and interesting engineering
-            conversations.
+          <p className="mt-3 max-w-md text-sm leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>
+            Open to full-time opportunities, internships, and interesting engineering conversations.
           </p>
         </motion.div>
 
+        {/* Two-column card */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3"
+          transition={{ duration: 0.55, delay: 0.1 }}
+          className="group relative rounded-3xl overflow-hidden"
         >
-          {contactLinks.map(({ Icon, label, href, display }) => (
-            <a
-              key={label}
-              href={href}
-              target={label !== "Email" ? "_blank" : undefined}
-              rel="noopener noreferrer"
-              className="group flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-200"
-              style={{
-                background: "var(--pg-surface)",
-                border: "1px solid var(--pg-border)",
-                color: "var(--color-pg-text-2)",
-              }}
-              onMouseEnter={(e) => {
-                const el = e.currentTarget;
-                el.style.background = "var(--pg-surface-hover)";
-                el.style.borderColor = "var(--pg-border-hover)";
-                el.style.color = "var(--color-pg-text-1)";
-              }}
-              onMouseLeave={(e) => {
-                const el = e.currentTarget;
-                el.style.background = "var(--pg-surface)";
-                el.style.borderColor = "var(--pg-border)";
-                el.style.color = "var(--color-pg-text-2)";
-              }}
+          {/* Glow rim */}
+          <div
+            className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+            style={{
+              background: "linear-gradient(135deg, rgba(126,184,247,0.06), transparent 60%)",
+            }}
+          />
+
+          <div
+            className="relative grid md:grid-cols-2 gap-0"
+            style={{ border: "1px solid var(--pg-border)", borderRadius: "1.5rem" }}
+          >
+            {/* Left — contact info */}
+            <div
+              className="p-8 md:p-10"
+              style={{ borderRight: "1px solid rgba(255,255,255,0.06)" }}
             >
-              <span style={{ color: "var(--color-pg-blue)" }}>
-                <Icon />
-              </span>
-              <span className="text-sm">{display}</span>
-              <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-60 transition-opacity" />
-            </a>
-          ))}
+              <h3 className="text-base font-semibold text-white mb-6">Get in Touch</h3>
+
+              <div className="flex flex-col gap-3 mb-8">
+                {contactLinks.map((link, i) => (
+                  <motion.div
+                    key={link.label}
+                    initial={{ opacity: 0, x: -16 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.35, delay: 0.15 + i * 0.08 }}
+                  >
+                    {link.href ? (
+                      <a
+                        href={link.href}
+                        target={link.href.startsWith("http") ? "_blank" : undefined}
+                        rel="noopener noreferrer"
+                        className="group/link flex items-center gap-4 p-3.5 rounded-xl transition-all duration-200"
+                        style={{ background: "var(--pg-surface)", border: "1px solid var(--pg-border)" }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = "rgba(126,184,247,0.3)";
+                          e.currentTarget.style.boxShadow = "0 0 16px rgba(126,184,247,0.06)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = "var(--pg-border)";
+                          e.currentTarget.style.boxShadow = "none";
+                        }}
+                      >
+                        <div
+                          className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+                          style={{ background: "rgba(126,184,247,0.08)", color: "var(--color-pg-accent)" }}
+                        >
+                          <link.Icon />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="text-[11px] mb-0.5" style={{ color: "var(--color-pg-text-2)" }}>{link.label}</div>
+                          <div className="text-sm text-white truncate">{link.display}</div>
+                        </div>
+                        <ArrowUpRight className="w-3.5 h-3.5 ml-auto opacity-0 group-hover/link:opacity-40 transition-opacity shrink-0" style={{ color: "var(--color-pg-accent)" }} />
+                      </a>
+                    ) : (
+                      <div
+                        className="flex items-center gap-4 p-3.5 rounded-xl"
+                        style={{ background: "var(--pg-surface)", border: "1px solid var(--pg-border)" }}
+                      >
+                        <div
+                          className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+                          style={{ background: "rgba(126,184,247,0.08)", color: "var(--color-pg-accent)" }}
+                        >
+                          <link.Icon />
+                        </div>
+                        <div>
+                          <div className="text-[11px] mb-0.5" style={{ color: "var(--color-pg-text-2)" }}>{link.label}</div>
+                          <div className="text-sm text-white">{link.display}</div>
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+
+              <a href="/Resume.pdf" target="_blank" rel="noopener noreferrer" className="btn-primary w-full flex items-center justify-center gap-2">
+                <FileText className="w-4 h-4" />
+                Download Resume
+              </a>
+            </div>
+
+            {/* Right — message form */}
+            <motion.form
+              initial={{ opacity: 0, x: 16 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.55, delay: 0.2 }}
+              className="p-8 md:p-10 flex flex-col gap-4"
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <h3 className="text-base font-semibold text-white mb-2">Send a Message</h3>
+
+              <div>
+                <label htmlFor="cf-name" className="block text-xs mb-1.5" style={{ color: "var(--color-pg-text-2)" }}>Name</label>
+                <input
+                  id="cf-name"
+                  type="text"
+                  placeholder="Your name"
+                  className={inputCls}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="cf-email" className="block text-xs mb-1.5" style={{ color: "var(--color-pg-text-2)" }}>Email</label>
+                <input
+                  id="cf-email"
+                  type="email"
+                  placeholder="your.email@example.com"
+                  className={inputCls}
+                />
+              </div>
+
+              <div className="flex-1">
+                <label htmlFor="cf-message" className="block text-xs mb-1.5" style={{ color: "var(--color-pg-text-2)" }}>Message</label>
+                <textarea
+                  id="cf-message"
+                  rows={5}
+                  placeholder="Tell me about your opportunity or project..."
+                  className={`${inputCls} resize-none`}
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="btn-secondary flex items-center justify-center gap-2 w-full mt-auto"
+              >
+                <Send className="w-4 h-4" />
+                Send Message
+              </button>
+            </motion.form>
+          </div>
         </motion.div>
+
       </div>
     </section>
   );

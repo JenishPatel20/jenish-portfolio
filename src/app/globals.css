@@ -49,13 +49,15 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 
   /* ── Portfolio design tokens ──── */
-  --color-pg-bg:      #09090f;
-  --color-pg-text-1:  #eeeef2;
-  --color-pg-text-2:  #8888a0;
-  --color-pg-text-3:  #44444e;
-  --color-pg-cyan:    #22d3ee;
-  --color-pg-blue:    #60a5fa;
-  --color-pg-violet:  #a78bfa;
+  --color-pg-bg:      #000000;
+  --color-pg-text-1:  #ffffff;
+  --color-pg-text-2:  #666666;
+  --color-pg-text-3:  #383838;
+  --color-pg-cyan:    #7eb8f7;
+  --color-pg-blue:    #7eb8f7;
+  --color-pg-violet:  #7eb8f7;
+  --color-pg-accent:  #7eb8f7;
+  --color-pg-accent-glow: rgba(126, 184, 247, 0.25);
 }
 
 /* ─── shadcn light (unused — site is always dark) ────────────────────────── */
@@ -91,15 +93,14 @@
   /* ── Portfolio custom surface tokens ── */
   --pg-surface:       rgba(255, 255, 255, 0.04);
   --pg-surface-hover: rgba(255, 255, 255, 0.07);
-  --pg-border:        rgba(255, 255, 255, 0.08);
-  --pg-border-hover:  rgba(255, 255, 255, 0.16);
+  --pg-border:        rgba(255, 255, 255, 0.09);
+  --pg-border-hover:  rgba(126, 184, 247, 0.35);
 }
 
 /* ─── Dark theme (always active via html.dark) ───────────────────────────── */
 .dark {
-  /* Deeper than shadcn defaults */
-  --background: oklch(0.065 0.018 275);
-  --foreground: oklch(0.93 0.005 275);
+  --background: oklch(0 0 0);
+  --foreground: oklch(1 0 0);
   --card: oklch(0.095 0.018 275);
   --card-foreground: oklch(0.93 0.005 275);
   --popover: oklch(0.095 0.018 275);
@@ -135,19 +136,19 @@
   html {
     @apply font-sans;
     scroll-behavior: smooth;
-    background-color: #09090f;
+    background-color: #000000;
   }
 
   body {
     @apply bg-background text-foreground;
-    background-color: #09090f;
-    color: #eeeef2;
+    background-color: #000000;
+    color: #ffffff;
     -webkit-font-smoothing: antialiased;
   }
 
   /* Accessible focus for keyboard nav */
   :focus-visible {
-    outline: 2px solid rgba(96, 165, 250, 0.6);
+    outline: 2px solid rgba(126, 184, 247, 0.6);
     outline-offset: 2px;
     border-radius: 4px;
   }
@@ -164,7 +165,7 @@
   /* Section label ("Work", "Stack", etc.) */
   .section-label {
     @apply text-xs font-semibold uppercase tracking-widest;
-    color: var(--color-pg-blue);
+    color: var(--color-pg-accent);
   }
 
   /* Glass card surface */
@@ -181,7 +182,7 @@
 
   /* Gradient accent text */
   .gradient-text {
-    background: linear-gradient(135deg, #22d3ee 0%, #60a5fa 45%, #a78bfa 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #7eb8f7 60%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -207,13 +208,13 @@
     @apply inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full
            text-sm font-semibold bg-transparent cursor-pointer
            transition-all duration-200;
-    color: var(--color-pg-blue);
-    border: 1px solid rgba(96, 165, 250, 0.3);
+    color: var(--color-pg-accent);
+    border: 1px solid rgba(126, 184, 247, 0.25);
   }
 
   .btn-secondary:hover {
-    background: rgba(96, 165, 250, 0.08);
-    border-color: rgba(96, 165, 250, 0.5);
+    background: rgba(126, 184, 247, 0.07);
+    border-color: rgba(126, 184, 247, 0.45);
   }
 
   /* Pill filter button — inactive */
@@ -234,9 +235,9 @@
   .filter-pill-active {
     @apply px-4 py-1.5 rounded-full text-sm font-medium cursor-pointer
            transition-all duration-200;
-    background: rgba(255, 255, 255, 0.10);
-    border: 1px solid rgba(255, 255, 255, 0.20);
-    color: #eeeef2;
+    background: rgba(126, 184, 247, 0.10);
+    border: 1px solid rgba(126, 184, 247, 0.30);
+    color: #7eb8f7;
   }
 
   /* Skill chip */
@@ -248,16 +249,16 @@
   }
 
   .skill-chip:hover {
-    background: rgba(255, 255, 255, 0.09);
-    color: rgba(255, 255, 255, 0.85);
-    border-color: rgba(96, 165, 250, 0.25);
+    background: rgba(126, 184, 247, 0.07);
+    color: #7eb8f7;
+    border-color: rgba(126, 184, 247, 0.3);
   }
 
   /* Accent badge */
   .accent-badge {
     @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium;
-    background: rgba(96, 165, 250, 0.08);
-    border: 1px solid rgba(96, 165, 250, 0.18);
-    color: var(--color-pg-blue);
+    background: rgba(126, 184, 247, 0.07);
+    border: 1px solid rgba(126, 184, 247, 0.18);
+    color: var(--color-pg-accent);
   }
 }

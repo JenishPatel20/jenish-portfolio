@@ -15,7 +15,7 @@ export function ExperienceSection() {
     <section
       id="experience"
       className="py-24"
-      style={{ backgroundColor: "#09090f" }}
+      style={{ backgroundColor: "#000000" }}
     >
       <div className="section-container">
 
@@ -86,9 +86,9 @@ export function ExperienceSection() {
                       <span
                         className="text-xs font-medium px-2 py-0.5 rounded-full"
                         style={{
-                          color: "var(--color-pg-cyan)",
-                          background: "rgba(34,211,238,0.08)",
-                          border: "1px solid rgba(34,211,238,0.18)",
+                          color: "var(--color-pg-accent)",
+                          background: "rgba(126,184,247,0.08)",
+                          border: "1px solid rgba(126,184,247,0.18)",
                         }}
                       >
                         {typeLabel[role.type]}
@@ -115,7 +115,7 @@ export function ExperienceSection() {
                         <li key={bi} className="flex gap-3">
                           <span
                             className="mt-[7px] h-1 w-1 shrink-0 rounded-full"
-                            style={{ background: "var(--color-pg-blue)" }}
+                            style={{ background: "var(--color-pg-accent)" }}
                           />
                           <span
                             className="text-sm leading-relaxed"
