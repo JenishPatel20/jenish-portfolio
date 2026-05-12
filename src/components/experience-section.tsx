@@ -27,7 +27,7 @@ export function ExperienceSection() {
           transition={{ duration: 0.55 }}
           className="mb-12"
         >
-          <p className="section-label mb-2">Work</p>
+          <p className="section-label mb-2">Career</p>
           <h2
             className="text-3xl sm:text-4xl font-bold tracking-tight"
             style={{ color: "var(--color-pg-text-1)" }}

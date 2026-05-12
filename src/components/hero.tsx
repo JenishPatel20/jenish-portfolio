@@ -1,16 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import { ChevronDown, Brain, Cpu, Code, Smartphone, Database, Sparkles, Mail, Zap } from "lucide-react";
-
-const techChips = [
-  { Icon: Brain,      label: "AI / ML",      delay: 0    },
-  { Icon: Cpu,        label: "WebGPU",        delay: 0.15 },
-  { Icon: Code,       label: "Full Stack",    delay: 0.3  },
-  { Icon: Smartphone, label: "Mobile",        delay: 0.45 },
-  { Icon: Database,   label: "Systems",       delay: 0.6  },
-  { Icon: Sparkles,   label: "Algorithms",    delay: 0.75 },
-];
+import { ChevronDown, Mail, Zap } from "lucide-react";
+import { HeroVisual } from "@/components/hero-visual";
 
 const GithubIcon = () => (
   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -50,7 +42,7 @@ export function Hero({ onRecruiterMode }: HeroProps) {
       <div className="relative z-10 section-container w-full py-24 pt-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-          {/* ── Left: content ── */}
+          {/* ── Left: text content ── */}
           <div>
             {/* Status badge */}
             <motion.div
@@ -92,7 +84,7 @@ export function Hero({ onRecruiterMode }: HeroProps) {
               className="text-lg font-medium mb-4"
               style={{ color: "var(--color-pg-text-2)" }}
             >
-              Computer Science Engineer
+              Software Engineer · MS CS @ Rutgers
             </motion.p>
 
             {/* Description */}
@@ -152,71 +144,11 @@ export function Hero({ onRecruiterMode }: HeroProps) {
             </motion.div>
           </div>
 
-          {/* ── Right: floating chips ── */}
-          <div className="relative hidden lg:flex items-center justify-center h-[480px]">
-            {techChips.map((chip, i) => {
-              const angle  = (i / techChips.length) * Math.PI * 2 - Math.PI / 2;
-              const radius = 175;
-              const x      = Math.cos(angle) * radius;
-              const y      = Math.sin(angle) * radius;
-
-              return (
-                <motion.div
-                  key={chip.label}
-                  className="absolute top-1/2 left-1/2"
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{
-                    opacity: 1,
-                    scale: 1,
-                    x: [x - 20, x, x + 14, x],
-                    y: [y, y - 14, y, y + 10, y],
-                  }}
-                  transition={{
-                    opacity: { delay: chip.delay, duration: 0.4 },
-                    scale:   { delay: chip.delay, duration: 0.4 },
-                    x: { delay: chip.delay + 0.4, duration: 5 + i * 0.4, repeat: Infinity, ease: "easeInOut" },
-                    y: { delay: chip.delay + 0.4, duration: 4 + i * 0.3, repeat: Infinity, ease: "easeInOut" },
-                  }}
-                >
-                  <div
-                    className="relative cursor-default select-none"
-                    style={{ transform: "translate(-50%, -50%)" }}
-                  >
-                    {/* Glow blur behind chip */}
-                    <div
-                      className="absolute inset-0 rounded-2xl blur-xl opacity-30"
-                      style={{ backgroundColor: "var(--color-pg-accent)" }}
-                    />
-                    {/* Chip */}
-                    <div
-                      className="relative flex flex-col items-center gap-2 px-5 py-3.5 rounded-2xl"
-                      style={{
-                        background:   "rgba(255,255,255,0.04)",
-                        border:       "1px solid rgba(126,184,247,0.15)",
-                        backdropFilter: "blur(12px)",
-                      }}
-                    >
-                      <chip.Icon
-                        className="w-6 h-6"
-                        style={{ color: "var(--color-pg-accent)" }}
-                      />
-                      <span className="text-xs font-medium text-white whitespace-nowrap">
-                        {chip.label}
-                      </span>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-
-            {/* Center glow orb */}
-            <motion.div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full"
-              animate={{ scale: [1, 1.25, 1], opacity: [0.2, 0.35, 0.2] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              style={{ background: "var(--color-pg-accent)", filter: "blur(32px)" }}
-            />
+          {/* ── Right: 3D orbital visual (desktop only) ── */}
+          <div className="hidden lg:flex items-center justify-center">
+            <HeroVisual />
           </div>
+
         </div>
       </div>
 

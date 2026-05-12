@@ -1,212 +1,228 @@
 "use client";
 
 import { motion } from "motion/react";
+import dynamic from "next/dynamic";
 
-const floatingChips = [
-  { label: "AI/ML", delay: 0, top: "2%", left: "6%" },
-  { label: "Benchmarks", delay: 0.1, top: "6%", left: "64%" },
-  { label: "Full Stack", delay: 0.2, top: "44%", left: "82%" },
-  { label: "Systems", delay: 0.3, top: "80%", left: "62%" },
-  { label: "Mobile", delay: 0.4, top: "82%", left: "8%" },
-  { label: "Research", delay: 0.5, top: "38%", left: "-4%" },
+// Lazy-load the WebGL scene — SSR-safe, PlaceholderScene is the fallback
+const OrbitalSphereScene = dynamic(
+  () => import("./orbital-sphere-scene").then((m) => ({ default: m.OrbitalSphereScene })),
+  { ssr: false, loading: () => <PlaceholderScene /> }
+);
+
+// ─── Data ─────────────────────────────────────────────────────────────────────
+
+const TECH_CHIPS: { label: string; top: string; left: string; delay: number }[] = [
+  { label: "AI/ML",      top: "3%",  left: "5%",  delay: 0.9 },
+  { label: "WebGPU",     top: "5%",  left: "62%", delay: 1.0 },
+  { label: "Full Stack", top: "42%", left: "87%", delay: 1.1 },
+  { label: "Systems",    top: "80%", left: "65%", delay: 1.2 },
+  { label: "Mobile",     top: "83%", left: "5%",  delay: 1.3 },
+  { label: "Algorithms", top: "40%", left: "-2%", delay: 1.4 },
 ];
+
+const STAT_CARDS: {
+  value: string;
+  label: string;
+  top: string;
+  left?: string;
+  right?: string;
+  floatY: number[];
+  delay: number;
+}[] = [
+  { value: "7",   label: "Projects",     top: "2%",  right: "16%", floatY: [0, -7, 0], delay: 1.0 },
+  { value: "30+", label: "Skills",       top: "38%", left: "2%",   floatY: [0,  5, 0], delay: 1.1 },
+  { value: "4",   label: "Live Demos",   top: "38%", right: "2%",  floatY: [0, -6, 0], delay: 1.2 },
+  { value: "7",   label: "Case Studies", top: "76%", right: "14%", floatY: [0,  6, 0], delay: 1.3 },
+];
+
+// SVG hex nodes — viewBox 0 0 200 200, center (100,100), ring r=46
+const HEX_NODES: { cx: number; cy: number }[] = [
+  { cx: 100,   cy: 54  },
+  { cx: 139.8, cy: 77  },
+  { cx: 139.8, cy: 123 },
+  { cx: 100,   cy: 146 },
+  { cx: 60.2,  cy: 123 },
+  { cx: 60.2,  cy: 77  },
+];
+
+// ─── Sub-components ───────────────────────────────────────────────────────────
+
+function OrbitalDiagram() {
+  return (
+    <svg viewBox="0 0 200 200" className="w-full h-full" aria-hidden="true" style={{ overflow: "visible" }}>
+      <circle cx={100} cy={100} r={70} fill="none" stroke="rgba(126,184,247,0.07)" strokeWidth={1} strokeDasharray="4 6" />
+      <circle cx={100} cy={100} r={46} fill="none" stroke="rgba(126,184,247,0.12)" strokeWidth={1} />
+      <circle cx={100} cy={100} r={22} fill="none" stroke="rgba(126,184,247,0.10)" strokeWidth={1} strokeDasharray="3 5" />
+      {HEX_NODES.map((n, i) => (
+        <line key={i} x1={100} y1={100} x2={n.cx} y2={n.cy} stroke="rgba(126,184,247,0.13)" strokeWidth={1} />
+      ))}
+      {HEX_NODES.filter((_, i) => i % 2 === 0).map((a, i) => {
+        const b = HEX_NODES[(i * 2 + 2) % 6];
+        return <line key={`x${i}`} x1={a.cx} y1={a.cy} x2={b.cx} y2={b.cy} stroke="rgba(126,184,247,0.06)" strokeWidth={1} />;
+      })}
+      {HEX_NODES.map((n, i) => (
+        <g key={i}>
+          <circle cx={n.cx} cy={n.cy} r={5}   fill="rgba(126,184,247,0.12)" />
+          <circle cx={n.cx} cy={n.cy} r={2.5} fill="rgba(126,184,247,0.65)" />
+        </g>
+      ))}
+      <circle cx={100} cy={100} r={7}   fill="rgba(126,184,247,0.08)" />
+      <circle cx={100} cy={100} r={3.5} fill="rgba(126,184,247,0.9)"  />
+    </svg>
+  );
+}
+
+function StatCard({ value, label, floatY, delay }: {
+  value: string; label: string; floatY: number[]; delay: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.88 }}
+      animate={{ opacity: 1, scale: 1, y: floatY }}
+      transition={{
+        opacity: { delay, duration: 0.4 },
+        scale:   { delay, duration: 0.4 },
+        y: { delay: delay + 0.4, duration: 5.5 + delay, repeat: Infinity, ease: "easeInOut" },
+      }}
+      className="flex flex-col items-center justify-center rounded-2xl px-3 py-2.5 min-w-[68px]"
+      style={{
+        background: "rgba(255,255,255,0.045)",
+        border: "1px solid rgba(255,255,255,0.10)",
+        backdropFilter: "blur(16px)",
+        boxShadow: "0 8px 24px rgba(0,0,0,0.18)",
+      }}
+    >
+      <span className="text-lg font-bold leading-none tracking-tight" style={{ color: "var(--color-pg-accent)" }}>
+        {value}
+      </span>
+      <span className="mt-1 text-[9px] font-medium uppercase tracking-widest whitespace-nowrap" style={{ color: "rgba(255,255,255,0.4)" }}>
+        {label}
+      </span>
+    </motion.div>
+  );
+}
+
+// ─── CSS Placeholder scene ────────────────────────────────────────────────────
+
+function PlaceholderScene() {
+  return (
+    <div
+      className="relative w-full h-full rounded-[1.75rem] overflow-hidden"
+      style={{
+        background: "linear-gradient(160deg, rgba(20,22,32,0.95) 0%, rgba(8,8,12,0.92) 100%)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        boxShadow: "0 28px 72px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.05)",
+      }}
+    >
+      {/* Dot grid */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        backgroundImage: "radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px)",
+        backgroundSize: "24px 24px",
+      }} />
+      {/* Ambient inner glow */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: "radial-gradient(circle at 20% 22%, rgba(126,184,247,0.10) 0%, transparent 40%), radial-gradient(circle at 80% 80%, rgba(126,184,247,0.07) 0%, transparent 38%)",
+      }} />
+
+      {/* Header bar */}
+      <div className="relative flex items-center justify-between px-5 py-3.5" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+        <div className="flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "var(--color-pg-accent)", boxShadow: "0 0 8px rgba(126,184,247,0.7)" }} />
+          <motion.span
+            animate={{ opacity: [0.5, 0.9, 0.5] }}
+            transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+            className="text-[10px] font-medium uppercase tracking-[0.2em]"
+            style={{ color: "rgba(126,184,247,0.75)" }}
+          >
+            ACTIVE
+          </motion.span>
+        </div>
+        <span className="font-mono text-[10px] tracking-widest" style={{ color: "rgba(255,255,255,0.2)" }}>
+          sys.neural_v2
+        </span>
+      </div>
+
+      {/* Orbital diagram */}
+      <div className="relative flex items-center justify-center flex-1 py-4 px-6" style={{ height: "calc(100% - 88px)" }}>
+        <motion.div
+          className="absolute rounded-full pointer-events-none"
+          style={{ width: "140px", height: "140px", background: "rgba(126,184,247,0.06)", filter: "blur(28px)" }}
+          animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0.9, 0.5] }}
+          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <div className="relative w-[175px] h-[175px]">
+          <OrbitalDiagram />
+        </div>
+      </div>
+
+      {/* Footer tech strip */}
+      <div className="relative flex items-center gap-2 px-5 py-3" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+        {["Python", "PyTorch", "WebGPU", "Node.js"].map((t) => (
+          <span key={t} className="text-[9px] px-2 py-0.5 rounded font-medium" style={{
+            background: "rgba(126,184,247,0.05)",
+            border: "1px solid rgba(126,184,247,0.10)",
+            color: "rgba(255,255,255,0.3)",
+          }}>
+            {t}
+          </span>
+        ))}
+        <span className="ml-auto font-mono text-[9px]" style={{ color: "rgba(255,255,255,0.15)" }}>v2.0</span>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main export ──────────────────────────────────────────────────────────────
 
 export function HeroVisual() {
   return (
     <motion.div
       initial={{ opacity: 0, x: 24 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.8, delay: 0.45 }}
-      className="relative mx-auto h-[390px] w-full max-w-[460px] [perspective:1600px]"
+      transition={{ duration: 0.75, delay: 0.4 }}
+      className="relative mx-auto h-[460px] w-full max-w-[500px]"
+      aria-hidden="true"
     >
+      {/* Ambient outer glow */}
       <div
-        className="absolute inset-0 rounded-[2rem] pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          background:
-            "radial-gradient(circle at 40% 38%, rgba(96,165,250,0.22), transparent 34%), radial-gradient(circle at 68% 70%, rgba(167,139,250,0.18), transparent 36%)",
-          filter: "blur(30px)",
+          background: "radial-gradient(circle at 35% 35%, rgba(126,184,247,0.14) 0%, transparent 45%), radial-gradient(circle at 70% 72%, rgba(126,184,247,0.08) 0%, transparent 40%)",
+          filter: "blur(32px)",
         }}
       />
 
-      <motion.div
-        className="absolute bottom-8 left-10 right-10 top-[4.5rem] overflow-hidden rounded-[2rem]"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(18,20,31,0.94), rgba(9,9,15,0.90))",
-          border: "1px solid rgba(255,255,255,0.10)",
-          transform: "rotateX(65deg) rotateZ(-33deg)",
-          transformStyle: "preserve-3d",
-          boxShadow:
-            "0 34px 90px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06)",
-        }}
-      >
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
-            backgroundSize: "28px 28px",
-          }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(circle at 20% 24%, rgba(34,211,238,0.16), transparent 20%), radial-gradient(circle at 70% 66%, rgba(167,139,250,0.16), transparent 18%)",
-          }}
-        />
-        <div
-          className="absolute left-[12%] top-[18%] h-[1px] w-[26%]"
-          style={{ background: "rgba(34,211,238,0.34)", boxShadow: "0 0 12px rgba(34,211,238,0.45)" }}
-        />
-        <div
-          className="absolute left-[34%] top-[18%] h-[30%] w-[1px]"
-          style={{ background: "rgba(34,211,238,0.30)", boxShadow: "0 0 12px rgba(34,211,238,0.35)" }}
-        />
-        <div
-          className="absolute left-[56%] top-[48%] h-[1px] w-[22%]"
-          style={{ background: "rgba(167,139,250,0.30)", boxShadow: "0 0 12px rgba(167,139,250,0.35)" }}
-        />
-        <div
-          className="absolute left-[56%] top-[26%] h-[24%] w-[1px]"
-          style={{ background: "rgba(167,139,250,0.26)" }}
-        />
-      </motion.div>
+      <div className="absolute inset-x-8 top-12 bottom-8" style={{ borderRadius: "1.75rem", overflow: "hidden" }}>
+        <OrbitalSphereScene />
+      </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: [0, -7, 0] }}
-        transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 0.9 }}
-        className="absolute left-10 top-12 w-[210px] overflow-hidden rounded-[1.4rem]"
-        style={{
-          background: "rgba(255,255,255,0.055)",
-          border: "1px solid rgba(255,255,255,0.12)",
-          backdropFilter: "blur(18px)",
-          transform: "rotateX(16deg) rotateY(-14deg) rotateZ(-10deg) translateZ(54px)",
-          boxShadow: "0 20px 45px rgba(0,0,0,0.22)",
-        }}
-      >
-        <div className="flex items-center gap-2 border-b px-4 py-3" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-          <span className="h-2 w-2 rounded-full" style={{ background: "rgba(34,211,238,0.65)" }} />
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em]" style={{ color: "rgba(255,255,255,0.44)" }}>
-            Edge Benchmarks
-          </p>
-        </div>
-        <div className="space-y-3 p-4">
-          <MetricBar label="TTFT" value="73-172ms" width="78%" color="var(--color-pg-cyan)" />
-          <MetricBar label="TPS" value="48-52" width="92%" color="var(--color-pg-blue)" />
-          <MetricBar label="Cost" value="$0" width="98%" color="var(--color-pg-violet)" />
-        </div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: [0, 8, 0] }}
-        transition={{ duration: 7.2, repeat: Infinity, ease: "easeInOut", delay: 1.05 }}
-        className="absolute right-0 top-24 w-[220px] rounded-[1.35rem] p-4"
-        style={{
-          background: "rgba(255,255,255,0.05)",
-          border: "1px solid rgba(255,255,255,0.12)",
-          backdropFilter: "blur(18px)",
-          transform: "rotateX(14deg) rotateY(14deg) rotateZ(11deg) translateZ(70px)",
-          boxShadow: "0 20px 45px rgba(0,0,0,0.22)",
-        }}
-      >
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em]" style={{ color: "rgba(255,255,255,0.44)" }}>
-          Live Stack
-        </p>
-        <div className="mt-4 space-y-3 text-[12px]">
-          <StackLine label="Auction events" value="3 role views" />
-          <StackLine label="SNN flow" value="Sparse spikes" />
-          <StackLine label="Chess rules" value="Special moves" />
-        </div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: [0, -6, 0] }}
-        transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-        className="absolute bottom-2 left-24 h-[160px] w-[220px] overflow-hidden rounded-[1.5rem] p-4"
-        style={{
-          background: "rgba(255,255,255,0.045)",
-          border: "1px solid rgba(255,255,255,0.11)",
-          backdropFilter: "blur(18px)",
-          transform: "rotateX(18deg) rotateY(-10deg) rotateZ(7deg) translateZ(58px)",
-          boxShadow: "0 24px 48px rgba(0,0,0,0.22)",
-        }}
-      >
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em]" style={{ color: "rgba(255,255,255,0.44)" }}>
-          Signal Graph
-        </p>
-        <div className="relative mt-5 h-[90px] rounded-2xl border" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-          <div
-            className="absolute left-[18%] top-[32%] h-2.5 w-2.5 rounded-full"
-            style={{ background: "rgba(34,211,238,0.78)", boxShadow: "0 0 16px rgba(34,211,238,0.55)" }}
-          />
-          <div
-            className="absolute left-[46%] top-[18%] h-2.5 w-2.5 rounded-full"
-            style={{ background: "rgba(96,165,250,0.78)", boxShadow: "0 0 16px rgba(96,165,250,0.5)" }}
-          />
-          <div
-            className="absolute left-[74%] top-[54%] h-2.5 w-2.5 rounded-full"
-            style={{ background: "rgba(167,139,250,0.78)", boxShadow: "0 0 16px rgba(167,139,250,0.5)" }}
-          />
-          <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path d="M18 32 C30 26, 36 20, 46 18" fill="none" stroke="rgba(34,211,238,0.42)" strokeWidth="1" />
-            <path d="M46 18 C58 26, 64 40, 74 54" fill="none" stroke="rgba(167,139,250,0.42)" strokeWidth="1" />
-          </svg>
-        </div>
-      </motion.div>
-
-      {floatingChips.map(({ label, delay, top, left }) => (
-        <motion.span
-          key={label}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.35, delay: 1 + delay }}
-          className="absolute select-none rounded-full px-2.5 py-1 text-[11px] font-medium pointer-events-none"
-          style={{
-            top,
-            left,
-            background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.14)",
-            color: "rgba(255,255,255,0.7)",
-          }}
-        >
-          {label}
-        </motion.span>
-      ))}
+      {/* Floating stat cards + tech chips */}
+      <div className="absolute inset-0 z-10 pointer-events-none">
+        {STAT_CARDS.map((s) => (
+          <div key={s.label} className="absolute" style={{ top: s.top, left: s.left, right: s.right, pointerEvents: "auto" }}>
+            <StatCard value={s.value} label={s.label} floatY={s.floatY} delay={s.delay} />
+          </div>
+        ))}
+        {TECH_CHIPS.map((chip) => (
+          <motion.span
+            key={chip.label}
+            className="absolute select-none pointer-events-none rounded-full px-2.5 py-1 text-[10px] font-medium"
+            style={{
+              top: chip.top,
+              left: chip.left,
+              background: "rgba(255,255,255,0.045)",
+              border: "1px solid rgba(255,255,255,0.10)",
+              color: "rgba(255,255,255,0.5)",
+              backdropFilter: "blur(8px)",
+            }}
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.35, delay: chip.delay }}
+          >
+            {chip.label}
+          </motion.span>
+        ))}
+      </div>
     </motion.div>
-  );
-}
-
-function MetricBar({ label, value, width, color }: { label: string; value: string; width: string; color: string }) {
-  return (
-    <div>
-      <div className="mb-1 flex items-center justify-between text-[11px]">
-        <span style={{ color: "rgba(255,255,255,0.44)" }}>{label}</span>
-        <span style={{ color: "rgba(255,255,255,0.72)" }}>{value}</span>
-      </div>
-      <div className="h-2 rounded-full" style={{ background: "rgba(255,255,255,0.06)" }}>
-        <motion.div
-          className="h-full rounded-full"
-          style={{
-            width,
-            background: `linear-gradient(90deg, ${color}, rgba(255,255,255,0.82))`,
-          }}
-          animate={{ opacity: [0.82, 1, 0.82] }}
-          transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </div>
-    </div>
-  );
-}
-
-function StackLine({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex items-center justify-between rounded-xl border px-3 py-2" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-      <span style={{ color: "rgba(255,255,255,0.52)" }}>{label}</span>
-      <span style={{ color: "rgba(255,255,255,0.82)" }}>{value}</span>
-    </div>
   );
 }

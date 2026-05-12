@@ -10,7 +10,9 @@ import { FeaturedProjects } from "@/components/featured-projects";
 import { LiveDemoLab } from "@/components/live-demo-lab";
 import { SkillsBento } from "@/components/skills-bento";
 import { ExperienceSection } from "@/components/experience-section";
+import { AskPortfolio } from "@/components/ask-portfolio";
 import { ContactSection } from "@/components/contact-section";
+import { AboutSection } from "@/components/about-section";
 
 export default function Home() {
   const [recruiterMode, setRecruiterMode] = useState(false);
@@ -62,10 +64,12 @@ export default function Home() {
           )}
         </AnimatePresence>
 
+        <AboutSection />
         <FeaturedProjects recruiterMode={recruiterMode} />
         <LiveDemoLab />
         <ExperienceSection />
         <SkillsBento />
+        <AskPortfolio />
         <ContactSection />
       </main>
 

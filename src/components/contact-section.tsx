@@ -1,7 +1,11 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Mail, MapPin, Send, FileText, ArrowUpRight } from "lucide-react";
+import { Mail, MapPin, Send, FileText, ArrowUpRight, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { useState } from "react";
+
+// ← Replace this with your Formspree endpoint: https://formspree.io/f/xxxxxxxx
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xqennzyg";
 
 const GithubIcon = () => (
   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -49,7 +53,31 @@ const inputCls = [
   "focus:border-[rgba(126,184,247,0.45)] focus:ring-2 focus:ring-[rgba(126,184,247,0.08)]",
 ].join(" ");
 
+type FormStatus = "idle" | "loading" | "success" | "error";
+
 export function ContactSection() {
+  const [status, setStatus] = useState<FormStatus>("idle");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("loading");
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        body: new FormData(e.currentTarget),
+        headers: { Accept: "application/json" },
+      });
+      if (res.ok) {
+        setStatus("success");
+        (e.target as HTMLFormElement).reset();
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  }
+
   return (
     <section
       id="contact"
@@ -173,7 +201,7 @@ export function ContactSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.55, delay: 0.2 }}
               className="p-8 md:p-10 flex flex-col gap-4"
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={handleSubmit}
             >
               <h3 className="text-base font-semibold text-white mb-2">Send a Message</h3>
 
@@ -181,7 +209,9 @@ export function ContactSection() {
                 <label htmlFor="cf-name" className="block text-xs mb-1.5" style={{ color: "var(--color-pg-text-2)" }}>Name</label>
                 <input
                   id="cf-name"
+                  name="name"
                   type="text"
+                  required
                   placeholder="Your name"
                   className={inputCls}
                 />
@@ -191,7 +221,9 @@ export function ContactSection() {
                 <label htmlFor="cf-email" className="block text-xs mb-1.5" style={{ color: "var(--color-pg-text-2)" }}>Email</label>
                 <input
                   id="cf-email"
+                  name="email"
                   type="email"
+                  required
                   placeholder="your.email@example.com"
                   className={inputCls}
                 />
@@ -201,18 +233,37 @@ export function ContactSection() {
                 <label htmlFor="cf-message" className="block text-xs mb-1.5" style={{ color: "var(--color-pg-text-2)" }}>Message</label>
                 <textarea
                   id="cf-message"
+                  name="message"
                   rows={5}
+                  required
                   placeholder="Tell me about your opportunity or project..."
                   className={`${inputCls} resize-none`}
                 />
               </div>
 
+              {/* Status feedback */}
+              {status === "success" && (
+                <div className="flex items-center gap-2 text-sm px-4 py-3 rounded-xl" style={{ background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.2)", color: "#34d399" }}>
+                  <CheckCircle className="w-4 h-4 shrink-0" />
+                  Message sent! I&apos;ll get back to you soon.
+                </div>
+              )}
+              {status === "error" && (
+                <div className="flex items-center gap-2 text-sm px-4 py-3 rounded-xl" style={{ background: "rgba(248,113,113,0.08)", border: "1px solid rgba(248,113,113,0.2)", color: "#f87171" }}>
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  Something went wrong. Email me directly instead.
+                </div>
+              )}
+
               <button
                 type="submit"
-                className="btn-secondary flex items-center justify-center gap-2 w-full mt-auto"
+                disabled={status === "loading" || status === "success"}
+                className="btn-secondary flex items-center justify-center gap-2 w-full mt-auto disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Send className="w-4 h-4" />
-                Send Message
+                {status === "loading"
+                  ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending…</>
+                  : <><Send className="w-4 h-4" /> Send Message</>
+                }
               </button>
             </motion.form>
           </div>
