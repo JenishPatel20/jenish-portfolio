@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { MaskText } from "@/components/mask-text";
 import { Search, ArrowUpRight, Sparkles, ChevronRight, Bot, RotateCcw } from "lucide-react";
 import Link from "next/link";
 import { projects, type Project, type RoleFilter } from "@/data/projects";
@@ -317,7 +318,7 @@ export function AskPortfolio() {
             <p className="section-label">Portfolio Search</p>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
-            Ask My Portfolio
+            <MaskText text="Ask My Portfolio" />
           </h2>
           <p className="mt-3 max-w-xl text-sm leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>
             Search by role, technology, or project type. Answers come only from local portfolio data.

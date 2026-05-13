@@ -3,6 +3,10 @@
 import { motion } from "motion/react";
 import { ChevronDown, Mail, Zap } from "lucide-react";
 import { HeroVisual } from "@/components/hero-visual";
+import { MaskText } from "@/components/mask-text";
+import { MagneticButton } from "@/components/magnetic-button";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 const GithubIcon = () => (
   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -29,14 +33,25 @@ export function Hero({ onRecruiterMode }: HeroProps) {
       {/* Subtle grid */}
       <div className="absolute inset-0 hero-grid pointer-events-none" />
 
-      {/* Ambient orbs */}
-      <div
-        className="absolute top-[-80px] right-[-80px] w-[400px] h-[400px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(126,184,247,0.09) 0%, transparent 70%)" }}
+      {/* Ambient orbs — floating, GPU-composited via transform */}
+      <motion.div
+        className="absolute top-[-80px] right-[-80px] w-[520px] h-[520px] rounded-full pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(126,184,247,0.11) 0%, transparent 70%)" }}
+        animate={{ y: [0, -28, 0], x: [0, 14, 0], scale: [1, 1.07, 1] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", repeatType: "mirror" }}
       />
-      <div
-        className="absolute bottom-[-60px] left-[-60px] w-[360px] h-[360px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(126,184,247,0.05) 0%, transparent 70%)" }}
+      <motion.div
+        className="absolute bottom-[-60px] left-[-60px] w-[420px] h-[420px] rounded-full pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(126,184,247,0.06) 0%, transparent 70%)" }}
+        animate={{ y: [0, 22, 0], x: [0, -10, 0] }}
+        transition={{ duration: 17, repeat: Infinity, ease: "easeInOut", delay: 3, repeatType: "mirror" }}
+      />
+      {/* Centre bloom — subtle depth behind hero text */}
+      <motion.div
+        className="absolute top-1/2 left-[20%] -translate-y-1/2 w-[640px] h-[640px] rounded-full pointer-events-none"
+        style={{ background: "radial-gradient(circle, rgba(126,184,247,0.035) 0%, transparent 65%)" }}
+        animate={{ scale: [1, 1.12, 1] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", repeatType: "mirror" }}
       />
 
       <div className="relative z-10 section-container w-full py-24 pt-32">
@@ -46,9 +61,9 @@ export function Hero({ onRecruiterMode }: HeroProps) {
           <div>
             {/* Status badge */}
             <motion.div
-              initial={{ opacity: 0, y: -12 }}
+              initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.5, ease: EASE }}
               className="accent-badge mb-8 w-fit"
             >
               <span className="relative flex h-2 w-2 shrink-0">
@@ -64,11 +79,11 @@ export function Hero({ onRecruiterMode }: HeroProps) {
               Open to SWE &amp; AI/ML roles
             </motion.div>
 
-            {/* Name — two-line, accent on second */}
+            {/* Name */}
             <motion.h1
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
+              transition={{ duration: 0.75, delay: 0.1, ease: EASE }}
               className="font-bold tracking-tight leading-[1.0] mb-5"
               style={{ fontSize: "clamp(48px, 7vw, 72px)" }}
             >
@@ -76,22 +91,37 @@ export function Hero({ onRecruiterMode }: HeroProps) {
               <span className="block" style={{ color: "var(--color-pg-accent)" }}>Patel.</span>
             </motion.h1>
 
-            {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.2 }}
-              className="text-lg font-medium mb-4"
-              style={{ color: "var(--color-pg-text-2)" }}
-            >
-              Software Engineer · MS CS @ Rutgers
-            </motion.p>
+            {/* Subtitle — mask reveal + split colour (Effect 01 + 14) */}
+            <p className="text-lg font-medium mb-4 flex flex-wrap gap-x-[0.27em]">
+              {/* "Software Engineer ·" — white */}
+              <span style={{ overflow: "hidden", display: "inline-block" }}>
+                <motion.span
+                  style={{ display: "inline-block", color: "var(--color-pg-text-2)" }}
+                  initial={{ y: "110%" }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 0.72, delay: 0.5, ease: EASE }}
+                >
+                  Software Engineer ·
+                </motion.span>
+              </span>
+              {/* "MS CS @ Rutgers" — accent blue */}
+              <span style={{ overflow: "hidden", display: "inline-block" }}>
+                <motion.span
+                  style={{ display: "inline-block", color: "var(--color-pg-accent)" }}
+                  initial={{ y: "110%" }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 0.72, delay: 0.62, ease: EASE }}
+                >
+                  MS CS @ Rutgers
+                </motion.span>
+              </span>
+            </p>
 
             {/* Description */}
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.3 }}
+              transition={{ duration: 0.65, delay: 0.34, ease: EASE }}
               className="text-base leading-relaxed mb-8 max-w-md"
               style={{ color: "var(--color-pg-text-2)" }}
             >
@@ -103,58 +133,71 @@ export function Hero({ onRecruiterMode }: HeroProps) {
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.4 }}
+              transition={{ duration: 0.6, delay: 0.46, ease: EASE }}
               className="flex flex-col sm:flex-row gap-3 mb-10"
             >
-              <a href="#projects" className="btn-primary">
-                View Projects
-              </a>
-              <button onClick={onRecruiterMode} className="btn-secondary">
-                <Zap className="w-4 h-4" />
-                Recruiter Mode
-              </button>
+              <MagneticButton>
+                <a href="#projects" className="btn-primary">
+                  View Projects
+                </a>
+              </MagneticButton>
+              <MagneticButton>
+                <button onClick={onRecruiterMode} className="btn-secondary">
+                  <Zap className="w-4 h-4" />
+                  Recruiter Mode
+                </button>
+              </MagneticButton>
             </motion.div>
 
-            {/* Social links */}
+            {/* Social links — staggered */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
+              transition={{ duration: 0.6, delay: 0.58, ease: EASE }}
               className="flex items-center gap-5"
             >
               {[
-                { href: "https://github.com/JenishPatel20",              label: "GitHub",   Icon: GithubIcon },
-                { href: "https://www.linkedin.com/in/jenish--patel",     label: "LinkedIn", Icon: LinkedInIcon },
-                { href: "mailto:jenishvpatel4995@gmail.com",             label: "Email",    Icon: () => <Mail className="w-5 h-5" /> },
-              ].map(({ href, label, Icon }) => (
-                <a
+                { href: "https://github.com/JenishPatel20",          label: "GitHub",   Icon: GithubIcon },
+                { href: "https://www.linkedin.com/in/jenish--patel", label: "LinkedIn", Icon: LinkedInIcon },
+                { href: "mailto:jenishvpatel4995@gmail.com",         label: "Email",    Icon: () => <Mail className="w-5 h-5" /> },
+              ].map(({ href, label, Icon }, i) => (
+                <motion.a
                   key={label}
                   href={href}
                   target={href.startsWith("http") ? "_blank" : undefined}
                   rel="noopener noreferrer"
                   aria-label={label}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.62 + i * 0.08, ease: EASE }}
+                  whileHover={{ y: -2, scale: 1.1 }}
                   className="transition-colors duration-200"
                   style={{ color: "var(--color-pg-text-3)" }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-pg-accent)")}
                   onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-pg-text-3)")}
                 >
                   <Icon />
-                </a>
+                </motion.a>
               ))}
             </motion.div>
           </div>
 
           {/* ── Right: 3D orbital visual (desktop only) ── */}
-          <div className="hidden lg:flex items-center justify-center">
+          <motion.div
+            className="hidden lg:flex items-center justify-center"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.2, ease: EASE }}
+          >
             <HeroVisual />
-          </div>
+          </motion.div>
 
         </div>
       </div>
 
       {/* Scroll indicator */}
       <motion.a
-        href="#projects"
+        href="#about"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, y: [0, 8, 0] }}
         transition={{

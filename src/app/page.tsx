@@ -13,6 +13,7 @@ import { ExperienceSection } from "@/components/experience-section";
 import { AskPortfolio } from "@/components/ask-portfolio";
 import { ContactSection } from "@/components/contact-section";
 import { AboutSection } from "@/components/about-section";
+import { TechParade } from "@/components/tech-parade";
 
 export default function Home() {
   const [recruiterMode, setRecruiterMode] = useState(false);
@@ -65,9 +66,10 @@ export default function Home() {
         </AnimatePresence>
 
         <AboutSection />
+        <ExperienceSection />
+        <TechParade />
         <FeaturedProjects recruiterMode={recruiterMode} />
         <LiveDemoLab />
-        <ExperienceSection />
         <SkillsBento />
         <AskPortfolio />
         <ContactSection />

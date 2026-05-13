@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, useScroll, useSpring } from "motion/react";
+import { useRef } from "react";
+import { motion, useScroll, useSpring, useTransform } from "motion/react";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import type { Project, RoleFilter } from "@/data/projects";
+import { ProjectMockup } from "@/components/project-mockup";
 
 // ── Role colour system — identical to project-card.tsx ─────────────────────────
 const roleConfig: Record<RoleFilter, {
@@ -32,28 +33,6 @@ function ReadingProgress({ color }: { color: string }) {
       <motion.div className="h-full origin-left" style={{ scaleX, background: color }} />
     </div>
   );
-}
-
-// ── Scroll-aware active section for TOC ────────────────────────────────────────
-function useActiveSection(ids: string[]) {
-  const [active, setActive] = useState(ids[0] ?? "");
-  useEffect(() => {
-    if (ids.length === 0) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        }
-      },
-      { rootMargin: "-18% 0% -65% 0%" }
-    );
-    ids.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-    return () => observer.disconnect();
-  }, [ids]);
-  return active;
 }
 
 // ── Animated content section ───────────────────────────────────────────────────
@@ -113,6 +92,12 @@ interface Props {
 
 export function CaseStudyClient({ project, prev, next }: Props) {
   const cfg = roleConfig[project.roles[0]];
+  const mockupRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: mockupScroll } = useScroll({
+    target: mockupRef,
+    offset: ["start end", "end start"],
+  });
+  const mockupY = useTransform(mockupScroll, [0, 1], [-30, 30]);
 
   // Build ordered content sections (only those with data)
   const contentSections = [
@@ -121,8 +106,6 @@ export function CaseStudyClient({ project, prev, next }: Props) {
     { id: "cs-results",   heading: "Results & Outcome",      content: project.results ?? project.highlight },
   ].filter((s): s is { id: string; heading: string; content: string } => !!s.content);
 
-  const tocIds    = contentSections.map((s) => s.id);
-  const activeId  = useActiveSection(tocIds);
 
   return (
     <main className="min-h-screen" style={{ backgroundColor: "#09090f" }}>
@@ -244,6 +227,31 @@ export function CaseStudyClient({ project, prev, next }: Props) {
               </a>
             )}
           </motion.div>
+
+          {/* Parallax mockup banner */}
+          <motion.div
+            ref={mockupRef}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.42 }}
+            className="mt-10 rounded-2xl overflow-hidden"
+            style={{
+              height: 220,
+              border: `1px solid ${cfg.border}`,
+              position: "relative",
+            }}
+          >
+            <motion.div style={{ y: mockupY, height: "calc(100% + 60px)", marginTop: -30, width: "100%" }}>
+              <ProjectMockup role={project.roles[0]} accentColor={cfg.color} />
+            </motion.div>
+            {/* Subtle vignette overlay */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: `radial-gradient(ellipse 80% 60% at 50% 50%, transparent 40%, rgba(9,9,15,0.55) 100%)`,
+              }}
+            />
+          </motion.div>
         </div>
       </div>
 
@@ -334,32 +342,6 @@ export function CaseStudyClient({ project, prev, next }: Props) {
           {/* ── Sidebar ── */}
           <aside className="hidden lg:block" aria-label="Project details">
             <div className="sticky top-24 flex flex-col gap-4">
-
-              {/* Table of Contents */}
-              {tocIds.length > 0 && (
-                <div
-                  className="rounded-2xl p-5"
-                  style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}
-                >
-                  <SidebarLabel>On This Page</SidebarLabel>
-                  <nav className="flex flex-col gap-1">
-                    {contentSections.map(({ id, heading }) => (
-                      <button
-                        key={id}
-                        onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" })}
-                        className="flex items-center gap-2.5 text-left text-xs py-1.5 cursor-pointer rounded transition-all duration-200"
-                        style={{ color: activeId === id ? cfg.color : "var(--color-pg-text-3)" }}
-                      >
-                        <span
-                          className="h-1 w-1 rounded-full shrink-0 transition-all duration-200"
-                          style={{ background: activeId === id ? cfg.color : "rgba(255,255,255,0.18)" }}
-                        />
-                        <span className={activeId === id ? "font-medium" : ""}>{heading}</span>
-                      </button>
-                    ))}
-                  </nav>
-                </div>
-              )}
 
               {/* Details card — role-tinted border + top strip */}
               <div

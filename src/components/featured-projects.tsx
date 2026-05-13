@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { ProjectCard } from "@/components/project-card";
 import { projects, type RoleFilter } from "@/data/projects";
+import { MaskText } from "@/components/mask-text";
 
 const filters: { label: string; value: RoleFilter | "all" }[] = [
   { label: "All", value: "all" },
@@ -42,11 +43,8 @@ export function FeaturedProjects({ recruiterMode }: FeaturedProjectsProps) {
         >
           <div>
             <p className="section-label mb-2">Work</p>
-            <h2
-              className="text-3xl sm:text-4xl font-bold tracking-tight"
-              style={{ color: "var(--color-pg-text-1)" }}
-            >
-              Projects
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: "var(--color-pg-text-1)" }}>
+              <MaskText text="Projects" />
             </h2>
           </div>
 
@@ -88,10 +86,11 @@ export function FeaturedProjects({ recruiterMode }: FeaturedProjectsProps) {
               <motion.div
                 key={project.id}
                 layout
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.28, delay: index * 0.05 }}
+                initial={{ opacity: 0, y: 16, filter: "blur(10px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                viewport={{ once: false, amount: 0.08 }}
+                exit={{ opacity: 0, scale: 0.96, filter: "blur(6px)" }}
+                transition={{ duration: 0.5, delay: index * 0.12 }}
               >
                 <ProjectCard project={project} />
               </motion.div>

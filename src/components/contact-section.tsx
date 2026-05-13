@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { Mail, MapPin, Send, FileText, ArrowUpRight, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { MaskText } from "@/components/mask-text";
 import { useState } from "react";
 
 // ← Replace this with your Formspree endpoint: https://formspree.io/f/xxxxxxxx
@@ -96,7 +97,7 @@ export function ContactSection() {
         >
           <p className="section-label mb-3">Get in touch</p>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
-            Let&apos;s Connect
+            <MaskText text="Let's Connect" />
           </h2>
           <p className="mt-3 max-w-md text-sm leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>
             Open to full-time opportunities, internships, and interesting engineering conversations.

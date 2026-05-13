@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import { Brain, Code2, Database, Layers, Monitor, Cpu, Wrench } from "lucide-react";
 import { skillGroups } from "@/data/skills";
+import { MaskText } from "@/components/mask-text";
 
 const categoryIcons: Record<string, React.ComponentType<{ className?: string }>> = {
   "Core Stack":      Layers,
@@ -31,7 +32,7 @@ export function SkillsBento() {
         >
           <p className="section-label mb-3">Stack</p>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
-            Technical Skills
+            <MaskText text="Technical Skills" />
           </h2>
           <p className="mt-3 max-w-xl text-sm leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>
             A toolkit spanning AI research, systems engineering, and full-stack development.
@@ -45,10 +46,10 @@ export function SkillsBento() {
             return (
               <motion.div
                 key={group.category}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.1 }}
-                transition={{ duration: 0.45, delay: i * 0.07 }}
+                initial={{ opacity: 0, y: 16, filter: "blur(10px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                viewport={{ once: false, amount: 0.1 }}
+                transition={{ duration: 0.5, delay: i * 0.12 }}
                 className={`group relative rounded-2xl p-6 transition-all duration-300 ${
                   group.span === "double" ? "md:col-span-2" : ""
                 }`}

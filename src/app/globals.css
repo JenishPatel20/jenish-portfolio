@@ -135,8 +135,17 @@
 
   html {
     @apply font-sans;
-    scroll-behavior: smooth;
     background-color: #000000;
+  }
+
+  /* Honour OS-level reduced motion preference globally */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 
   body {

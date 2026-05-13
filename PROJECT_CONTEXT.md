@@ -23,7 +23,6 @@ Upload this file at the start of any AI chat to get full context on the project 
 - TypeScript (strict mode)
 - Tailwind CSS v4
 - Motion for React (`motion/react` — framer-motion v11 fork, **always import from `motion/react` not `framer-motion`**)
-- React Three Fiber (`@react-three/fiber` v9, `@react-three/drei`, `three`) for 3D scene
 - shadcn/ui base (dark theme only, never light)
 - No backend, no database, fully static
 
@@ -39,34 +38,31 @@ Upload this file at the start of any AI chat to get full context on the project 
 src/
 ├── app/
 │   ├── globals.css          # All CSS tokens and utility classes
-│   ├── layout.tsx           # data-scroll-behavior="smooth" on <html>
+│   ├── layout.tsx
 │   ├── page.tsx             # Homepage — wires all sections together
 │   ├── projects/
 │   │   ├── page.tsx         # /projects — all projects listing
 │   │   └── [slug]/
-│   │       └── page.tsx     # Thin server shell — resolves project, renders CaseStudyClient
+│   │       └── page.tsx     # /projects/[slug] — case study pages (server component)
 │   └── resume/
 │       └── page.tsx
 ├── components/
-│   ├── about-section.tsx        # "Who I Am" — bio + 4 fact cards (co-op, degree, graduation, location)
 │   ├── ask-portfolio.tsx        # Keyword-matching recruiter assistant (no AI APIs)
-│   ├── case-study-client.tsx    # Full animated case study UI (client component)
-│   ├── contact-section.tsx      # Contact form wired to Formspree (xqennzyg endpoint)
-│   ├── experience-section.tsx   # Work experience timeline (section label: "Career")
+│   ├── contact-section.tsx
+│   ├── experience-section.tsx   # Work experience timeline
 │   ├── featured-projects.tsx    # Project grid with filter pills
-│   ├── hero.tsx                 # Two-column hero: text left, OrbitalSphereScene right
-│   ├── hero-visual.tsx          # Lazy-loads OrbitalSphereScene via next/dynamic (ssr: false)
+│   ├── hero.tsx                 # Hero section (no visual on right — awaiting 3D model)
+│   ├── hero-visual.tsx          # CSS placeholder + 3D anchor comment (not rendered in hero yet)
 │   ├── live-demo-lab.tsx        # 4 interactive demo cards (expand on play)
 │   ├── live-demo/               # Individual demo components
 │   │   ├── benchmark-table-demo.tsx
 │   │   ├── chess-replay-demo.tsx
 │   │   ├── snn-spike-demo.tsx
 │   │   └── auction-master-mini-demo.tsx
-│   ├── orbital-sphere-scene.tsx # React Three Fiber 3D scene (pulsating core, 3 orbital rings, star field)
-│   ├── project-card.tsx         # Reusable project card with role-color system
+│   ├── project-card.tsx         # Reusable project card
 │   ├── recruiter-mode.tsx       # RecruiterModeBanner + RecruiterModeSection
 │   ├── site-footer.tsx
-│   ├── site-header.tsx          # Nav + mobile drawer (hamburger, spring slide-in, AnimatePresence)
+│   ├── site-header.tsx
 │   ├── skills-bento.tsx
 │   └── ui/                      # shadcn primitives
 └── data/
@@ -80,20 +76,19 @@ src/
 
 ## Homepage Section Order (top to bottom)
 
-1. `SiteHeader` — nav with Recruiter Mode toggle + Resume CTA + mobile hamburger drawer
+1. `SiteHeader` — nav with Recruiter Mode toggle + Resume CTA
 2. `RecruiterModeBanner` — animated dismissible banner (only when recruiter mode on)
-3. `Hero` — name, subtitle, description, CTAs, social links | OrbitalSphereScene (right column, hidden on mobile)
-4. `AboutSection` — "Who I Am" bio + 4 fact cards
-5. `RecruiterModeSection` — animated summary section (only when recruiter mode on)
-6. `FeaturedProjects` — project grid, filter pills: All / AI & ML / Full Stack / Systems / Mobile
-7. `LiveDemoLab` — 4 expandable interactive demo cards (id: `demos`)
-8. `ExperienceSection` — Greenlit co-op timeline
-9. `SkillsBento` — skills bento grid
-10. `AskPortfolio` — keyword-matching recruiter assistant (id: `ask`)
-11. `ContactSection` — contact info + message form (id: `contact`)
-12. `SiteFooter`
+3. `Hero` — name, subtitle, description, CTAs, social links (no right-side visual currently)
+4. `RecruiterModeSection` — animated summary section (only when recruiter mode on)
+5. `FeaturedProjects` — project grid, filter pills: All / AI & ML / Full Stack / Systems / Mobile
+6. `LiveDemoLab` — 4 expandable interactive demo cards (id: `demos`)
+7. `ExperienceSection` — Greenlit co-op timeline
+8. `SkillsBento` — skills bento grid
+9. `AskPortfolio` — keyword-matching recruiter assistant (id: `ask`)
+10. `ContactSection` — contact info (id: `contact`)
+11. `SiteFooter`
 
-**Removed:** `RoleMatcher` section — deleted, `src/components/role-matcher.tsx` no longer exists.
+**Removed:** `RoleMatcher` section — was deleted, `src/components/role-matcher.tsx` no longer exists.
 
 ---
 
@@ -101,7 +96,7 @@ src/
 
 ### CSS Custom Properties (defined in `globals.css`)
 
-All accent colors are unified to a single ice blue. There is no cyan/blue/violet split **on the main site**. Project cards and case study pages use a per-role color system (see below) for card-level theming only.
+All accent colors are unified to a single ice blue. There is no cyan/blue/violet split.
 
 ```css
 /* Colors */
@@ -112,7 +107,7 @@ All accent colors are unified to a single ice blue. There is no cyan/blue/violet
 --color-pg-accent:  #7eb8f7;        /* single accent — ice blue */
 --color-pg-accent-glow: rgba(126, 184, 247, 0.25);
 
-/* These aliases all resolve to ice blue */
+/* These aliases all resolve to ice blue — do not use different colors per role */
 --color-pg-cyan:    #7eb8f7;
 --color-pg-blue:    #7eb8f7;
 --color-pg-violet:  #7eb8f7;
@@ -124,20 +119,9 @@ All accent colors are unified to a single ice blue. There is no cyan/blue/violet
 --pg-border-hover:  rgba(126,184,247,0.35);
 ```
 
-### Per-Role Color System (project-card.tsx + case-study-client.tsx)
-
-Used only in project cards and case study pages so colors visually link a card to its case study.
-
-| Role | Color | Usage |
-|---|---|---|
-| `ai-ml` | `#7eb8f7` (ice blue) | category chip, accent strip, sidebar border, progress bar |
-| `full-stack` | `#34d399` (emerald) | same |
-| `systems` | `#fb923c` (orange) | same |
-| `mobile` | `#a78bfa` (violet) | same |
-
 ### Section Backgrounds
 
-All sections use `#000000`. `LiveDemoLab` and `ContactSection` use `#040404` with a top border for subtle separation.
+All sections use `#000000`. `LiveDemoLab` uses `#040404` with a top border for subtle separation.
 
 ### Utility Classes (defined in `globals.css`)
 
@@ -163,7 +147,6 @@ All sections use `#000000`. `LiveDemoLab` and `ContactSection` use `#040404` wit
 - Animation pattern: `whileInView`, `viewport={{ once: true, amount: 0.2 }}`, `initial={{ opacity: 0, y: 20 }}`
 - Always import motion from `motion/react`, never `framer-motion`
 - Expand/collapse: `AnimatePresence` with `height: 0 → auto` + `overflow-hidden`
-- THREE.Clock deprecation warning from R3F v9 suppressed via `useSuppressThreeClockWarning` hook in `orbital-sphere-scene.tsx`
 
 ---
 
@@ -209,7 +192,7 @@ export interface Project {
 
 **Auction Master** — Node.js/Express REST API, MySQL, Firebase (password reset), Multer (image uploads), Nodemailer. 3-role system: Admin, Customer Representative, Buyer. Preference-matched email notifications on new auction listings. 20+ HTML/CSS/JS pages. Vanilla JS frontend.
 
-**Edge AI LLM Benchmark** — Browser-native LLM benchmarking via WebGPU + @mlc-ai/web-llm. Models: Llama 3.2 1B, Qwen 2.5 1.5B, SmolLM2 1.7B, Llama 3.1 8B. Real measured metrics: Llama 3.2 1B = 73–172ms TTFT, 48–52 TPS, $0/run. Cloud comparison: Gemini 2.5 Flash, Claude Haiku 4.5. 3 hardware profiles (Windows NVIDIA, Mac M1, Mac M2 Pro). Results exported to timestamped CSVs.
+**Edge AI LLM Benchmark** — Browser-native LLM benchmarking via WebGPU + @mlc-ai/web-llm. Models: Llama 3.2 1B, Qwen 2.5 1.5B, SmolLM2 1.7B, Llama 3.1 8B. Real measured metrics: Llama 3.2 1B = 73–172ms TTFT, 48–52 TPS, $0/run. Cloud comparison: Gemini 2.5 Flash, Claude Haiku 4.5. 3 hardware profiles (Windows NVIDIA, Mac M1, Mac M2 Pro). Results exported to timestamped CSVs. Python scripts: gemini_testing.py, anthropic_testing.py, mmlu_benchmark.py.
 
 **Industrial Fault Detection via SNNs** — PyTorch + TensorFlow. 3 architectures × 2 datasets (CWRU bearing vibration + MIT-BIH ECG). CNN→SNN weight transfer, surrogate gradient training. 6 Jupyter notebooks.
 
@@ -254,20 +237,6 @@ export interface Experience {
 
 ---
 
-## OrbitalSphereScene (`src/components/orbital-sphere-scene.tsx`)
-
-React Three Fiber 3D scene used as the hero visual (right column on desktop).
-
-- **Core:** Pulsating metallic sphere (`MeshStandardMaterial`, emissiveIntensity animated via `useFrame`) + 2 atmosphere shells + equatorial ring
-- **Orbital rings:** 3 rings at different inclinations (`[π/2,0,0]`, `[0.3,0,1.05]`, `[1.2,0.55,0.2]`) with 2–3 traveling dot particles each
-- **Star field:** 180 ambient `Points` particles scattered in a shell (r = 2.9–5.1)
-- **Camera rig:** Mouse parallax via pointer.x / pointer.y smoothed with lerp
-- **Auto-rotation:** Entire scene group rotates on Y at 0.07 rad/s
-- **Warning suppression:** `useSuppressThreeClockWarning` patches `console.warn` to silence R3F's internal `THREE.Clock` deprecation
-- Loaded in `hero-visual.tsx` via `next/dynamic({ ssr: false })` with `<PlaceholderScene />` fallback
-
----
-
 ## AskPortfolio Component (`src/components/ask-portfolio.tsx`)
 
 Keyword-matching recruiter assistant. **No AI APIs, no backend, no external services.**
@@ -275,6 +244,7 @@ Keyword-matching recruiter assistant. **No AI APIs, no backend, no external serv
 - Input: free-text query or one of 8 suggestion chips
 - Engine: pure JS keyword scoring against `projects.ts` and `skills.ts`
 - Result types: `"projects"` (up to 4 cards), `"skills"` (grid), `"none"` (fallback message)
+- Each project card: status dot, title, reason string, highlight stat, up to 4 tags, "View case study →" link
 - 8 chips: AI experience, Full-stack projects, Systems projects, Mobile project, Python projects, Recruiter picks, Machine learning, Benchmarking work
 - Section id: `ask`
 
@@ -287,7 +257,7 @@ Keyword-matching recruiter assistant. **No AI APIs, no backend, no external serv
 | id | Title | Component file |
 |---|---|---|
 | `benchmark` | Edge AI Benchmark | `benchmark-table-demo.tsx` — real TTFT/TPS data from actual CSVs across 3 hardware profiles |
-| `chess` | Chess Engine Move Replay | `chess-replay-demo.tsx` — static CSS/SVG board, pre-scripted move sequences |
+| `chess` | Chess Engine Move Replay | `chess-replay-demo.tsx` — static CSS/SVG board, pre-scripted move sequences (en passant, castling, checkmate) |
 | `snn` | SNN Spike Visualizer | `snn-spike-demo.tsx` — CSS keyframe neuron-firing animation |
 | `auction` | Auction Master Live Feed | `auction-master-mini-demo.tsx` — countdown timer, animated bid feed, reserve price indicator |
 
@@ -295,37 +265,27 @@ Section id: `demos`
 
 ---
 
-## Case Study Pages
+## HeroVisual (`src/components/hero-visual.tsx`)
 
-### Server shell (`src/app/projects/[slug]/page.tsx`)
+CSS-only orbital diagram placeholder. **Currently NOT rendered in the hero** — the hero right column was removed until a real 3D model is ready.
 
-Thin server component (~40 lines). Resolves `project`, `prev`, `next` from `projects.ts`, then renders:
-
-```tsx
-<SiteHeader />
-<CaseStudyClient project={project} prev={prev} next={next} />
-<SiteFooter />
-```
-
-`generateStaticParams` generates all 7 slugs at build time.
-
-### Client component (`src/components/case-study-client.tsx`)
-
-Full animated UI — `"use client"`.
-
-- **Reading progress bar** — `useScroll` + `useSpring` (`scaleX`), fixed below header, colored to role accent
-- **Hero** — 3px role-colored accent strip, radial glow tinted to role color, staggered `animate` entrances (back link → chip → title → description → key metric → action buttons). No status badge.
-- **Content sections** — `ContentSection` uses `whileInView` fade+slide; each section has a section number (01, 02, 03) + left colored bar
-- **Table of Contents** — sticky sidebar, `IntersectionObserver` (`rootMargin: "-18% 0% -65% 0%"`), active section dot + text highlight in role color
-- **Sidebar details card** — 2px top gradient strip + role-tinted border; shows tech stack, category chip, year, GitHub/demo links; no status field
-- **Prev/Next nav** — hover border tints to role color
-- Sections (Overview, Architecture & Approach, Results & Outcome) only render if the field exists in `projects.ts`
+When a 3D model is available:
+1. Add model/package (Three.js, react-three-fiber, or Spline scene with actual content)
+2. Lazy-load with `next/dynamic({ ssr: false })`
+3. Render inside the `{/* 3D MODEL ANCHOR */}` block at `<div className="absolute inset-x-8 top-12 bottom-8">`
+4. Keep `<PlaceholderScene />` as the SSR + mobile + loading fallback
+5. Restore the right column div in `hero.tsx` and re-import `HeroVisual`
 
 ---
 
-## Contact Form (`src/components/contact-section.tsx`)
+## Case Study Pages (`src/app/projects/[slug]/page.tsx`)
 
-Wired to Formspree endpoint `https://formspree.io/f/xqennzyg`. Uses fetch + FormData. Fields: name, email, message (all have `name` attributes). States: `idle | loading | success | error`. Success shows green checkmark; error shows red alert.
+Server component. `generateStaticParams` generates all 7 slugs at build time.
+
+Layout: dark hero (hero-grid background + radial glow) → two-column body (`lg:grid lg:grid-cols-[1fr_256px]`)
+- Article: Overview (ice blue accent) → Architecture & Approach → Results & Outcome → tech stack (mobile only) → Prev/Next navigation
+- Sidebar (desktop, sticky): tech stack badges, category, status, year, GitHub/demo links
+- Sections only render if the field exists in `projects.ts` — never invented
 
 ---
 
@@ -336,8 +296,8 @@ Wired to Formspree endpoint `https://formspree.io/f/xqennzyg`. Uses fetch + Form
 3. **Don't duplicate existing components.** Check what's already on the page before building a new widget.
 4. **Don't block on security issues** in source repos — user is aware, will fix later.
 5. **No paid APIs, no Supabase, no external LLM APIs** for demo components.
-6. Always run `npx tsc --noEmit` after major changes. Clear `.next/` first if TS shows stale cache errors.
+6. Always run `npx tsc --noEmit` and `npm run build` after major changes.
 7. `"use client"` only where genuinely needed — prefer server components.
 8. No code comments unless the why is non-obvious.
 9. No trailing summaries after completing work — keep responses tight.
-10. **Main site uses single accent** `var(--color-pg-accent)` (#7EB8F7). The per-role color system (blue/emerald/orange/violet) is scoped to `project-card.tsx` and `case-study-client.tsx` only.
+10. **Single accent color only** — `var(--color-pg-accent)` (#7EB8F7). Do not use separate cyan/blue/violet per role or section.

@@ -1,8 +1,11 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
-import { ExternalLink, ArrowUpRight } from "lucide-react";
+import { ExternalLink, ArrowUpRight, Star } from "lucide-react";
+import { motion, useScroll, useTransform } from "motion/react";
 import type { Project, RoleFilter } from "@/data/projects";
+import { ProjectMockup } from "@/components/project-mockup";
 
 const GithubIcon = () => (
   <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -10,7 +13,7 @@ const GithubIcon = () => (
   </svg>
 );
 
-// ─── Role colour system ────────────────────────────────────────────────────────
+// ─── Role colour system ───────────────────────────────────────────────────────
 const roleConfig: Record<RoleFilter, {
   label:       string;
   color:       string;
@@ -71,18 +74,30 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const primaryRole = project.roles[0];
   const cfg = roleConfig[primaryRole];
 
+  const cardRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "end start"],
+  });
+  const mockupY = useTransform(scrollYProgress, [0, 1], [-22, 22]);
+
   return (
-    <article
-      className="group relative flex flex-col rounded-2xl overflow-hidden transition-all duration-300"
+    <motion.article
+      ref={cardRef}
+      className="group relative flex flex-col rounded-2xl overflow-hidden"
       style={{
         background: "var(--pg-surface)",
         border: "1px solid var(--pg-border)",
+        willChange: "transform",
+        transition: "background 0.25s ease, border-color 0.25s ease, box-shadow 0.3s ease",
       }}
+      whileHover={{ y: -5 }}
+      transition={{ duration: 0.22, ease: "easeOut" }}
       onMouseEnter={(e) => {
         const el = e.currentTarget;
-        el.style.background = "var(--pg-surface-hover)";
+        el.style.background = cfg.hoverBg;
         el.style.borderColor = cfg.hoverBorder;
-        el.style.boxShadow = `0 0 32px ${cfg.hoverShadow}`;
+        el.style.boxShadow = `0 20px 48px ${cfg.hoverShadow}, 0 0 0 1px ${cfg.hoverBorder}`;
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget;
@@ -91,25 +106,65 @@ export function ProjectCard({ project }: ProjectCardProps) {
         el.style.boxShadow = "none";
       }}
     >
+      {/* Inner glow on hover — role colour at top */}
+      <div
+        className="absolute inset-x-0 top-0 h-32 rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse at 50% -20%, ${cfg.hoverShadow.replace("0.08", "0.18")} 0%, transparent 70%)`,
+        }}
+      />
+
+      {/* Parallax mockup panel */}
+      <div
+        style={{ height: 180, overflow: "hidden", position: "relative", flexShrink: 0 }}
+      >
+        <motion.div
+          style={{ y: mockupY, height: "calc(100% + 44px)", marginTop: -22, width: "100%" }}
+        >
+          <ProjectMockup role={primaryRole} accentColor={cfg.color} />
+        </motion.div>
+        {/* Fade-out gradient at bottom to blend into card body */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-12 pointer-events-none"
+          style={{ background: "linear-gradient(to bottom, transparent, var(--pg-surface))" }}
+        />
+      </div>
+
       {/* Role-coloured accent strip */}
       <div
         style={{
           height: "2px",
           background: `linear-gradient(90deg, ${cfg.bar}cc 0%, ${cfg.bar}22 60%, transparent 100%)`,
+          flexShrink: 0,
         }}
       />
 
       <div className="flex flex-col flex-1 p-5">
 
-        {/* Category chip + year */}
-        <div className="flex items-center justify-between mb-4">
-          <span
-            className="text-[11px] font-semibold px-2.5 py-1 rounded-full tracking-wide"
-            style={{ color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.border}` }}
-          >
-            {cfg.label}
-          </span>
-          <span className="text-xs tabular-nums" style={{ color: "var(--color-pg-text-3)" }}>
+        {/* Category chip + Featured pill + year */}
+        <div className="flex items-center justify-between gap-2 mb-4">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span
+              className="text-[11px] font-semibold px-2.5 py-1 rounded-full tracking-wide"
+              style={{ color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.border}` }}
+            >
+              {cfg.label}
+            </span>
+            {project.featured && (
+              <span
+                className="flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-full"
+                style={{
+                  color: "rgba(255,255,255,0.55)",
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                }}
+              >
+                <Star className="w-2.5 h-2.5" />
+                Featured
+              </span>
+            )}
+          </div>
+          <span className="text-xs tabular-nums shrink-0" style={{ color: "var(--color-pg-text-3)" }}>
             {project.year}
           </span>
         </div>
@@ -122,7 +177,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {project.title}
         </h3>
 
-        {/* Description — 3-line clamp keeps cards scannable */}
+        {/* Description */}
         <p
           className="text-sm leading-relaxed flex-1 line-clamp-3"
           style={{ color: "var(--color-pg-text-2)" }}
@@ -134,10 +189,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         {project.highlight && (
           <div
             className="mt-4 px-3 py-2.5 rounded-lg"
-            style={{
-              background: cfg.bg,
-              border: `1px solid ${cfg.border}`,
-            }}
+            style={{ background: cfg.bg, border: `1px solid ${cfg.border}` }}
           >
             <p className="text-xs font-mono leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>
               <span style={{ color: cfg.color }}>↳ </span>
@@ -154,10 +206,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </span>
           ))}
           {project.tags.length > 4 && (
-            <span
-              className="px-2 py-0.5 text-xs"
-              style={{ color: "var(--color-pg-text-3)" }}
-            >
+            <span className="px-2 py-0.5 text-xs" style={{ color: "var(--color-pg-text-3)" }}>
               +{project.tags.length - 4}
             </span>
           )}
@@ -174,10 +223,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="View source code"
-              className="flex items-center gap-1.5 text-xs transition-colors duration-200"
-              style={{ color: "var(--color-pg-text-3)" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-pg-text-1)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-pg-text-3)")}
+              className="group/link flex items-center gap-1.5 text-xs font-medium transition-colors duration-200"
+              style={{ color: "rgba(255,255,255,0.4)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.85)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}
             >
               <GithubIcon />
               Code
@@ -188,17 +237,17 @@ export function ProjectCard({ project }: ProjectCardProps) {
               href={project.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-xs transition-colors duration-200"
-              style={{ color: "var(--color-pg-text-3)" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-pg-text-1)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-pg-text-3)")}
+              className="flex items-center gap-1.5 text-xs font-medium transition-colors duration-200"
+              style={{ color: "rgba(255,255,255,0.4)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.85)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}
             >
               <ExternalLink className="w-3.5 h-3.5" />
               Demo
             </a>
           )}
 
-          {/* Primary CTA — styled as a mini button */}
+          {/* Primary CTA */}
           <Link
             href={`/projects/${project.id}`}
             className="ml-auto flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all duration-200"
@@ -207,15 +256,21 @@ export function ProjectCard({ project }: ProjectCardProps) {
               border: `1px solid ${cfg.border}`,
               color: cfg.color,
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = cfg.hoverBg)}
-            onMouseLeave={(e) => (e.currentTarget.style.background = cfg.bg)}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = cfg.hoverBg;
+              e.currentTarget.style.borderColor = cfg.hoverBorder;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = cfg.bg;
+              e.currentTarget.style.borderColor = cfg.border;
+            }}
           >
             Case Study
-            <ArrowUpRight className="w-3.5 h-3.5" />
+            <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
         </div>
 
       </div>
-    </article>
+    </motion.article>
   );
 }

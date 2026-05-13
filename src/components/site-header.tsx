@@ -4,13 +4,15 @@ import { motion, AnimatePresence } from "motion/react";
 import { useEffect, useState } from "react";
 import { FileText, Zap, Menu, X } from "lucide-react";
 import Link from "next/link";
+import { MagneticButton } from "@/components/magnetic-button";
 
 const navLinks = [
-  { label: "Projects",   href: "/#projects" },
-  { label: "Experience", href: "/#experience" },
-  { label: "Skills",     href: "/#skills" },
-  { label: "Ask",        href: "/#ask" },
-  { label: "Contact",    href: "/#contact" },
+  { label: "Experience", href: "/#experience", sectionId: "experience" },
+  { label: "Projects",   href: "/#projects",   sectionId: "projects"   },
+  { label: "Live Demo",  href: "/#demos",      sectionId: "demos"      },
+  { label: "Skills",     href: "/#skills",     sectionId: "skills"     },
+  { label: "Ask",        href: "/#ask",        sectionId: "ask"        },
+  { label: "Contact",    href: "/#contact",    sectionId: "contact"    },
 ];
 
 interface SiteHeaderProps {
@@ -19,9 +21,10 @@ interface SiteHeaderProps {
 }
 
 export function SiteHeader({ onRecruiterMode, recruiterMode }: SiteHeaderProps = {}) {
-  const [scrolled, setScrolled]   = useState(false);
-  const [cursorOn, setCursorOn]   = useState(true);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled]       = useState(false);
+  const [cursorOn, setCursorOn]       = useState(true);
+  const [mobileOpen, setMobileOpen]   = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -33,6 +36,28 @@ export function SiteHeader({ onRecruiterMode, recruiterMode }: SiteHeaderProps =
   useEffect(() => {
     const id = setInterval(() => setCursorOn((v) => !v), 530);
     return () => clearInterval(id);
+  }, []);
+
+  // Active section detection via IntersectionObserver
+  useEffect(() => {
+    const ids = navLinks.map((l) => l.sectionId);
+    const visible = new Map<string, boolean>();
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => visible.set(e.target.id, e.isIntersecting));
+        const active = ids.find((id) => visible.get(id));
+        setActiveSection(active ?? "");
+      },
+      { rootMargin: "-64px 0px -45% 0px", threshold: 0 }
+    );
+
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) obs.observe(el);
+    });
+
+    return () => obs.disconnect();
   }, []);
 
   const handleRecruiterMode = () => {
@@ -56,7 +81,11 @@ export function SiteHeader({ onRecruiterMode, recruiterMode }: SiteHeaderProps =
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled ? "border-b border-white/5" : "bg-transparent"
       }`}
-      style={scrolled ? { backgroundColor: "rgba(0,0,0,0.88)", backdropFilter: "blur(16px)" } : undefined}
+      style={
+        scrolled
+          ? { backgroundColor: "rgba(0,0,0,0.90)", backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)" }
+          : undefined
+      }
     >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
 
@@ -88,56 +117,76 @@ export function SiteHeader({ onRecruiterMode, recruiterMode }: SiteHeaderProps =
 
         {/* Desktop nav */}
         <nav className="hidden sm:flex items-center gap-1" aria-label="Main navigation">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="relative px-3 py-1.5 rounded-lg text-sm transition-all duration-200 group"
-              style={{ color: "var(--color-pg-text-2)" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#ffffff")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-pg-text-2)")}
-            >
-              {link.label}
-              <span
-                className="absolute bottom-0 left-3 right-3 h-[1px] scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left rounded-full"
-                style={{ backgroundColor: "var(--color-pg-accent)" }}
-              />
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = link.sectionId === activeSection;
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                className="relative px-3 py-1.5 rounded-lg text-sm transition-colors duration-200 group"
+                style={{
+                  color: isActive ? "#ffffff" : "var(--color-pg-text-2)",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#ffffff")}
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.color = isActive ? "#ffffff" : "var(--color-pg-text-2)")
+                }
+              >
+                {link.label}
+                {/* Hover underline */}
+                <span
+                  className="absolute bottom-0 left-3 right-3 h-[1px] transition-transform duration-200 origin-left rounded-full"
+                  style={{
+                    backgroundColor: "var(--color-pg-accent)",
+                    transform: isActive ? "scaleX(1)" : "scaleX(0)",
+                  }}
+                />
+                {/* Group-hover underline (via CSS not Motion to avoid conflicts) */}
+                <span
+                  className="absolute bottom-0 left-3 right-3 h-[1px] scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left rounded-full"
+                  style={{ backgroundColor: "var(--color-pg-accent)", opacity: isActive ? 0 : 1 }}
+                />
+              </a>
+            );
+          })}
 
           {/* Recruiter Mode toggle */}
-          <button
-            onClick={handleRecruiterMode}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer ml-1"
-            style={{
-              color: recruiterMode ? "var(--color-pg-accent)" : "var(--color-pg-text-2)",
-              background: recruiterMode ? "rgba(126,184,247,0.08)" : "transparent",
-              border: recruiterMode ? "1px solid rgba(126,184,247,0.2)" : "1px solid transparent",
-            }}
-            onMouseEnter={(e) => {
-              if (!recruiterMode) e.currentTarget.style.color = "#ffffff";
-            }}
-            onMouseLeave={(e) => {
-              if (!recruiterMode) e.currentTarget.style.color = "var(--color-pg-text-2)";
-            }}
-          >
-            <Zap className="w-3.5 h-3.5" />
-            Recruiter Mode
-          </button>
+          <MagneticButton className="ml-1">
+            <button
+              onClick={handleRecruiterMode}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer"
+              style={{
+                color: recruiterMode ? "var(--color-pg-accent)" : "var(--color-pg-text-2)",
+                background: recruiterMode ? "rgba(126,184,247,0.08)" : "transparent",
+                border: recruiterMode ? "1px solid rgba(126,184,247,0.2)" : "1px solid transparent",
+              }}
+              onMouseEnter={(e) => {
+                if (!recruiterMode) e.currentTarget.style.color = "#ffffff";
+              }}
+              onMouseLeave={(e) => {
+                if (!recruiterMode) e.currentTarget.style.color = "var(--color-pg-text-2)";
+              }}
+            >
+              <Zap className="w-3.5 h-3.5" />
+              Recruiter Mode
+            </button>
+          </MagneticButton>
 
           {/* Resume CTA */}
-          <a
-            href="/Resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="ml-2 flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold bg-white text-black hover:bg-white/90 transition-colors duration-200"
-          >
-            <FileText className="w-3.5 h-3.5" />
-            Resume
-          </a>
+          <MagneticButton className="ml-2">
+            <a
+              href="/Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold bg-white text-black hover:bg-white/90 transition-colors duration-200"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              Resume
+            </a>
+          </MagneticButton>
         </nav>
 
-        {/* Mobile hamburger — visible only below sm */}
+        {/* Mobile hamburger */}
         <button
           className="sm:hidden flex items-center justify-center w-9 h-9 rounded-lg transition-colors duration-200 cursor-pointer"
           onClick={() => setMobileOpen(true)}
@@ -200,28 +249,34 @@ export function SiteHeader({ onRecruiterMode, recruiterMode }: SiteHeaderProps =
 
             {/* Nav links */}
             <nav className="flex-1 flex flex-col px-4 py-6 gap-1 overflow-y-auto">
-              {navLinks.map((link, i) => (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
-                  initial={{ opacity: 0, x: 16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 + 0.1 }}
-                  onClick={() => setMobileOpen(false)}
-                  className="px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200"
-                  style={{ color: "var(--color-pg-text-2)" }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = "#ffffff";
-                    e.currentTarget.style.background = "rgba(255,255,255,0.05)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = "var(--color-pg-text-2)";
-                    e.currentTarget.style.background = "transparent";
-                  }}
-                >
-                  {link.label}
-                </motion.a>
-              ))}
+              {navLinks.map((link, i) => {
+                const isActive = link.sectionId === activeSection;
+                return (
+                  <motion.a
+                    key={link.href}
+                    href={link.href}
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05 + 0.1 }}
+                    onClick={() => setMobileOpen(false)}
+                    className="px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200"
+                    style={{
+                      color: isActive ? "var(--color-pg-accent)" : "var(--color-pg-text-2)",
+                      background: isActive ? "rgba(126,184,247,0.06)" : "transparent",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = "#ffffff";
+                      e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = isActive ? "var(--color-pg-accent)" : "var(--color-pg-text-2)";
+                      e.currentTarget.style.background = isActive ? "rgba(126,184,247,0.06)" : "transparent";
+                    }}
+                  >
+                    {link.label}
+                  </motion.a>
+                );
+              })}
 
               {/* Recruiter Mode */}
               <motion.button

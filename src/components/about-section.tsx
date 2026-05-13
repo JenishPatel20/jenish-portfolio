@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { Briefcase, GraduationCap, MapPin, Calendar } from "lucide-react";
+import { MaskText } from "@/components/mask-text";
 
 const facts = [
   {
@@ -43,11 +44,8 @@ export function AboutSection() {
           className="mb-10"
         >
           <p className="section-label mb-2">About</p>
-          <h2
-            className="text-3xl sm:text-4xl font-bold tracking-tight"
-            style={{ color: "var(--color-pg-text-1)" }}
-          >
-            Who I Am
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: "var(--color-pg-text-1)" }}>
+            <MaskText text="Who I Am" />
           </h2>
         </motion.div>
 
