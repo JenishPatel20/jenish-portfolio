@@ -122,7 +122,7 @@ export const chessSequences: ChessSequence[] = [
     id: "en-passant",
     title: "En Passant",
     summary: "Replay the special pawn capture that only exists for one turn window.",
-    accent: "var(--color-pg-cyan)",
+    accent: "var(--pg-accent)",
     moves: [
       { label: "1. e4", from: "e2", to: "e4", note: "White advances two squares to contest the center." },
       { label: "... a6", from: "a7", to: "a6", note: "Black makes a quiet move and keeps the file clear." },
@@ -141,7 +141,7 @@ export const chessSequences: ChessSequence[] = [
     id: "castling",
     title: "Kingside Castling",
     summary: "This sequence shows how the king and rook move together in one legal action.",
-    accent: "var(--color-pg-blue)",
+    accent: "var(--pg-accent)",
     moves: [
       { label: "1. e4", from: "e2", to: "e4", note: "White opens the diagonal for the bishop." },
       { label: "... e5", from: "e7", to: "e5", note: "Black mirrors the central pawn push." },
@@ -165,7 +165,7 @@ export const chessSequences: ChessSequence[] = [
     id: "checkmate",
     title: "Fast Checkmate",
     summary: "A short tactical sequence that finishes with an immediate mate on f7.",
-    accent: "var(--color-pg-violet)",
+    accent: "var(--pg-accent)",
     moves: [
       { label: "1. e4", from: "e2", to: "e4", note: "White claims central space and opens the queen." },
       { label: "... e5", from: "e7", to: "e5", note: "Black mirrors and keeps the board open." },

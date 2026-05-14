@@ -35,10 +35,10 @@ export function SnnSpikeDemo() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="section-label mb-2">Research Demo</p>
-          <h3 className="text-xl font-semibold" style={{ color: "var(--color-pg-text-1)" }}>
+          <h3 className="text-xl font-semibold" style={{ color: "var(--pg-text-1)" }}>
             SNN Spike Visualization
           </h3>
-          <p className="mt-3 max-w-xl text-sm leading-6" style={{ color: "var(--color-pg-text-2)" }}>
+          <p className="mt-3 max-w-xl text-sm leading-6" style={{ color: "var(--pg-text-2)" }}>
             A visual explainer for how signal windows move from learned features into sparse spiking activity.
           </p>
         </div>
@@ -46,7 +46,7 @@ export function SnnSpikeDemo() {
         <Link
           href="/projects/industrial-anomaly-detection"
           className="inline-flex items-center gap-1 text-sm transition-colors duration-200"
-          style={{ color: "var(--color-pg-text-3)" }}
+          style={{ color: "var(--pg-text-3)" }}
         >
           Full case study
           <ArrowRight className="h-4 w-4" />
@@ -67,12 +67,12 @@ export function SnnSpikeDemo() {
               style={
                 active
                   ? {
-                      color: "var(--color-pg-text-1)",
+                      color: "var(--pg-text-1)",
                       background: "rgba(167,139,250,0.12)",
                       border: "1px solid rgba(167,139,250,0.28)",
                     }
                   : {
-                      color: "var(--color-pg-text-2)",
+                      color: "var(--pg-text-2)",
                       background: "rgba(255,255,255,0.04)",
                       border: "1px solid rgba(255,255,255,0.08)",
                     }
@@ -87,7 +87,7 @@ export function SnnSpikeDemo() {
           onClick={() => setPlaying((current) => !current)}
           className="ml-auto inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium transition-all duration-200"
           style={{
-            color: "var(--color-pg-text-1)",
+            color: "var(--pg-text-1)",
             background: "rgba(96,165,250,0.12)",
             border: "1px solid rgba(96,165,250,0.28)",
           }}
@@ -184,10 +184,10 @@ export function SnnSpikeDemo() {
             background: "rgba(255,255,255,0.025)",
           }}
         >
-          <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--color-pg-text-3)" }}>
+          <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--pg-text-3)" }}>
             {activeStep.label}
           </p>
-          <p className="mt-2 text-sm leading-6" style={{ color: "var(--color-pg-text-2)" }}>
+          <p className="mt-2 text-sm leading-6" style={{ color: "var(--pg-text-2)" }}>
             {activeStep.note}
           </p>
         </div>
@@ -199,10 +199,10 @@ export function SnnSpikeDemo() {
             background: "rgba(255,255,255,0.025)",
           }}
         >
-          <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--color-pg-text-3)" }}>
+          <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--pg-text-3)" }}>
             Data Source
           </p>
-          <p className="mt-2 text-sm leading-6" style={{ color: "var(--color-pg-text-2)" }}>
+          <p className="mt-2 text-sm leading-6" style={{ color: "var(--pg-text-2)" }}>
             {activeDataset.source}
           </p>
         </div>

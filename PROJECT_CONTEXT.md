@@ -27,6 +27,7 @@ Upload this file at the start of any AI chat to get full context on the project 
 - No backend, no database, fully static
 
 **Repo path:** `jenish-portfolio/`
+**Live URL:** `https://jenishpatel.vercel.app` (deployed on Vercel, auto-deploys on push to `main`)
 **Build command:** `npm run build` (must pass clean)
 **Dev command:** `npm run dev`
 
@@ -47,24 +48,32 @@ src/
 │   └── resume/
 │       └── page.tsx
 ├── components/
-│   ├── ask-portfolio.tsx        # Keyword-matching recruiter assistant (no AI APIs)
+│   ├── about-section.tsx            # Facts grid: role, education, location, availability
+│   ├── ask-portfolio.tsx            # Keyword-matching recruiter assistant (no AI APIs)
 │   ├── contact-section.tsx
-│   ├── experience-section.tsx   # Work experience timeline
-│   ├── featured-projects.tsx    # Project grid with filter pills
-│   ├── hero.tsx                 # Hero section (no visual on right — awaiting 3D model)
-│   ├── hero-visual.tsx          # CSS placeholder + 3D anchor comment (not rendered in hero yet)
-│   ├── live-demo-lab.tsx        # 4 interactive demo cards (expand on play)
-│   ├── live-demo/               # Individual demo components
+│   ├── experience-section.tsx       # Work experience timeline
+│   ├── featured-projects.tsx        # Project grid with filter pills
+│   ├── hero.tsx                     # Hero section — two-column, right col has 3D orbital sphere (desktop only)
+│   ├── hero-visual.tsx              # Lazy-loads OrbitalSphereScene via next/dynamic (ssr:false)
+│   ├── live-demo-lab.tsx            # 4 interactive demo cards (expand on play)
+│   ├── live-demo/                   # Individual demo components
 │   │   ├── benchmark-table-demo.tsx
 │   │   ├── chess-replay-demo.tsx
 │   │   ├── snn-spike-demo.tsx
 │   │   └── auction-master-mini-demo.tsx
-│   ├── project-card.tsx         # Reusable project card
-│   ├── recruiter-mode.tsx       # RecruiterModeBanner + RecruiterModeSection
+│   ├── magnetic-button.tsx          # Spring-physics magnetic hover wrapper (STRENGTH=0.38, motion/react)
+│   ├── mask-text.tsx                # Word-by-word reveal animation (clip-path mask, whileInView or mount)
+│   ├── orbital-sphere-scene.tsx     # Three.js / react-three-fiber 3D orbital sphere (Canvas, useFrame)
+│   ├── project-card.tsx             # Reusable project card
+│   ├── project-mockup.tsx           # SVG role-specific mockups for project cards (ai-ml, full-stack, systems, mobile)
+│   ├── recruiter-mode.tsx           # RecruiterModeBanner + RecruiterModeSection
+│   ├── reveal.tsx                   # Scroll-triggered fade+slide wrapper (whileInView, once, margin -80px)
 │   ├── site-footer.tsx
 │   ├── site-header.tsx
 │   ├── skills-bento.tsx
-│   └── ui/                      # shadcn primitives
+│   ├── smooth-scroll-provider.tsx   # Lenis smooth scroll + MotionConfig(reducedMotion:"user") wraps layout
+│   ├── tech-parade.tsx              # Infinite-scroll branded skill chips row (visual separator between sections)
+│   └── ui/                          # shadcn primitives
 └── data/
     ├── experience.ts            # Work experience data
     ├── live-demo/               # Data used by live demo components
@@ -78,15 +87,17 @@ src/
 
 1. `SiteHeader` — nav with Recruiter Mode toggle + Resume CTA
 2. `RecruiterModeBanner` — animated dismissible banner (only when recruiter mode on)
-3. `Hero` — name, subtitle, description, CTAs, social links (no right-side visual currently)
+3. `Hero` — two-column: left = name/subtitle/CTAs/socials, right = 3D orbital sphere (desktop only, `HeroVisual`)
 4. `RecruiterModeSection` — animated summary section (only when recruiter mode on)
-5. `FeaturedProjects` — project grid, filter pills: All / AI & ML / Full Stack / Systems / Mobile
-6. `LiveDemoLab` — 4 expandable interactive demo cards (id: `demos`)
-7. `ExperienceSection` — Greenlit co-op timeline
-8. `SkillsBento` — skills bento grid
-9. `AskPortfolio` — keyword-matching recruiter assistant (id: `ask`)
-10. `ContactSection` — contact info (id: `contact`)
-11. `SiteFooter`
+5. `AboutSection` — facts grid: current role, education, location, availability
+6. `ExperienceSection` — Greenlit co-op timeline
+7. `TechParade` — infinite-scroll branded skill chips row (visual separator)
+8. `FeaturedProjects` — project grid, filter pills: All / AI & ML / Full Stack / Systems / Mobile
+9. `LiveDemoLab` — 4 expandable interactive demo cards (id: `demos`)
+10. `SkillsBento` — skills bento grid
+11. `AskPortfolio` — keyword-matching recruiter assistant (id: `ask`)
+12. `ContactSection` — contact info (id: `contact`)
+13. `SiteFooter`
 
 **Removed:** `RoleMatcher` section — was deleted, `src/components/role-matcher.tsx` no longer exists.
 
@@ -147,6 +158,10 @@ All sections use `#000000`. `LiveDemoLab` uses `#040404` with a top border for s
 - Animation pattern: `whileInView`, `viewport={{ once: true, amount: 0.2 }}`, `initial={{ opacity: 0, y: 20 }}`
 - Always import motion from `motion/react`, never `framer-motion`
 - Expand/collapse: `AnimatePresence` with `height: 0 → auto` + `overflow-hidden`
+- Use `<Reveal>` wrapper for scroll-triggered section content (fade+slide, `once`, `-80px` margin)
+- Use `<MaskText>` for animated headings — `inView` prop controls whether it triggers on scroll or mount
+- Use `<MagneticButton>` wrapper for CTA buttons with spring-physics magnetic hover
+- Smooth scroll is provided globally by `SmoothScrollProvider` (Lenis, lerp 0.08) in `layout.tsx` — do not add per-component scroll libraries
 
 ---
 
@@ -265,16 +280,11 @@ Section id: `demos`
 
 ---
 
-## HeroVisual (`src/components/hero-visual.tsx`)
+## HeroVisual + OrbitalSphereScene
 
-CSS-only orbital diagram placeholder. **Currently NOT rendered in the hero** — the hero right column was removed until a real 3D model is ready.
+**`src/components/hero-visual.tsx`** — lazy-loads `OrbitalSphereScene` via `next/dynamic({ ssr: false })`. Rendered in the hero's right column (desktop only, `hidden lg:flex`).
 
-When a 3D model is available:
-1. Add model/package (Three.js, react-three-fiber, or Spline scene with actual content)
-2. Lazy-load with `next/dynamic({ ssr: false })`
-3. Render inside the `{/* 3D MODEL ANCHOR */}` block at `<div className="absolute inset-x-8 top-12 bottom-8">`
-4. Keep `<PlaceholderScene />` as the SSR + mobile + loading fallback
-5. Restore the right column div in `hero.tsx` and re-import `HeroVisual`
+**`src/components/orbital-sphere-scene.tsx`** — Three.js scene via `@react-three/fiber` + `@react-three/drei`. Canvas-rendered interactive 3D orbital sphere with `useFrame` animation loop. No SSR (client-only).
 
 ---
 

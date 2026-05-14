@@ -3,7 +3,6 @@
 import { motion } from "motion/react";
 import { ChevronDown, Mail, Zap } from "lucide-react";
 import { HeroVisual } from "@/components/hero-visual";
-import { MaskText } from "@/components/mask-text";
 import { MagneticButton } from "@/components/magnetic-button";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -27,8 +26,7 @@ interface HeroProps {
 export function Hero({ onRecruiterMode }: HeroProps) {
   return (
     <section
-      className="relative min-h-screen flex items-center overflow-hidden"
-      style={{ backgroundColor: "#000000" }}
+      className="section-primary relative min-h-screen flex items-center overflow-hidden"
     >
       {/* Subtle grid */}
       <div className="absolute inset-0 hero-grid pointer-events-none" />
@@ -36,20 +34,20 @@ export function Hero({ onRecruiterMode }: HeroProps) {
       {/* Ambient orbs — floating, GPU-composited via transform */}
       <motion.div
         className="absolute top-[-80px] right-[-80px] w-[520px] h-[520px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(126,184,247,0.11) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, color-mix(in srgb, var(--pg-accent) 14%, transparent) 0%, transparent 70%)" }}
         animate={{ y: [0, -28, 0], x: [0, 14, 0], scale: [1, 1.07, 1] }}
         transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", repeatType: "mirror" }}
       />
       <motion.div
         className="absolute bottom-[-60px] left-[-60px] w-[420px] h-[420px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(126,184,247,0.06) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, color-mix(in srgb, var(--pg-accent) 8%, transparent) 0%, transparent 70%)" }}
         animate={{ y: [0, 22, 0], x: [0, -10, 0] }}
         transition={{ duration: 17, repeat: Infinity, ease: "easeInOut", delay: 3, repeatType: "mirror" }}
       />
       {/* Centre bloom — subtle depth behind hero text */}
       <motion.div
         className="absolute top-1/2 left-[20%] -translate-y-1/2 w-[640px] h-[640px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(126,184,247,0.035) 0%, transparent 65%)" }}
+        style={{ background: "radial-gradient(circle, color-mix(in srgb, var(--pg-accent) 5%, transparent) 0%, transparent 65%)" }}
         animate={{ scale: [1, 1.12, 1] }}
         transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", repeatType: "mirror" }}
       />
@@ -69,11 +67,11 @@ export function Hero({ onRecruiterMode }: HeroProps) {
               <span className="relative flex h-2 w-2 shrink-0">
                 <span
                   className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60"
-                  style={{ backgroundColor: "var(--color-pg-accent)" }}
+                  style={{ backgroundColor: "var(--pg-accent)" }}
                 />
                 <span
                   className="relative inline-flex rounded-full h-2 w-2"
-                  style={{ backgroundColor: "var(--color-pg-accent)" }}
+                  style={{ backgroundColor: "var(--pg-accent)" }}
                 />
               </span>
               Open to SWE &amp; AI/ML roles
@@ -87,8 +85,8 @@ export function Hero({ onRecruiterMode }: HeroProps) {
               className="font-bold tracking-tight leading-[1.0] mb-5"
               style={{ fontSize: "clamp(48px, 7vw, 72px)" }}
             >
-              <span className="block text-white">Jenish</span>
-              <span className="block" style={{ color: "var(--color-pg-accent)" }}>Patel.</span>
+              <span className="block text-pg-text-1">Jenish</span>
+              <span className="block" style={{ color: "var(--pg-accent)" }}>Patel.</span>
             </motion.h1>
 
             {/* Subtitle — mask reveal + split colour (Effect 01 + 14) */}
@@ -96,7 +94,7 @@ export function Hero({ onRecruiterMode }: HeroProps) {
               {/* "Software Engineer ·" — white */}
               <span style={{ overflow: "hidden", display: "inline-block" }}>
                 <motion.span
-                  style={{ display: "inline-block", color: "var(--color-pg-text-2)" }}
+                  style={{ display: "inline-block", color: "var(--pg-text-2)" }}
                   initial={{ y: "110%" }}
                   animate={{ y: 0 }}
                   transition={{ duration: 0.72, delay: 0.5, ease: EASE }}
@@ -107,7 +105,7 @@ export function Hero({ onRecruiterMode }: HeroProps) {
               {/* "MS CS @ Rutgers" — accent blue */}
               <span style={{ overflow: "hidden", display: "inline-block" }}>
                 <motion.span
-                  style={{ display: "inline-block", color: "var(--color-pg-accent)" }}
+                  style={{ display: "inline-block", color: "var(--pg-accent)" }}
                   initial={{ y: "110%" }}
                   animate={{ y: 0 }}
                   transition={{ duration: 0.72, delay: 0.62, ease: EASE }}
@@ -123,7 +121,7 @@ export function Hero({ onRecruiterMode }: HeroProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.34, ease: EASE }}
               className="text-base leading-relaxed mb-8 max-w-md"
-              style={{ color: "var(--color-pg-text-2)" }}
+              style={{ color: "var(--pg-text-2)" }}
             >
               Building intelligent systems at the intersection of AI, high-performance computing,
               and full-stack engineering. MS CS @ Rutgers, graduating Fall 2026.
@@ -172,9 +170,9 @@ export function Hero({ onRecruiterMode }: HeroProps) {
                   transition={{ duration: 0.4, delay: 0.62 + i * 0.08, ease: EASE }}
                   whileHover={{ y: -2, scale: 1.1 }}
                   className="transition-colors duration-200"
-                  style={{ color: "var(--color-pg-text-3)" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-pg-accent)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-pg-text-3)")}
+                  style={{ color: "var(--pg-text-3)" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--pg-accent)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--pg-text-3)")}
                 >
                   <Icon />
                 </motion.a>
@@ -205,9 +203,9 @@ export function Hero({ onRecruiterMode }: HeroProps) {
           y:       { delay: 1.8, duration: 2, repeat: Infinity, ease: "easeInOut" },
         }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 transition-colors duration-200"
-        style={{ color: "var(--color-pg-text-3)" }}
-        onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-pg-accent)")}
-        onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-pg-text-3)")}
+        style={{ color: "var(--pg-text-3)" }}
+        onMouseEnter={(e) => (e.currentTarget.style.color = "var(--pg-accent)")}
+        onMouseLeave={(e) => (e.currentTarget.style.color = "var(--pg-text-3)")}
       >
         <span className="text-xs tracking-widest uppercase font-medium">Explore</span>
         <ChevronDown className="w-5 h-5" />

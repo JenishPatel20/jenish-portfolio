@@ -79,10 +79,10 @@ export function ChessReplayDemo() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="section-label mb-2">Systems Demo</p>
-          <h3 className="text-xl font-semibold" style={{ color: "var(--color-pg-text-1)" }}>
+          <h3 className="text-xl font-semibold" style={{ color: "var(--pg-text-1)" }}>
             Chess Engine Move Replay
           </h3>
-          <p className="mt-3 max-w-xl text-sm leading-6" style={{ color: "var(--color-pg-text-2)" }}>
+          <p className="mt-3 max-w-xl text-sm leading-6" style={{ color: "var(--pg-text-2)" }}>
             Pre-scripted rule demonstrations for special moves and fast tactical outcomes, without needing a backend engine in the portfolio.
           </p>
         </div>
@@ -90,7 +90,7 @@ export function ChessReplayDemo() {
         <Link
           href="/projects/chess-engine"
           className="inline-flex items-center gap-1 text-sm transition-colors duration-200"
-          style={{ color: "var(--color-pg-text-3)" }}
+          style={{ color: "var(--pg-text-3)" }}
         >
           Full case study
           <ArrowRight className="h-4 w-4" />
@@ -112,12 +112,12 @@ export function ChessReplayDemo() {
               style={
                 active
                   ? {
-                      color: "var(--color-pg-text-1)",
+                      color: "var(--pg-text-1)",
                       background: "rgba(96,165,250,0.12)",
                       border: "1px solid rgba(96,165,250,0.28)",
                     }
                   : {
-                      color: "var(--color-pg-text-2)",
+                      color: "var(--pg-text-2)",
                       background: "rgba(255,255,255,0.04)",
                       border: "1px solid rgba(255,255,255,0.08)",
                     }
@@ -199,13 +199,13 @@ export function ChessReplayDemo() {
               background: "rgba(255,255,255,0.025)",
             }}
           >
-            <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--color-pg-text-3)" }}>
+            <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--pg-text-3)" }}>
               Current Step
             </p>
-            <p className="mt-2 text-lg font-semibold" style={{ color: "var(--color-pg-text-1)" }}>
+            <p className="mt-2 text-lg font-semibold" style={{ color: "var(--pg-text-1)" }}>
               {activeState.lastMove?.label ?? activeSequence.title}
             </p>
-            <p className="mt-2 text-sm leading-6" style={{ color: "var(--color-pg-text-2)" }}>
+            <p className="mt-2 text-sm leading-6" style={{ color: "var(--pg-text-2)" }}>
               {activeState.note}
             </p>
           </div>
@@ -223,7 +223,7 @@ export function ChessReplayDemo() {
               }}
               className="inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-medium transition-all duration-200"
               style={{
-                color: "var(--color-pg-text-1)",
+                color: "var(--pg-text-1)",
                 background: "rgba(96,165,250,0.12)",
                 border: "1px solid rgba(96,165,250,0.28)",
               }}
@@ -236,7 +236,7 @@ export function ChessReplayDemo() {
               onClick={() => setStepIndex((current) => Math.min(current + 1, states.length - 1))}
               className="inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-medium transition-all duration-200"
               style={{
-                color: "var(--color-pg-text-2)",
+                color: "var(--pg-text-2)",
                 background: "rgba(255,255,255,0.04)",
                 border: "1px solid rgba(255,255,255,0.08)",
               }}
@@ -252,7 +252,7 @@ export function ChessReplayDemo() {
               }}
               className="inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-medium transition-all duration-200"
               style={{
-                color: "var(--color-pg-text-2)",
+                color: "var(--pg-text-2)",
                 background: "rgba(255,255,255,0.04)",
                 border: "1px solid rgba(255,255,255,0.08)",
               }}
@@ -275,7 +275,7 @@ export function ChessReplayDemo() {
                 }}
               />
             </div>
-            <p className="text-xs" style={{ color: "var(--color-pg-text-3)" }}>
+            <p className="text-xs" style={{ color: "var(--pg-text-3)" }}>
               Move {stepIndex} of {states.length - 1}
             </p>
           </div>

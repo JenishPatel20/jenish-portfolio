@@ -86,16 +86,16 @@ function StatCard({ value, label, floatY, delay }: {
       }}
       className="flex flex-col items-center justify-center rounded-2xl px-3 py-2.5 min-w-[68px]"
       style={{
-        background: "rgba(255,255,255,0.045)",
-        border: "1px solid rgba(255,255,255,0.10)",
+        background: "var(--pg-surface)",
+        border: "1px solid var(--pg-border)",
         backdropFilter: "blur(16px)",
-        boxShadow: "0 8px 24px rgba(0,0,0,0.18)",
+        boxShadow: "0 8px 24px var(--pg-shadow)",
       }}
     >
-      <span className="text-lg font-bold leading-none tracking-tight" style={{ color: "var(--color-pg-accent)" }}>
+      <span className="text-lg font-bold leading-none tracking-tight" style={{ color: "var(--pg-accent)" }}>
         {value}
       </span>
-      <span className="mt-1 text-[9px] font-medium uppercase tracking-widest whitespace-nowrap" style={{ color: "rgba(255,255,255,0.4)" }}>
+      <span className="mt-1 text-[9px] font-medium uppercase tracking-widest whitespace-nowrap" style={{ color: "var(--pg-text-3)" }}>
         {label}
       </span>
     </motion.div>
@@ -110,13 +110,13 @@ function PlaceholderScene() {
       className="relative w-full h-full rounded-[1.75rem] overflow-hidden"
       style={{
         background: "linear-gradient(160deg, rgba(20,22,32,0.95) 0%, rgba(8,8,12,0.92) 100%)",
-        border: "1px solid rgba(255,255,255,0.08)",
-        boxShadow: "0 28px 72px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.05)",
+        border: "1px solid var(--pg-border)",
+        boxShadow: "0 28px 72px var(--pg-shadow), inset 0 1px 0 color-mix(in srgb, var(--pg-text-1) 5%, transparent)",
       }}
     >
       {/* Dot grid */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundImage: "radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px)",
+        backgroundImage: "radial-gradient(color-mix(in srgb, var(--pg-text-1) 7%, transparent) 1px, transparent 1px)",
         backgroundSize: "24px 24px",
       }} />
       {/* Ambient inner glow */}
@@ -125,9 +125,9 @@ function PlaceholderScene() {
       }} />
 
       {/* Header bar */}
-      <div className="relative flex items-center justify-between px-5 py-3.5" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+      <div className="relative flex items-center justify-between px-5 py-3.5" style={{ borderBottom: "1px solid var(--pg-border)" }}>
         <div className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "var(--color-pg-accent)", boxShadow: "0 0 8px rgba(126,184,247,0.7)" }} />
+          <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "var(--pg-accent)", boxShadow: "0 0 8px rgba(126,184,247,0.7)" }} />
           <motion.span
             animate={{ opacity: [0.5, 0.9, 0.5] }}
             transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
@@ -137,7 +137,7 @@ function PlaceholderScene() {
             ACTIVE
           </motion.span>
         </div>
-        <span className="font-mono text-[10px] tracking-widest" style={{ color: "rgba(255,255,255,0.2)" }}>
+        <span className="font-mono text-[10px] tracking-widest" style={{ color: "var(--pg-text-3)" }}>
           sys.neural_v2
         </span>
       </div>
@@ -156,17 +156,17 @@ function PlaceholderScene() {
       </div>
 
       {/* Footer tech strip */}
-      <div className="relative flex items-center gap-2 px-5 py-3" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+      <div className="relative flex items-center gap-2 px-5 py-3" style={{ borderTop: "1px solid var(--pg-border)" }}>
         {["Python", "PyTorch", "WebGPU", "Node.js"].map((t) => (
           <span key={t} className="text-[9px] px-2 py-0.5 rounded font-medium" style={{
             background: "rgba(126,184,247,0.05)",
             border: "1px solid rgba(126,184,247,0.10)",
-            color: "rgba(255,255,255,0.3)",
+            color: "var(--pg-text-3)",
           }}>
             {t}
           </span>
         ))}
-        <span className="ml-auto font-mono text-[9px]" style={{ color: "rgba(255,255,255,0.15)" }}>v2.0</span>
+        <span className="ml-auto font-mono text-[9px]" style={{ color: "var(--pg-text-3)" }}>v2.0</span>
       </div>
     </div>
   );
@@ -210,9 +210,9 @@ export function HeroVisual() {
             style={{
               top: chip.top,
               left: chip.left,
-              background: "rgba(255,255,255,0.045)",
-              border: "1px solid rgba(255,255,255,0.10)",
-              color: "rgba(255,255,255,0.5)",
+              background: "var(--pg-surface)",
+              border: "1px solid var(--pg-border)",
+              color: "var(--pg-text-2)",
               backdropFilter: "blur(8px)",
             }}
             initial={{ opacity: 0, scale: 0.85 }}

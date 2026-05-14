@@ -49,8 +49,7 @@ export function LiveDemoLab() {
   return (
     <section
       id="demos"
-      className="py-24"
-      style={{ backgroundColor: "#040404", borderTop: "1px solid rgba(255,255,255,0.04)" }}
+      className="section-alt border-t border-pg-border py-24"
     >
       <div className="section-container">
 
@@ -63,13 +62,13 @@ export function LiveDemoLab() {
           className="mb-12"
         >
           <div className="flex items-center gap-2 mb-3">
-            <Beaker className="w-4 h-4" style={{ color: "var(--color-pg-accent)" }} />
+            <Beaker className="w-4 h-4" style={{ color: "var(--pg-accent)" }} />
             <p className="section-label">Interactive Experiments</p>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-pg-text-1">
             Live Demo Lab
           </h2>
-          <p className="mt-3 max-w-xl text-sm leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>
+          <p className="mt-3 max-w-xl text-sm leading-relaxed" style={{ color: "var(--pg-text-2)" }}>
             Click play on any card to run the demo directly in the browser — no install, no API keys.
           </p>
         </motion.div>
@@ -99,11 +98,11 @@ export function LiveDemoLab() {
                     <div
                       className="flex items-center justify-center w-11 h-11 rounded-xl shrink-0"
                       style={{
-                        background: "rgba(126,184,247,0.08)",
-                        border: "1px solid rgba(126,184,247,0.15)",
+                        background: "color-mix(in srgb, var(--pg-accent) 10%, transparent)",
+                        border: "1px solid color-mix(in srgb, var(--pg-accent) 18%, transparent)",
                       }}
                     >
-                      <Code className="w-5 h-5" style={{ color: "var(--color-pg-accent)" }} />
+                      <Code className="w-5 h-5" style={{ color: "var(--pg-accent)" }} />
                     </div>
 
                     {/* Play / Stop button */}
@@ -111,12 +110,12 @@ export function LiveDemoLab() {
                       onClick={() => setActiveId(isOpen ? null : demo.id)}
                       className="flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-200 shrink-0 cursor-pointer"
                       style={{
-                        background: isOpen ? "rgba(126,184,247,0.15)" : "rgba(126,184,247,0.08)",
-                        border: "1px solid rgba(126,184,247,0.2)",
-                        color: "var(--color-pg-accent)",
+                        background: isOpen ? "color-mix(in srgb, var(--pg-accent) 16%, transparent)" : "color-mix(in srgb, var(--pg-accent) 10%, transparent)",
+                        border: "1px solid color-mix(in srgb, var(--pg-accent) 24%, transparent)",
+                        color: "var(--pg-accent)",
                       }}
-                      onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(126,184,247,0.18)")}
-                      onMouseLeave={(e) => (e.currentTarget.style.background = isOpen ? "rgba(126,184,247,0.15)" : "rgba(126,184,247,0.08)")}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = "color-mix(in srgb, var(--pg-accent) 20%, transparent)")}
+                      onMouseLeave={(e) => (e.currentTarget.style.background = isOpen ? "color-mix(in srgb, var(--pg-accent) 16%, transparent)" : "color-mix(in srgb, var(--pg-accent) 10%, transparent)")}
                       aria-label={isOpen ? "Stop demo" : "Play demo"}
                     >
                       {isOpen
@@ -126,22 +125,22 @@ export function LiveDemoLab() {
                     </button>
                   </div>
 
-                  <h3 className="text-base font-semibold text-white mb-2">{demo.title}</h3>
-                  <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--color-pg-text-2)" }}>
+                  <h3 className="text-base font-semibold text-pg-text-1 mb-2">{demo.title}</h3>
+                  <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--pg-text-2)" }}>
                     {demo.description}
                   </p>
 
                   {/* Tech chips */}
                   <div className="flex items-center gap-1.5 flex-wrap">
-                    <Code className="w-3.5 h-3.5 shrink-0" style={{ color: "var(--color-pg-accent)" }} />
+                    <Code className="w-3.5 h-3.5 shrink-0" style={{ color: "var(--pg-accent)" }} />
                     {demo.tech.map((t) => (
                       <span
                         key={t}
                         className="text-xs px-2 py-0.5 rounded-md"
                         style={{
-                          background: "rgba(255,255,255,0.04)",
-                          border: "1px solid rgba(255,255,255,0.07)",
-                          color: "var(--color-pg-text-2)",
+                          background: "var(--pg-surface)",
+                          border: "1px solid var(--pg-border)",
+                          color: "var(--pg-text-2)",
                         }}
                       >
                         {t}
@@ -162,7 +161,7 @@ export function LiveDemoLab() {
                     >
                       <div
                         className="px-6 pb-6 pt-0"
-                        style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+                        style={{ borderTop: "1px solid var(--pg-border)" }}
                       >
                         <div className="pt-5">
                           <demo.Component />

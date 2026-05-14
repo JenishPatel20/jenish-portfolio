@@ -154,9 +154,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
               <span
                 className="flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-full"
                 style={{
-                  color: "rgba(255,255,255,0.55)",
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.1)",
+                  color: "var(--pg-text-3)",
+                  background: "color-mix(in srgb, var(--pg-text-1) 5%, transparent)",
+                  border: "1px solid var(--pg-border)",
                 }}
               >
                 <Star className="w-2.5 h-2.5" />
@@ -164,7 +164,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               </span>
             )}
           </div>
-          <span className="text-xs tabular-nums shrink-0" style={{ color: "var(--color-pg-text-3)" }}>
+          <span className="text-xs tabular-nums shrink-0" style={{ color: "var(--pg-text-3)" }}>
             {project.year}
           </span>
         </div>
@@ -172,7 +172,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         {/* Title */}
         <h3
           className="text-base font-bold leading-snug mb-2.5"
-          style={{ color: "var(--color-pg-text-1)" }}
+          style={{ color: "var(--pg-text-1)" }}
         >
           {project.title}
         </h3>
@@ -180,7 +180,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         {/* Description */}
         <p
           className="text-sm leading-relaxed flex-1 line-clamp-3"
-          style={{ color: "var(--color-pg-text-2)" }}
+          style={{ color: "var(--pg-text-2)" }}
         >
           {project.description}
         </p>
@@ -191,7 +191,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             className="mt-4 px-3 py-2.5 rounded-lg"
             style={{ background: cfg.bg, border: `1px solid ${cfg.border}` }}
           >
-            <p className="text-xs font-mono leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>
+            <p className="text-xs font-mono leading-relaxed" style={{ color: "var(--pg-text-2)" }}>
               <span style={{ color: cfg.color }}>↳ </span>
               {project.highlight}
             </p>
@@ -206,7 +206,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </span>
           ))}
           {project.tags.length > 4 && (
-            <span className="px-2 py-0.5 text-xs" style={{ color: "var(--color-pg-text-3)" }}>
+            <span className="px-2 py-0.5 text-xs" style={{ color: "var(--pg-text-3)" }}>
               +{project.tags.length - 4}
             </span>
           )}
@@ -224,9 +224,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
               rel="noopener noreferrer"
               aria-label="View source code"
               className="group/link flex items-center gap-1.5 text-xs font-medium transition-colors duration-200"
-              style={{ color: "rgba(255,255,255,0.4)" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.85)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}
+              style={{ color: "var(--pg-text-3)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--pg-text-1)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--pg-text-3)")}
             >
               <GithubIcon />
               Code
@@ -238,9 +238,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-xs font-medium transition-colors duration-200"
-              style={{ color: "rgba(255,255,255,0.4)" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.85)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}
+              style={{ color: "var(--pg-text-3)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--pg-text-1)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--pg-text-3)")}
             >
               <ExternalLink className="w-3.5 h-3.5" />
               Demo

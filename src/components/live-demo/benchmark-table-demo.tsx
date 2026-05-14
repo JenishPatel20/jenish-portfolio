@@ -49,12 +49,12 @@ export function BenchmarkTableDemo() {
         <div>
           <p className="section-label mb-2">Edge AI Demo</p>
           <div className="flex items-center gap-2">
-            <BarChart3 className="h-4 w-4" style={{ color: "var(--color-pg-cyan)" }} />
-            <h3 className="text-xl font-semibold" style={{ color: "var(--color-pg-text-1)" }}>
+            <BarChart3 className="h-4 w-4" style={{ color: "var(--pg-accent)" }} />
+            <h3 className="text-xl font-semibold" style={{ color: "var(--pg-text-1)" }}>
               Real Benchmark Table
             </h3>
           </div>
-          <p className="mt-3 max-w-2xl text-sm leading-6" style={{ color: "var(--color-pg-text-2)" }}>
+          <p className="mt-3 max-w-2xl text-sm leading-6" style={{ color: "var(--pg-text-2)" }}>
             Verified figures from the Edge AI benchmark project, using only numbers already documented in the portfolio data.
           </p>
         </div>
@@ -62,7 +62,7 @@ export function BenchmarkTableDemo() {
         <Link
           href="/projects/edge-ai-benchmark"
           className="inline-flex items-center gap-1 text-sm transition-colors duration-200"
-          style={{ color: "var(--color-pg-text-3)" }}
+          style={{ color: "var(--pg-text-3)" }}
         >
           Full case study
           <ArrowRight className="h-4 w-4" />
@@ -75,7 +75,7 @@ export function BenchmarkTableDemo() {
             key={profile}
             className="rounded-full border px-3 py-1 text-xs font-medium"
             style={{
-              color: "var(--color-pg-text-2)",
+              color: "var(--pg-text-2)",
               borderColor: "rgba(255,255,255,0.10)",
               background: "rgba(255,255,255,0.035)",
             }}
@@ -96,12 +96,12 @@ export function BenchmarkTableDemo() {
               style={
                 active
                   ? {
-                      color: "var(--color-pg-text-1)",
+                      color: "var(--pg-text-1)",
                       background: "rgba(34,211,238,0.12)",
                       border: "1px solid rgba(34,211,238,0.28)",
                     }
                   : {
-                      color: "var(--color-pg-text-2)",
+                      color: "var(--pg-text-2)",
                       background: "rgba(255,255,255,0.04)",
                       border: "1px solid rgba(255,255,255,0.08)",
                     }
@@ -118,11 +118,11 @@ export function BenchmarkTableDemo() {
           <table className="min-w-full text-left text-sm">
             <thead style={{ background: "rgba(255,255,255,0.035)" }}>
               <tr>
-                <th className="px-4 py-3 font-medium" style={{ color: "var(--color-pg-text-2)" }}>Model</th>
-                <th className="px-4 py-3 font-medium" style={{ color: "var(--color-pg-text-2)" }}>Deployment</th>
-                <th className="px-4 py-3 font-medium" style={{ color: "var(--color-pg-text-2)" }}>TTFT</th>
-                <th className="px-4 py-3 font-medium" style={{ color: "var(--color-pg-text-2)" }}>Tokens / sec</th>
-                <th className="px-4 py-3 font-medium" style={{ color: "var(--color-pg-text-2)" }}>Cost</th>
+                <th className="px-4 py-3 font-medium" style={{ color: "var(--pg-text-2)" }}>Model</th>
+                <th className="px-4 py-3 font-medium" style={{ color: "var(--pg-text-2)" }}>Deployment</th>
+                <th className="px-4 py-3 font-medium" style={{ color: "var(--pg-text-2)" }}>TTFT</th>
+                <th className="px-4 py-3 font-medium" style={{ color: "var(--pg-text-2)" }}>Tokens / sec</th>
+                <th className="px-4 py-3 font-medium" style={{ color: "var(--pg-text-2)" }}>Cost</th>
               </tr>
             </thead>
             <tbody>
@@ -139,17 +139,17 @@ export function BenchmarkTableDemo() {
                   }}
                 >
                   <td className="px-4 py-4">
-                    <div className="font-medium" style={{ color: "var(--color-pg-text-1)" }}>
+                    <div className="font-medium" style={{ color: "var(--pg-text-1)" }}>
                       {row.model}
                     </div>
-                    <div className="mt-1 text-xs leading-5" style={{ color: "var(--color-pg-text-3)" }}>
+                    <div className="mt-1 text-xs leading-5" style={{ color: "var(--pg-text-3)" }}>
                       {row.summary}
                     </div>
                   </td>
-                  <td className="px-4 py-4" style={{ color: "var(--color-pg-text-2)" }}>{row.deployment}</td>
-                  <td className="px-4 py-4" style={{ color: "var(--color-pg-text-1)" }}>{row.ttft}</td>
-                  <td className="px-4 py-4" style={{ color: "var(--color-pg-text-1)" }}>{row.tps}</td>
-                  <td className="px-4 py-4" style={{ color: "var(--color-pg-text-1)" }}>{row.cost}</td>
+                  <td className="px-4 py-4" style={{ color: "var(--pg-text-2)" }}>{row.deployment}</td>
+                  <td className="px-4 py-4" style={{ color: "var(--pg-text-1)" }}>{row.ttft}</td>
+                  <td className="px-4 py-4" style={{ color: "var(--pg-text-1)" }}>{row.tps}</td>
+                  <td className="px-4 py-4" style={{ color: "var(--pg-text-1)" }}>{row.cost}</td>
                 </motion.tr>
               ))}
             </tbody>
@@ -165,7 +165,7 @@ export function BenchmarkTableDemo() {
             style={{
               borderColor: "rgba(255,255,255,0.08)",
               background: "rgba(255,255,255,0.025)",
-              color: "var(--color-pg-text-2)",
+              color: "var(--pg-text-2)",
             }}
           >
             {item}

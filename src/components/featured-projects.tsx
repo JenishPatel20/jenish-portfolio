@@ -32,7 +32,7 @@ export function FeaturedProjects({ recruiterMode }: FeaturedProjectsProps) {
   }, [activeFilter, recruiterMode]);
 
   return (
-    <section id="projects" className="py-24" style={{ backgroundColor: "#09090f" }}>
+    <section id="projects" className="section-alt py-24">
       <div className="section-container">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -43,7 +43,7 @@ export function FeaturedProjects({ recruiterMode }: FeaturedProjectsProps) {
         >
           <div>
             <p className="section-label mb-2">Work</p>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: "var(--color-pg-text-1)" }}>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: "var(--pg-text-1)" }}>
               <MaskText text="Projects" />
             </h2>
           </div>
@@ -51,9 +51,9 @@ export function FeaturedProjects({ recruiterMode }: FeaturedProjectsProps) {
           <Link
             href="/projects"
             className="flex items-center gap-1.5 self-start text-sm transition-colors duration-200 sm:self-auto"
-            style={{ color: "var(--color-pg-text-3)" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-pg-text-1)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-pg-text-3)")}
+            style={{ color: "var(--pg-text-3)" }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--pg-text-1)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--pg-text-3)")}
           >
             View all
             <ArrowRight className="w-4 h-4" />
@@ -99,7 +99,7 @@ export function FeaturedProjects({ recruiterMode }: FeaturedProjectsProps) {
         </motion.div>
 
         {displayed.length === 0 && (
-          <p className="py-16 text-center text-sm" style={{ color: "var(--color-pg-text-3)" }}>
+          <p className="py-16 text-center text-sm" style={{ color: "var(--pg-text-3)" }}>
             No projects match this filter.
           </p>
         )}

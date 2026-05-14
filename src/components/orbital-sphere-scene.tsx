@@ -6,6 +6,11 @@ import * as THREE from 'three';
 
 const ACCENT = '#7eb8f7';
 
+function seededUnit(index: number) {
+  const value = Math.sin(index * 12.9898 + 78.233) * 43758.5453;
+  return value - Math.floor(value);
+}
+
 // R3F v9 uses THREE.Clock internally; Three.js r168+ deprecated it.
 // Suppress the warning until R3F updates to THREE.Timer.
 function useSuppressThreeClockWarning() {
@@ -44,7 +49,7 @@ function OrbitalRing({
   opacity?: number;
 }) {
   const dotsRef = useRef<(THREE.Mesh | null)[]>([]);
-  const t = useRef(Math.random() * Math.PI * 2);
+  const t = useRef((radius + Math.abs(speed)) * Math.PI);
 
   useFrame((_, delta) => {
     t.current += delta * speed;
@@ -81,9 +86,9 @@ function StarField() {
   const geometry = useMemo(() => {
     const positions = new Float32Array(180 * 3);
     for (let i = 0; i < 180; i++) {
-      const r = 2.9 + Math.random() * 2.2;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
+      const r = 2.9 + seededUnit(i * 3 + 1) * 2.2;
+      const theta = seededUnit(i * 3 + 2) * Math.PI * 2;
+      const phi = Math.acos(2 * seededUnit(i * 3 + 3) - 1);
       positions[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
       positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
       positions[i * 3 + 2] = r * Math.cos(phi);

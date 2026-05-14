@@ -48,10 +48,10 @@ const contactLinks = [
 ];
 
 const inputCls = [
-  "w-full px-4 py-3 rounded-xl text-sm text-white placeholder-zinc-600",
+  "w-full px-4 py-3 rounded-xl text-sm text-pg-text-1 placeholder:text-pg-text-3",
   "outline-none transition-all duration-200",
-  "bg-white/[0.04] border border-white/[0.09]",
-  "focus:border-[rgba(126,184,247,0.45)] focus:ring-2 focus:ring-[rgba(126,184,247,0.08)]",
+  "bg-pg-input-bg border border-pg-border",
+  "focus:border-pg-border-hover focus:ring-2 focus:ring-pg-accent/10",
 ].join(" ");
 
 type FormStatus = "idle" | "loading" | "success" | "error";
@@ -82,8 +82,7 @@ export function ContactSection() {
   return (
     <section
       id="contact"
-      className="py-24"
-      style={{ backgroundColor: "#040404", borderTop: "1px solid rgba(255,255,255,0.04)" }}
+      className="section-alt border-t border-pg-border py-24"
     >
       <div className="section-container">
 
@@ -96,10 +95,10 @@ export function ContactSection() {
           className="mb-12"
         >
           <p className="section-label mb-3">Get in touch</p>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-pg-text-1">
             <MaskText text="Let's Connect" />
           </h2>
-          <p className="mt-3 max-w-md text-sm leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>
+          <p className="mt-3 max-w-md text-sm leading-relaxed" style={{ color: "var(--pg-text-2)" }}>
             Open to full-time opportunities, internships, and interesting engineering conversations.
           </p>
         </motion.div>
@@ -127,9 +126,9 @@ export function ContactSection() {
             {/* Left — contact info */}
             <div
               className="p-8 md:p-10"
-              style={{ borderRight: "1px solid rgba(255,255,255,0.06)" }}
+              style={{ borderRight: "1px solid var(--pg-border)" }}
             >
-              <h3 className="text-base font-semibold text-white mb-6">Get in Touch</h3>
+              <h3 className="text-base font-semibold text-pg-text-1 mb-6">Get in Touch</h3>
 
               <div className="flex flex-col gap-3 mb-8">
                 {contactLinks.map((link, i) => (
@@ -158,15 +157,15 @@ export function ContactSection() {
                       >
                         <div
                           className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-                          style={{ background: "rgba(126,184,247,0.08)", color: "var(--color-pg-accent)" }}
+                          style={{ background: "color-mix(in srgb, var(--pg-accent) 10%, transparent)", color: "var(--pg-accent)" }}
                         >
                           <link.Icon />
                         </div>
                         <div className="min-w-0">
-                          <div className="text-[11px] mb-0.5" style={{ color: "var(--color-pg-text-2)" }}>{link.label}</div>
-                          <div className="text-sm text-white truncate">{link.display}</div>
+                          <div className="text-[11px] mb-0.5" style={{ color: "var(--pg-text-2)" }}>{link.label}</div>
+                          <div className="text-sm text-pg-text-1 truncate">{link.display}</div>
                         </div>
-                        <ArrowUpRight className="w-3.5 h-3.5 ml-auto opacity-0 group-hover/link:opacity-40 transition-opacity shrink-0" style={{ color: "var(--color-pg-accent)" }} />
+                        <ArrowUpRight className="w-3.5 h-3.5 ml-auto opacity-0 group-hover/link:opacity-40 transition-opacity shrink-0" style={{ color: "var(--pg-accent)" }} />
                       </a>
                     ) : (
                       <div
@@ -175,13 +174,13 @@ export function ContactSection() {
                       >
                         <div
                           className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-                          style={{ background: "rgba(126,184,247,0.08)", color: "var(--color-pg-accent)" }}
+                          style={{ background: "color-mix(in srgb, var(--pg-accent) 10%, transparent)", color: "var(--pg-accent)" }}
                         >
                           <link.Icon />
                         </div>
                         <div>
-                          <div className="text-[11px] mb-0.5" style={{ color: "var(--color-pg-text-2)" }}>{link.label}</div>
-                          <div className="text-sm text-white">{link.display}</div>
+                          <div className="text-[11px] mb-0.5" style={{ color: "var(--pg-text-2)" }}>{link.label}</div>
+                          <div className="text-sm text-pg-text-1">{link.display}</div>
                         </div>
                       </div>
                     )}
@@ -204,10 +203,10 @@ export function ContactSection() {
               className="p-8 md:p-10 flex flex-col gap-4"
               onSubmit={handleSubmit}
             >
-              <h3 className="text-base font-semibold text-white mb-2">Send a Message</h3>
+              <h3 className="text-base font-semibold text-pg-text-1 mb-2">Send a Message</h3>
 
               <div>
-                <label htmlFor="cf-name" className="block text-xs mb-1.5" style={{ color: "var(--color-pg-text-2)" }}>Name</label>
+                <label htmlFor="cf-name" className="block text-xs mb-1.5" style={{ color: "var(--pg-text-2)" }}>Name</label>
                 <input
                   id="cf-name"
                   name="name"
@@ -219,7 +218,7 @@ export function ContactSection() {
               </div>
 
               <div>
-                <label htmlFor="cf-email" className="block text-xs mb-1.5" style={{ color: "var(--color-pg-text-2)" }}>Email</label>
+                <label htmlFor="cf-email" className="block text-xs mb-1.5" style={{ color: "var(--pg-text-2)" }}>Email</label>
                 <input
                   id="cf-email"
                   name="email"
@@ -231,7 +230,7 @@ export function ContactSection() {
               </div>
 
               <div className="flex-1">
-                <label htmlFor="cf-message" className="block text-xs mb-1.5" style={{ color: "var(--color-pg-text-2)" }}>Message</label>
+                <label htmlFor="cf-message" className="block text-xs mb-1.5" style={{ color: "var(--pg-text-2)" }}>Message</label>
                 <textarea
                   id="cf-message"
                   name="message"

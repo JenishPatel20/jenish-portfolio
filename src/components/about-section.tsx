@@ -31,8 +31,7 @@ export function AboutSection() {
   return (
     <section
       id="about"
-      className="py-20"
-      style={{ backgroundColor: "#09090f", borderTop: "1px solid rgba(255,255,255,0.04)" }}
+      className="section-alt border-t border-pg-border py-20"
     >
       <div className="section-container">
 
@@ -44,7 +43,7 @@ export function AboutSection() {
           className="mb-10"
         >
           <p className="section-label mb-2">About</p>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: "var(--color-pg-text-1)" }}>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: "var(--pg-text-1)" }}>
             <MaskText text="Who I Am" />
           </h2>
         </motion.div>
@@ -60,22 +59,22 @@ export function AboutSection() {
 
             {/* Bio — 3 columns */}
             <div className="md:col-span-3 flex flex-col justify-center gap-4">
-              <p className="text-base leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>
+              <p className="text-base leading-relaxed" style={{ color: "var(--pg-text-2)" }}>
                 I&apos;m a CS graduate student at Rutgers focused on the full spectrum of
                 intelligent systems — from training spiking neural networks on real industrial
                 sensor data, to running LLMs natively in the browser via WebGPU with zero
                 API cost. I care about bridging the gap between research and production.
               </p>
-              <p className="text-base leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>
+              <p className="text-base leading-relaxed" style={{ color: "var(--pg-text-2)" }}>
                 On co-op at Greenlit, I&apos;ve shipped AI-powered genre market analysis tools
                 from scraping to a FastAPI service used in production decisions. Outside of
                 work, I&apos;m usually benchmarking something, building something, or both.
               </p>
-              <p className="text-sm" style={{ color: "var(--color-pg-text-3)" }}>
+              <p className="text-sm" style={{ color: "var(--pg-text-3)" }}>
                 Currently exploring{" "}
-                <span style={{ color: "var(--color-pg-accent)" }}>Rust</span>,{" "}
-                <span style={{ color: "var(--color-pg-accent)" }}>WebAssembly</span>, and{" "}
-                <span style={{ color: "var(--color-pg-accent)" }}>Reinforcement Learning</span>.
+                <span style={{ color: "var(--pg-accent)" }}>Rust</span>,{" "}
+                <span style={{ color: "var(--pg-accent)" }}>WebAssembly</span>, and{" "}
+                <span style={{ color: "var(--pg-accent)" }}>Reinforcement Learning</span>.
               </p>
             </div>
 
@@ -90,23 +89,23 @@ export function AboutSection() {
                   transition={{ duration: 0.35, delay: 0.15 + i * 0.07 }}
                   className="flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200"
                   style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.07)",
+                    background: "var(--pg-surface)",
+                    border: "1px solid var(--pg-border)",
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = "rgba(126,184,247,0.25)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)")}
+                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = "var(--pg-border-hover)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = "var(--pg-border)")}
                 >
                   <div
                     className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-                    style={{ background: "rgba(126,184,247,0.08)", color: "var(--color-pg-accent)" }}
+                    style={{ background: "color-mix(in srgb, var(--pg-accent) 10%, transparent)", color: "var(--pg-accent)" }}
                   >
                     <fact.Icon className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="text-[10px] uppercase tracking-wider mb-0.5" style={{ color: "var(--color-pg-text-3)" }}>
+                    <div className="text-[10px] uppercase tracking-wider mb-0.5" style={{ color: "var(--pg-text-3)" }}>
                       {fact.label}
                     </div>
-                    <div className="text-sm font-medium text-white">{fact.value}</div>
+                    <div className="text-sm font-medium text-pg-text-1">{fact.value}</div>
                   </div>
                 </motion.div>
               ))}

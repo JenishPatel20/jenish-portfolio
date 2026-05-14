@@ -54,10 +54,10 @@ export function AuctionMasterMiniDemo() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="section-label mb-2">Full Stack Demo</p>
-          <h3 className="text-xl font-semibold" style={{ color: "var(--color-pg-text-1)" }}>
+          <h3 className="text-xl font-semibold" style={{ color: "var(--pg-text-1)" }}>
             Auction Master Mini Demo
           </h3>
-          <p className="mt-3 max-w-xl text-sm leading-6" style={{ color: "var(--color-pg-text-2)" }}>
+          <p className="mt-3 max-w-xl text-sm leading-6" style={{ color: "var(--pg-text-2)" }}>
             A read-only auction snapshot that highlights live bidding behavior, reserve enforcement, and role-based product thinking.
           </p>
         </div>
@@ -65,7 +65,7 @@ export function AuctionMasterMiniDemo() {
         <Link
           href="/projects/auction-master"
           className="inline-flex items-center gap-1 text-sm transition-colors duration-200"
-          style={{ color: "var(--color-pg-text-3)" }}
+          style={{ color: "var(--pg-text-3)" }}
         >
           Full case study
           <ArrowRight className="h-4 w-4" />
@@ -83,19 +83,19 @@ export function AuctionMasterMiniDemo() {
         >
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
-              <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--color-pg-text-3)" }}>
+              <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--pg-text-3)" }}>
                 {auctionDemo.title}
               </p>
-              <p className="mt-2 text-sm leading-6" style={{ color: "var(--color-pg-text-2)" }}>
+              <p className="mt-2 text-sm leading-6" style={{ color: "var(--pg-text-2)" }}>
                 {auctionDemo.subtitle}
               </p>
             </div>
 
             <div className="text-right">
-              <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--color-pg-text-3)" }}>
+              <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--pg-text-3)" }}>
                 Time left
               </p>
-              <p className="mt-2 text-2xl font-semibold tabular-nums" style={{ color: "var(--color-pg-text-1)" }}>
+              <p className="mt-2 text-2xl font-semibold tabular-nums" style={{ color: "var(--pg-text-1)" }}>
                 {formatTime(secondsRemaining)}
               </p>
             </div>
@@ -103,31 +103,31 @@ export function AuctionMasterMiniDemo() {
 
           <div className="mt-5 grid gap-3 sm:grid-cols-3">
             <div className="rounded-2xl border p-4" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
-              <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--color-pg-text-3)" }}>
+              <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--pg-text-3)" }}>
                 Current bid
               </p>
-              <p className="mt-2 text-xl font-semibold" style={{ color: "var(--color-pg-text-1)" }}>
+              <p className="mt-2 text-xl font-semibold" style={{ color: "var(--pg-text-1)" }}>
                 {formatCurrency(currentBid)}
               </p>
             </div>
 
             <div className="rounded-2xl border p-4" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
-              <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--color-pg-text-3)" }}>
+              <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--pg-text-3)" }}>
                 Reserve
               </p>
               <p
                 className="mt-2 text-xl font-semibold"
-                style={{ color: reserveMet ? "var(--color-pg-cyan)" : "var(--color-pg-text-1)" }}
+                style={{ color: reserveMet ? "var(--pg-accent)" : "var(--pg-text-1)" }}
               >
                 {reserveMet ? "Met" : "Locked"}
               </p>
             </div>
 
             <div className="rounded-2xl border p-4" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
-              <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--color-pg-text-3)" }}>
+              <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--pg-text-3)" }}>
                 Next min bid
               </p>
-              <p className="mt-2 text-xl font-semibold" style={{ color: "var(--color-pg-text-1)" }}>
+              <p className="mt-2 text-xl font-semibold" style={{ color: "var(--pg-text-1)" }}>
                 {formatCurrency(nextMinimumBid)}
               </p>
             </div>
@@ -139,7 +139,7 @@ export function AuctionMasterMiniDemo() {
                 key={feature}
                 className="rounded-full border px-3 py-1 text-xs font-medium"
                 style={{
-                  color: "var(--color-pg-text-2)",
+                  color: "var(--pg-text-2)",
                   borderColor: "rgba(255,255,255,0.10)",
                   background: "rgba(255,255,255,0.035)",
                 }}
@@ -151,7 +151,7 @@ export function AuctionMasterMiniDemo() {
 
           <div className="mt-5">
             <div className="mb-3 flex items-center justify-between">
-              <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--color-pg-text-3)" }}>
+              <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--pg-text-3)" }}>
                 Bid activity
               </p>
               <div className="flex gap-2">
@@ -159,7 +159,7 @@ export function AuctionMasterMiniDemo() {
                   onClick={() => setPlaying((current) => !current)}
                   className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium transition-all duration-200"
                   style={{
-                    color: "var(--color-pg-text-1)",
+                    color: "var(--pg-text-1)",
                     background: "rgba(34,211,238,0.12)",
                     border: "1px solid rgba(34,211,238,0.28)",
                   }}
@@ -175,7 +175,7 @@ export function AuctionMasterMiniDemo() {
                   }}
                   className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium transition-all duration-200"
                   style={{
-                    color: "var(--color-pg-text-2)",
+                    color: "var(--pg-text-2)",
                     background: "rgba(255,255,255,0.04)",
                     border: "1px solid rgba(255,255,255,0.08)",
                   }}
@@ -192,7 +192,7 @@ export function AuctionMasterMiniDemo() {
                   className="rounded-2xl border px-4 py-3 text-sm"
                   style={{
                     borderColor: "rgba(255,255,255,0.08)",
-                    color: "var(--color-pg-text-3)",
+                    color: "var(--pg-text-3)",
                     background: "rgba(255,255,255,0.025)",
                   }}
                 >
@@ -213,14 +213,14 @@ export function AuctionMasterMiniDemo() {
                   }}
                 >
                   <div>
-                    <p className="text-sm font-medium" style={{ color: "var(--color-pg-text-1)" }}>
+                    <p className="text-sm font-medium" style={{ color: "var(--pg-text-1)" }}>
                       {bid.bidder}
                     </p>
-                    <p className="text-xs" style={{ color: "var(--color-pg-text-3)" }}>
+                    <p className="text-xs" style={{ color: "var(--pg-text-3)" }}>
                       +{bid.revealAtSecond}s into the auction
                     </p>
                   </div>
-                  <p className="text-sm font-semibold tabular-nums" style={{ color: "var(--color-pg-text-1)" }}>
+                  <p className="text-sm font-semibold tabular-nums" style={{ color: "var(--pg-text-1)" }}>
                     {formatCurrency(bid.amount)}
                   </p>
                 </motion.div>
@@ -241,12 +241,12 @@ export function AuctionMasterMiniDemo() {
                   style={
                     active
                       ? {
-                          color: "var(--color-pg-text-1)",
+                          color: "var(--pg-text-1)",
                           background: "rgba(96,165,250,0.12)",
                           border: "1px solid rgba(96,165,250,0.28)",
                         }
                       : {
-                          color: "var(--color-pg-text-2)",
+                          color: "var(--pg-text-2)",
                           background: "rgba(255,255,255,0.04)",
                           border: "1px solid rgba(255,255,255,0.08)",
                         }
@@ -265,12 +265,12 @@ export function AuctionMasterMiniDemo() {
               background: "rgba(255,255,255,0.025)",
             }}
           >
-            <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--color-pg-text-3)" }}>
+            <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "var(--pg-text-3)" }}>
               {activeRoleView.headline}
             </p>
             <div className="mt-3 space-y-3">
               {activeRoleView.bullets.map((bullet) => (
-                <p key={bullet} className="text-sm leading-6" style={{ color: "var(--color-pg-text-2)" }}>
+                <p key={bullet} className="text-sm leading-6" style={{ color: "var(--pg-text-2)" }}>
                   {bullet}
                 </p>
               ))}

@@ -29,7 +29,7 @@ function ReadingProgress({ color }: { color: string }) {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
   return (
-    <div className="fixed top-16 left-0 right-0 z-40 h-[2px]" style={{ background: "rgba(255,255,255,0.04)" }}>
+    <div className="fixed top-16 left-0 right-0 z-40 h-[2px]" style={{ background: "var(--pg-border)" }}>
       <motion.div className="h-full origin-left" style={{ scaleX, background: color }} />
     </div>
   );
@@ -55,7 +55,7 @@ function ContentSection({
           <span className="font-mono text-xs tabular-nums opacity-40" style={{ color: accentColor }}>
             {number}
           </span>
-          <h2 className="text-xl font-bold tracking-tight text-white">{heading}</h2>
+          <h2 className="text-xl font-bold tracking-tight text-pg-text-1">{heading}</h2>
         </div>
       </div>
       {children}
@@ -68,7 +68,7 @@ function TechBadge({ label }: { label: string }) {
   return (
     <span
       className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium"
-      style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)", color: "rgba(255,255,255,0.65)" }}
+      style={{ background: "var(--pg-surface)", border: "1px solid var(--pg-border)", color: "var(--pg-text-2)" }}
     >
       {label}
     </span>
@@ -77,7 +77,7 @@ function TechBadge({ label }: { label: string }) {
 
 function SidebarLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-[10px] font-semibold uppercase tracking-widest mb-2.5" style={{ color: "var(--color-pg-text-3)" }}>
+    <p className="text-[10px] font-semibold uppercase tracking-widest mb-2.5" style={{ color: "var(--pg-text-3)" }}>
       {children}
     </p>
   );
@@ -108,13 +108,13 @@ export function CaseStudyClient({ project, prev, next }: Props) {
 
 
   return (
-    <main className="min-h-screen" style={{ backgroundColor: "#09090f" }}>
+    <main className="min-h-screen bg-pg-section-alt">
 
       {/* Scroll-driven reading progress bar */}
       <ReadingProgress color={cfg.bar} />
 
       {/* ── Hero ────────────────────────────────────────────────────────────── */}
-      <div className="relative border-b hero-grid" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
+      <div className="relative border-b hero-grid" style={{ borderColor: "var(--pg-border)" }}>
 
         {/* Role-coloured 3px accent strip — mirrors the project card */}
         <div style={{ height: "3px", background: `linear-gradient(90deg, ${cfg.bar}dd 0%, ${cfg.bar}44 55%, transparent 100%)` }} />
@@ -132,9 +132,9 @@ export function CaseStudyClient({ project, prev, next }: Props) {
             <Link
               href="/projects"
               className="inline-flex items-center gap-1.5 text-sm mb-8 transition-colors duration-200 group"
-              style={{ color: "var(--color-pg-text-3)" }}
+              style={{ color: "var(--pg-text-3)" }}
               onMouseEnter={(e) => (e.currentTarget.style.color = cfg.color)}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-pg-text-3)")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--pg-text-3)")}
             >
               <ArrowLeft className="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-0.5" />
               All Projects
@@ -154,7 +154,7 @@ export function CaseStudyClient({ project, prev, next }: Props) {
             </span>
             <span
               className="text-xs px-3 py-1 rounded-full tabular-nums"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "var(--color-pg-text-3)" }}
+              style={{ background: "var(--pg-surface)", border: "1px solid var(--pg-border)", color: "var(--pg-text-3)" }}
             >
               {project.year}
             </span>
@@ -164,7 +164,7 @@ export function CaseStudyClient({ project, prev, next }: Props) {
           <motion.h1
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.14 }}
             className="text-4xl sm:text-5xl font-bold tracking-tight leading-tight mb-5 max-w-3xl"
-            style={{ color: "var(--color-pg-text-1)" }}
+            style={{ color: "var(--pg-text-1)" }}
           >
             {project.title}
           </motion.h1>
@@ -173,7 +173,7 @@ export function CaseStudyClient({ project, prev, next }: Props) {
           <motion.p
             initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.21 }}
             className="text-base sm:text-lg leading-relaxed mb-8 max-w-2xl"
-            style={{ color: "var(--color-pg-text-2)" }}
+            style={{ color: "var(--pg-text-2)" }}
           >
             {project.description}
           </motion.p>
@@ -190,7 +190,7 @@ export function CaseStudyClient({ project, prev, next }: Props) {
                 <p className="text-[10px] font-semibold uppercase tracking-widest mb-1.5" style={{ color: cfg.color }}>
                   Key Metric
                 </p>
-                <p className="text-sm font-mono leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>
+                <p className="text-sm font-mono leading-relaxed" style={{ color: "var(--pg-text-2)" }}>
                   {project.highlight}
                 </p>
               </div>
@@ -218,9 +218,9 @@ export function CaseStudyClient({ project, prev, next }: Props) {
               <a
                 href={project.demo} target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200"
-                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--color-pg-text-2)" }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.background = "rgba(255,255,255,0.09)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = "var(--color-pg-text-2)"; e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
+                style={{ background: "var(--pg-surface)", border: "1px solid var(--pg-border)", color: "var(--pg-text-2)" }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = "var(--pg-text-1)"; e.currentTarget.style.background = "var(--pg-surface-hover)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = "var(--pg-text-2)"; e.currentTarget.style.background = "var(--pg-surface)"; }}
               >
                 <ExternalLink className="w-4 h-4 shrink-0" />
                 Live Demo
@@ -248,7 +248,7 @@ export function CaseStudyClient({ project, prev, next }: Props) {
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                background: `radial-gradient(ellipse 80% 60% at 50% 50%, transparent 40%, rgba(9,9,15,0.55) 100%)`,
+                background: "radial-gradient(ellipse 80% 60% at 50% 50%, transparent 40%, var(--pg-overlay) 100%)",
               }}
             />
           </motion.div>
@@ -270,7 +270,7 @@ export function CaseStudyClient({ project, prev, next }: Props) {
                 heading={section.heading}
                 accentColor={cfg.bar}
               >
-                <p className="text-base leading-[1.85] whitespace-pre-line" style={{ color: "var(--color-pg-text-2)" }}>
+                <p className="text-base leading-[1.85] whitespace-pre-line" style={{ color: "var(--pg-text-2)" }}>
                   {section.content}
                 </p>
               </ContentSection>
@@ -283,7 +283,7 @@ export function CaseStudyClient({ project, prev, next }: Props) {
             >
               <div className="flex items-center gap-3 mb-5">
                 <div className="h-5 w-[3px] rounded-full shrink-0" style={{ background: cfg.bar }} />
-                <h2 className="text-xl font-bold tracking-tight text-white">Tech Stack</h2>
+                <h2 className="text-xl font-bold tracking-tight text-pg-text-1">Tech Stack</h2>
               </div>
               <div className="flex flex-wrap gap-2">
                 {project.tags.map((tag) => <TechBadge key={tag} label={tag} />)}
@@ -295,10 +295,10 @@ export function CaseStudyClient({ project, prev, next }: Props) {
               <motion.nav
                 aria-label="Project navigation"
                 className="pt-10 border-t"
-                style={{ borderColor: "rgba(255,255,255,0.07)" }}
+                style={{ borderColor: "var(--pg-border)" }}
                 initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
               >
-                <p className="text-xs uppercase tracking-widest mb-4" style={{ color: "var(--color-pg-text-3)" }}>
+                <p className="text-xs uppercase tracking-widest mb-4" style={{ color: "var(--pg-text-3)" }}>
                   More Projects
                 </p>
                 <div className="grid grid-cols-2 gap-4">
@@ -307,12 +307,12 @@ export function CaseStudyClient({ project, prev, next }: Props) {
                       <Link
                         href={`/projects/${prev.id}`}
                         className="group flex flex-col gap-1 p-4 rounded-xl transition-all duration-200"
-                        style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}
+                        style={{ background: "var(--pg-surface)", border: "1px solid var(--pg-border)" }}
                         onMouseEnter={(e) => (e.currentTarget.style.borderColor = cfg.border)}
-                        onMouseLeave={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)")}
+                        onMouseLeave={(e) => (e.currentTarget.style.borderColor = "var(--pg-border)")}
                       >
-                        <span className="text-xs" style={{ color: "var(--color-pg-text-3)" }}>← Previous</span>
-                        <span className="text-sm font-medium leading-snug group-hover:text-white transition-colors duration-200" style={{ color: "var(--color-pg-text-2)" }}>
+                        <span className="text-xs" style={{ color: "var(--pg-text-3)" }}>← Previous</span>
+                        <span className="text-sm font-medium leading-snug group-hover:text-pg-text-1 transition-colors duration-200" style={{ color: "var(--pg-text-2)" }}>
                           {prev.title}
                         </span>
                       </Link>
@@ -323,12 +323,12 @@ export function CaseStudyClient({ project, prev, next }: Props) {
                       <Link
                         href={`/projects/${next.id}`}
                         className="group flex flex-col gap-1 p-4 rounded-xl text-right transition-all duration-200 w-full"
-                        style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}
+                        style={{ background: "var(--pg-surface)", border: "1px solid var(--pg-border)" }}
                         onMouseEnter={(e) => (e.currentTarget.style.borderColor = cfg.border)}
-                        onMouseLeave={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)")}
+                        onMouseLeave={(e) => (e.currentTarget.style.borderColor = "var(--pg-border)")}
                       >
-                        <span className="text-xs" style={{ color: "var(--color-pg-text-3)" }}>Next →</span>
-                        <span className="text-sm font-medium leading-snug group-hover:text-white transition-colors duration-200" style={{ color: "var(--color-pg-text-2)" }}>
+                        <span className="text-xs" style={{ color: "var(--pg-text-3)" }}>Next →</span>
+                        <span className="text-sm font-medium leading-snug group-hover:text-pg-text-1 transition-colors duration-200" style={{ color: "var(--pg-text-2)" }}>
                           {next.title}
                         </span>
                       </Link>
@@ -346,7 +346,7 @@ export function CaseStudyClient({ project, prev, next }: Props) {
               {/* Details card — role-tinted border + top strip */}
               <div
                 className="rounded-2xl overflow-hidden"
-                style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${cfg.border}` }}
+                style={{ background: "var(--pg-surface)", border: `1px solid ${cfg.border}` }}
               >
                 <div style={{ height: "2px", background: `linear-gradient(90deg, ${cfg.bar}cc, transparent)` }} />
 
@@ -359,7 +359,7 @@ export function CaseStudyClient({ project, prev, next }: Props) {
                     </div>
                   </div>
 
-                  <div className="h-px" style={{ background: "rgba(255,255,255,0.07)" }} />
+                  <div className="h-px" style={{ background: "var(--pg-border)" }} />
 
                   {/* Category */}
                   <div>
@@ -375,12 +375,12 @@ export function CaseStudyClient({ project, prev, next }: Props) {
                   {/* Year */}
                   <div>
                     <SidebarLabel>Year</SidebarLabel>
-                    <p className="text-sm font-medium tabular-nums" style={{ color: "var(--color-pg-text-2)" }}>
+                    <p className="text-sm font-medium tabular-nums" style={{ color: "var(--pg-text-2)" }}>
                       {project.year}
                     </p>
                   </div>
 
-                  <div className="h-px" style={{ background: "rgba(255,255,255,0.07)" }} />
+                  <div className="h-px" style={{ background: "var(--pg-border)" }} />
 
                   {/* Links */}
                   <div className="space-y-2">
@@ -397,15 +397,15 @@ export function CaseStudyClient({ project, prev, next }: Props) {
                         GitHub Repository
                       </a>
                     ) : (
-                      <p className="text-xs italic" style={{ color: "var(--color-pg-text-3)" }}>Repository private</p>
+                      <p className="text-xs italic" style={{ color: "var(--pg-text-3)" }}>Repository private</p>
                     )}
                     {project.demo && project.demo !== "#" && (
                       <a
                         href={project.demo} target="_blank" rel="noopener noreferrer"
                         className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200"
-                        style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "var(--color-pg-text-2)" }}
-                        onMouseEnter={(e) => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
-                        onMouseLeave={(e) => { e.currentTarget.style.color = "var(--color-pg-text-2)"; e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}
+                        style={{ background: "var(--pg-surface)", border: "1px solid var(--pg-border)", color: "var(--pg-text-2)" }}
+                        onMouseEnter={(e) => { e.currentTarget.style.color = "var(--pg-text-1)"; e.currentTarget.style.background = "var(--pg-surface-hover)"; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.color = "var(--pg-text-2)"; e.currentTarget.style.background = "var(--pg-surface)"; }}
                       >
                         <ExternalLink className="w-3.5 h-3.5 shrink-0" />
                         Live Demo

@@ -16,18 +16,21 @@ export function RecruiterModeBanner({ onDismiss }: RecruiterModeBannerProps) {
   return (
     <div
       className="sticky top-16 z-40 flex items-center justify-center gap-3 text-sm py-2.5 px-4"
-      style={{ background: "rgba(126,184,247,0.1)", borderBottom: "1px solid rgba(126,184,247,0.2)" }}
+      style={{
+        background: "color-mix(in srgb, var(--pg-accent) 11%, var(--pg-bg))",
+        borderBottom: "1px solid color-mix(in srgb, var(--pg-accent) 24%, transparent)",
+      }}
     >
-      <Zap className="w-4 h-4 shrink-0" style={{ color: "var(--color-pg-accent)" }} />
-      <span style={{ color: "var(--color-pg-accent)" }}>
+      <Zap className="w-4 h-4 shrink-0" style={{ color: "var(--pg-accent)" }} />
+      <span style={{ color: "var(--pg-accent)" }}>
         <strong>Recruiter Mode</strong> — quick view of skills, experience &amp; highlights below.
       </span>
       <button
         onClick={onDismiss}
         aria-label="Exit Recruiter Mode"
         className="ml-2 p-0.5 rounded-full transition-colors cursor-pointer"
-        style={{ color: "var(--color-pg-accent)" }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(126,184,247,0.15)")}
+        style={{ color: "var(--pg-accent)" }}
+        onMouseEnter={(e) => (e.currentTarget.style.background = "color-mix(in srgb, var(--pg-accent) 16%, transparent)")}
         onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
       >
         <X className="w-4 h-4" />
@@ -44,7 +47,7 @@ const stats = [
   { value: "Fall '26", label: "Available",         Icon: Code2         },
 ];
 
-const ACC = "var(--color-pg-accent)";
+const ACC = "var(--pg-accent)";
 
 // ─── Experience accordion card ────────────────────────────────────────────────
 function CompanyBadge({ name }: { name: string }) {
@@ -53,8 +56,8 @@ function CompanyBadge({ name }: { name: string }) {
     <div
       className="w-10 h-10 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 select-none"
       style={{
-        background: "rgba(126,184,247,0.07)",
-        border: "1px solid rgba(126,184,247,0.18)",
+        background: "color-mix(in srgb, var(--pg-accent) 9%, transparent)",
+        border: "1px solid color-mix(in srgb, var(--pg-accent) 22%, transparent)",
         color: ACC,
         letterSpacing: "0.04em",
       }}
@@ -108,7 +111,7 @@ function ExpAccordionCard({ exp, isOpen, onToggle }: ExpCardProps) {
         <CompanyBadge name={exp.company} />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-0.5">
-            <span className="text-sm font-bold" style={{ color: "var(--color-pg-text-1)" }}>
+            <span className="text-sm font-bold" style={{ color: "var(--pg-text-1)" }}>
               {exp.company}
             </span>
             {isCurrent && (
@@ -121,23 +124,23 @@ function ExpAccordionCard({ exp, isOpen, onToggle }: ExpCardProps) {
             )}
           </div>
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-            <span className="text-xs font-medium" style={{ color: "var(--color-pg-text-2)" }}>
+            <span className="text-xs font-medium" style={{ color: "var(--pg-text-2)" }}>
               {role.title}
             </span>
             <span
               className="text-[10px] px-1.5 py-0.5 rounded-full font-medium"
-              style={{ color: TYPE_COLOR[role.type], background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)" }}
+              style={{ color: TYPE_COLOR[role.type], background: "var(--pg-surface)", border: "1px solid var(--pg-border)" }}
             >
               {TYPE_LABEL[role.type]}
             </span>
-            <span className="text-[11px]" style={{ color: "var(--color-pg-text-3)" }}>
+            <span className="text-[11px]" style={{ color: "var(--pg-text-3)" }}>
               {role.startDate} – {role.endDate} · {role.location}
             </span>
           </div>
         </div>
         <ChevronDown
           className="w-4 h-4 shrink-0 transition-transform duration-300"
-          style={{ color: "var(--color-pg-text-3)", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+          style={{ color: "var(--pg-text-3)", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
         />
       </button>
 
@@ -146,16 +149,16 @@ function ExpAccordionCard({ exp, isOpen, onToggle }: ExpCardProps) {
         {role.bullets.slice(0, 2).map((bullet, i) => (
           <div key={i} className="flex gap-2.5">
             <span className="mt-[7px] h-[5px] w-[5px] shrink-0 rounded-full" style={{ background: ACC, opacity: 0.7 }} />
-            <span className="text-sm leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>{bullet}</span>
+            <span className="text-sm leading-relaxed" style={{ color: "var(--pg-text-2)" }}>{bullet}</span>
           </div>
         ))}
         {!isOpen && hiddenBullets > 0 && (
           <button
             onClick={onToggle}
             className="mt-1 text-xs font-medium cursor-pointer transition-colors duration-150"
-            style={{ color: "var(--color-pg-text-3)" }}
+            style={{ color: "var(--pg-text-3)" }}
             onMouseEnter={(e) => (e.currentTarget.style.color = ACC)}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-pg-text-3)")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--pg-text-3)")}
           >
             +{hiddenBullets} more bullet{hiddenBullets > 1 ? "s" : ""} · tap to expand
           </button>
@@ -178,7 +181,7 @@ function ExpAccordionCard({ exp, isOpen, onToggle }: ExpCardProps) {
               {role.bullets.slice(2).map((bullet, i) => (
                 <div key={i} className="flex gap-2.5">
                   <span className="mt-[7px] h-[5px] w-[5px] shrink-0 rounded-full" style={{ background: ACC, opacity: 0.5 }} />
-                  <span className="text-sm leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>{bullet}</span>
+                  <span className="text-sm leading-relaxed" style={{ color: "var(--pg-text-2)" }}>{bullet}</span>
                 </div>
               ))}
 
@@ -228,7 +231,7 @@ function ProjAccordionCard({ project, isOpen, onToggle }: ProjCardProps) {
       >
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-1.5">
-            <span className="text-sm font-bold" style={{ color: "var(--color-pg-text-1)" }}>
+            <span className="text-sm font-bold" style={{ color: "var(--pg-text-1)" }}>
               {project.title}
             </span>
             <span
@@ -237,17 +240,17 @@ function ProjAccordionCard({ project, isOpen, onToggle }: ProjCardProps) {
             >
               {ROLE_LABEL[project.roles[0]]}
             </span>
-            <span className="text-[11px] ml-auto tabular-nums" style={{ color: "var(--color-pg-text-3)" }}>
+            <span className="text-[11px] ml-auto tabular-nums" style={{ color: "var(--pg-text-3)" }}>
               {project.year}
             </span>
           </div>
-          <p className="text-sm leading-relaxed line-clamp-2" style={{ color: "var(--color-pg-text-2)" }}>
+          <p className="text-sm leading-relaxed line-clamp-2" style={{ color: "var(--pg-text-2)" }}>
             {project.description}
           </p>
         </div>
         <ChevronDown
           className="w-4 h-4 shrink-0 mt-0.5 transition-transform duration-300"
-          style={{ color: "var(--color-pg-text-3)", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+          style={{ color: "var(--pg-text-3)", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
         />
       </button>
 
@@ -258,7 +261,7 @@ function ProjAccordionCard({ project, isOpen, onToggle }: ProjCardProps) {
             className="px-3 py-2 rounded-lg"
             style={{ background: rc.bg, border: `1px solid ${rc.border}` }}
           >
-            <p className="text-xs font-mono leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>
+            <p className="text-xs font-mono leading-relaxed" style={{ color: "var(--pg-text-2)" }}>
               <span style={{ color: rc.color }}>↳ </span>
               {project.highlight}
             </p>
@@ -277,7 +280,7 @@ function ProjAccordionCard({ project, isOpen, onToggle }: ProjCardProps) {
             transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
             style={{ overflow: "hidden" }}
           >
-            <div className="px-5 pb-5 space-y-3 border-t" style={{ borderColor: "rgba(255,255,255,0.06)", paddingTop: "12px" }}>
+            <div className="px-5 pb-5 space-y-3 border-t" style={{ borderColor: "var(--pg-border)", paddingTop: "12px" }}>
               {/* Tech tags */}
               <div className="flex flex-wrap gap-1.5">
                 {project.tags.map((tag) => (
@@ -291,9 +294,9 @@ function ProjAccordionCard({ project, isOpen, onToggle }: ProjCardProps) {
                   <a
                     href={project.github} target="_blank" rel="noopener noreferrer"
                     className="flex items-center gap-1.5 text-xs font-medium transition-colors duration-150"
-                    style={{ color: "rgba(255,255,255,0.4)" }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.8)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}
+                    style={{ color: "var(--pg-text-3)" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--pg-text-1)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--pg-text-3)")}
                   >
                     GitHub <ArrowUpRight className="w-3 h-3" />
                   </a>
@@ -323,7 +326,11 @@ export function RecruiterModeSection() {
   const toggle = (id: string) =>
     setOpenIds((prev) => {
       const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
       return next;
     });
 
@@ -332,8 +339,7 @@ export function RecruiterModeSection() {
   return (
     <section
       id="recruiter-mode"
-      className="py-20"
-      style={{ backgroundColor: "#040404", borderTop: "1px solid rgba(255,255,255,0.05)" }}
+      className="section-alt border-t border-pg-border py-20"
     >
       <div className="section-container">
 
@@ -346,10 +352,10 @@ export function RecruiterModeSection() {
           className="mb-12 text-center"
         >
           <p className="section-label mb-3">Recruiter Quick View</p>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-pg-text-1">
             <MaskText text="Why hire me?" />
           </h2>
-          <p className="mt-3 text-base max-w-xl mx-auto" style={{ color: "var(--color-pg-text-2)" }}>
+          <p className="mt-3 text-base max-w-xl mx-auto" style={{ color: "var(--pg-text-2)" }}>
             Click any card to expand — experience and projects with full details.
           </p>
         </motion.div>
@@ -367,17 +373,17 @@ export function RecruiterModeSection() {
             >
               <div
                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{ background: "rgba(126,184,247,0.04)", filter: "blur(12px)" }}
+                style={{ background: "color-mix(in srgb, var(--pg-accent) 6%, transparent)", filter: "blur(12px)" }}
               />
               <div
                 className="relative flex flex-col items-center text-center p-6 rounded-2xl transition-all duration-300"
                 style={{ background: "var(--pg-surface)", border: "1px solid var(--pg-border)" }}
-                onMouseEnter={(e) => (e.currentTarget.style.borderColor = "rgba(126,184,247,0.3)")}
+                onMouseEnter={(e) => (e.currentTarget.style.borderColor = "var(--pg-border-hover)")}
                 onMouseLeave={(e) => (e.currentTarget.style.borderColor = "var(--pg-border)")}
               >
                 <stat.Icon className="w-6 h-6 mb-3" style={{ color: ACC }} />
-                <div className="text-2xl font-bold text-white mb-1">{stat.value}</div>
-                <div className="text-xs" style={{ color: "var(--color-pg-text-2)" }}>{stat.label}</div>
+                <div className="text-2xl font-bold text-pg-text-1 mb-1">{stat.value}</div>
+                <div className="text-xs" style={{ color: "var(--pg-text-2)" }}>{stat.label}</div>
               </div>
             </motion.div>
           ))}
@@ -391,7 +397,7 @@ export function RecruiterModeSection() {
           transition={{ duration: 0.5 }}
           className="mb-8"
         >
-          <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "var(--color-pg-text-3)" }}>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "var(--pg-text-3)" }}>
             Experience
           </p>
           <div className="space-y-3">
@@ -414,7 +420,7 @@ export function RecruiterModeSection() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="mb-12"
         >
-          <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "var(--color-pg-text-3)" }}>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "var(--pg-text-3)" }}>
             Featured Projects
           </p>
           <div className="space-y-3">

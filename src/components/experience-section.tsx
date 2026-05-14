@@ -34,7 +34,7 @@ function CompanyBadge({ name }: { name: string }) {
       style={{
         background: "rgba(126,184,247,0.07)",
         border: "1px solid rgba(126,184,247,0.18)",
-        color: "var(--color-pg-accent)",
+        color: "var(--pg-accent)",
         letterSpacing: "0.04em",
       }}
     >
@@ -54,7 +54,7 @@ function ActiveDot() {
       />
       <span
         className="relative z-10 w-2.5 h-2.5 rounded-full"
-        style={{ background: "var(--color-pg-accent)", boxShadow: "0 0 8px rgba(126,184,247,0.6)" }}
+        style={{ background: "var(--pg-accent)", boxShadow: "0 0 8px rgba(126,184,247,0.6)" }}
       />
     </span>
   );
@@ -80,8 +80,7 @@ export function ExperienceSection() {
   return (
     <section
       id="experience"
-      className="py-24"
-      style={{ backgroundColor: "#000000" }}
+      className="section-primary py-24"
     >
       <div className="section-container">
 
@@ -94,7 +93,7 @@ export function ExperienceSection() {
           className="mb-16"
         >
           <p className="section-label mb-2">Career</p>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: "var(--color-pg-text-1)" }}>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: "var(--pg-text-1)" }}>
             <MaskText text="Experience" />
           </h2>
         </motion.div>
@@ -105,7 +104,7 @@ export function ExperienceSection() {
           {/* Animated vertical line */}
           <div
             className="absolute left-[5px] top-3 bottom-3 w-px hidden sm:block overflow-hidden"
-            style={{ background: "rgba(255,255,255,0.05)" }}
+            style={{ background: "var(--pg-border)" }}
           >
             <motion.div
               className="w-full origin-top"
@@ -145,7 +144,7 @@ export function ExperienceSection() {
                   <motion.div
                     whileHover={{
                       y: -4,
-                      boxShadow: "0 24px 64px rgba(0,0,0,0.55), 0 0 0 1px rgba(126,184,247,0.14)",
+                      boxShadow: "0 24px 64px var(--pg-shadow), 0 0 0 1px color-mix(in srgb, var(--pg-accent) 18%, transparent)",
                     }}
                     transition={{ duration: 0.22, ease: "easeOut" }}
                     className="glass-card overflow-hidden"
@@ -179,7 +178,7 @@ export function ExperienceSection() {
                             <div className="flex items-center gap-2 flex-wrap">
                               <h3
                                 className="text-base font-bold tracking-tight"
-                                style={{ color: "var(--color-pg-text-1)" }}
+                                style={{ color: "var(--pg-text-1)" }}
                               >
                                 {exp.company}
                               </h3>
@@ -198,7 +197,7 @@ export function ExperienceSection() {
                             </div>
                             <p
                               className="text-xs mt-0.5"
-                              style={{ color: "var(--color-pg-text-3)" }}
+                              style={{ color: "var(--pg-text-3)" }}
                             >
                               {exp.companyTagline}
                             </p>
@@ -217,14 +216,14 @@ export function ExperienceSection() {
                               <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 mb-5">
                                 <span
                                   className="text-sm font-semibold"
-                                  style={{ color: "var(--color-pg-text-1)" }}
+                                  style={{ color: "var(--pg-text-1)" }}
                                 >
                                   {role.title}
                                 </span>
 
                                 <span
                                   className="h-3 w-px hidden sm:block"
-                                  style={{ background: "rgba(255,255,255,0.12)" }}
+                                  style={{ background: "var(--pg-border)" }}
                                 />
 
                                 <span
@@ -240,14 +239,14 @@ export function ExperienceSection() {
 
                                 <span
                                   className="text-[11px]"
-                                  style={{ color: "var(--color-pg-text-3)" }}
+                                  style={{ color: "var(--pg-text-3)" }}
                                 >
                                   {role.startDate} – {role.endDate}
                                 </span>
 
                                 <span
                                   className="text-[11px]"
-                                  style={{ color: "var(--color-pg-text-3)" }}
+                                  style={{ color: "var(--pg-text-3)" }}
                                 >
                                   · {role.location}
                                 </span>
@@ -274,7 +273,7 @@ export function ExperienceSection() {
                                     />
                                     <span
                                       className="text-sm leading-relaxed"
-                                      style={{ color: "var(--color-pg-text-2)" }}
+                                      style={{ color: "var(--pg-text-2)" }}
                                     >
                                       {bullet}
                                     </span>

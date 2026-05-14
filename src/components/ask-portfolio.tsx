@@ -300,8 +300,7 @@ export function AskPortfolio() {
   return (
     <section
       id="ask"
-      className="py-24"
-      style={{ backgroundColor: "#040404", borderTop: "1px solid rgba(255,255,255,0.04)" }}
+      className="section-alt border-t border-pg-border py-24"
     >
       <div className="section-container">
 
@@ -314,13 +313,13 @@ export function AskPortfolio() {
           className="mb-12"
         >
           <div className="flex items-center gap-2 mb-3">
-            <Bot className="w-4 h-4" style={{ color: "var(--color-pg-accent)" }} />
+            <Bot className="w-4 h-4" style={{ color: "var(--pg-accent)" }} />
             <p className="section-label">Portfolio Search</p>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-pg-text-1">
             <MaskText text="Ask My Portfolio" />
           </h2>
-          <p className="mt-3 max-w-xl text-sm leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>
+          <p className="mt-3 max-w-xl text-sm leading-relaxed" style={{ color: "var(--pg-text-2)" }}>
             Search by role, technology, or project type. Answers come only from local portfolio data.
           </p>
         </motion.div>
@@ -338,7 +337,7 @@ export function AskPortfolio() {
           {/* Input + chips */}
           <div
             className="p-6 sm:p-8"
-            style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+            style={{ borderBottom: "1px solid var(--pg-border)" }}
           >
             <form
               onSubmit={(e) => { e.preventDefault(); handleSubmit(query); }}
@@ -347,7 +346,7 @@ export function AskPortfolio() {
               <div className="relative flex-1">
                 <Search
                   className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none"
-                  style={{ color: "var(--color-pg-text-3)" }}
+                  style={{ color: "var(--pg-text-3)" }}
                 />
                 <input
                   ref={inputRef}
@@ -355,19 +354,19 @@ export function AskPortfolio() {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder='Try "Which project shows AI experience?" or pick a topic below'
-                  className="w-full pl-10 pr-4 py-3 rounded-xl text-sm text-white placeholder-zinc-600 outline-none transition-all duration-200 bg-white/[0.04] border border-white/[0.09] focus:border-[rgba(126,184,247,0.45)] focus:ring-2 focus:ring-[rgba(126,184,247,0.08)]"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl text-sm text-pg-text-1 placeholder:text-pg-text-3 outline-none transition-all duration-200 bg-pg-input-bg border border-pg-border focus:border-pg-border-hover focus:ring-2 focus:ring-pg-accent/10"
                 />
               </div>
               <button
                 type="submit"
                 className="flex items-center gap-1.5 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 shrink-0 cursor-pointer"
                 style={{
-                  background: "rgba(126,184,247,0.12)",
-                  border: "1px solid rgba(126,184,247,0.25)",
-                  color: "var(--color-pg-accent)",
+                  background: "color-mix(in srgb, var(--pg-accent) 14%, transparent)",
+                  border: "1px solid color-mix(in srgb, var(--pg-accent) 28%, transparent)",
+                  color: "var(--pg-accent)",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(126,184,247,0.2)")}
-                onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(126,184,247,0.12)")}
+                onMouseEnter={(e) => (e.currentTarget.style.background = "color-mix(in srgb, var(--pg-accent) 22%, transparent)")}
+                onMouseLeave={(e) => (e.currentTarget.style.background = "color-mix(in srgb, var(--pg-accent) 14%, transparent)")}
               >
                 Ask
                 <ChevronRight className="w-4 h-4" />
@@ -382,19 +381,19 @@ export function AskPortfolio() {
                   onClick={() => handleChip(chip.query)}
                   className="text-xs px-3 py-1.5 rounded-full transition-all duration-150 cursor-pointer"
                   style={{
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    color: "var(--color-pg-text-2)",
+                    background: "var(--pg-surface)",
+                    border: "1px solid var(--pg-border)",
+                    color: "var(--pg-text-2)",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(126,184,247,0.3)";
-                    e.currentTarget.style.color = "var(--color-pg-accent)";
-                    e.currentTarget.style.background = "rgba(126,184,247,0.05)";
+                    e.currentTarget.style.borderColor = "var(--pg-border-hover)";
+                    e.currentTarget.style.color = "var(--pg-accent)";
+                    e.currentTarget.style.background = "color-mix(in srgb, var(--pg-accent) 7%, transparent)";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
-                    e.currentTarget.style.color = "var(--color-pg-text-2)";
-                    e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+                    e.currentTarget.style.borderColor = "var(--pg-border)";
+                    e.currentTarget.style.color = "var(--pg-text-2)";
+                    e.currentTarget.style.background = "var(--pg-surface)";
                   }}
                 >
                   {chip.label}
@@ -418,17 +417,17 @@ export function AskPortfolio() {
                 {/* ── No match ── */}
                 {result.kind === "none" && (
                   <div className="text-center py-10">
-                    <p className="text-sm mb-2 text-white">No matches found.</p>
-                    <p className="text-xs mb-6 max-w-sm mx-auto" style={{ color: "var(--color-pg-text-3)" }}>
+                    <p className="text-sm mb-2 text-pg-text-1">No matches found.</p>
+                    <p className="text-xs mb-6 max-w-sm mx-auto" style={{ color: "var(--pg-text-3)" }}>
                       Try rephrasing your question, or use one of the chips above — this searches local portfolio data only.
                     </p>
                     <button
                       onClick={handleReset}
                       className="inline-flex items-center gap-1.5 text-xs px-4 py-2 rounded-lg cursor-pointer transition-all"
                       style={{
-                        color: "var(--color-pg-accent)",
-                        border: "1px solid rgba(126,184,247,0.2)",
-                        background: "rgba(126,184,247,0.06)",
+                        color: "var(--pg-accent)",
+                        border: "1px solid color-mix(in srgb, var(--pg-accent) 24%, transparent)",
+                        background: "color-mix(in srgb, var(--pg-accent) 8%, transparent)",
                       }}
                     >
                       <RotateCcw className="w-3 h-3" />
@@ -440,7 +439,7 @@ export function AskPortfolio() {
                 {/* ── Project results ── */}
                 {result.kind === "projects" && result.matches && (
                   <div>
-                    <p className="text-xs font-medium mb-5" style={{ color: "var(--color-pg-text-2)" }}>
+                    <p className="text-xs font-medium mb-5" style={{ color: "var(--pg-text-2)" }}>
                       {result.headline}
                     </p>
 
@@ -453,20 +452,20 @@ export function AskPortfolio() {
                           transition={{ duration: 0.3, delay: i * 0.07 }}
                           className="flex flex-col gap-3 rounded-xl p-4"
                           style={{
-                            background: "rgba(255,255,255,0.03)",
-                            border: "1px solid rgba(255,255,255,0.07)",
+                            background: "var(--pg-surface)",
+                            border: "1px solid var(--pg-border)",
                           }}
                         >
                           {/* Title */}
                           <div className="flex items-start gap-2">
                             <span className={`mt-[5px] h-1.5 w-1.5 rounded-full shrink-0 ${statusDot[match.project.status]}`} />
-                            <span className="text-[13px] font-semibold text-white leading-snug">
+                            <span className="text-[13px] font-semibold text-pg-text-1 leading-snug">
                               {match.project.title}
                             </span>
                           </div>
 
                           {/* Reason */}
-                          <p className="text-xs leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>
+                          <p className="text-xs leading-relaxed" style={{ color: "var(--pg-text-2)" }}>
                             {match.reason}
                           </p>
 
@@ -475,9 +474,9 @@ export function AskPortfolio() {
                             <p
                               className="text-[11px] font-mono px-2.5 py-1.5 rounded-lg"
                               style={{
-                                color: "var(--color-pg-text-3)",
-                                background: "rgba(255,255,255,0.02)",
-                                border: "1px solid rgba(255,255,255,0.05)",
+                                color: "var(--pg-text-3)",
+                                background: "color-mix(in srgb, var(--pg-text-1) 4%, transparent)",
+                                border: "1px solid var(--pg-border)",
                               }}
                             >
                               ↳ {match.project.highlight}
@@ -493,7 +492,7 @@ export function AskPortfolio() {
                                 style={{
                                   background: "rgba(126,184,247,0.06)",
                                   border: "1px solid rgba(126,184,247,0.12)",
-                                  color: "var(--color-pg-text-2)",
+                                  color: "var(--pg-text-2)",
                                 }}
                               >
                                 {tag}
@@ -505,7 +504,7 @@ export function AskPortfolio() {
                           <Link
                             href={`/projects/${match.project.id}`}
                             className="mt-auto self-start flex items-center gap-1 text-[11px] font-medium transition-opacity hover:opacity-80"
-                            style={{ color: "var(--color-pg-accent)" }}
+                            style={{ color: "var(--pg-accent)" }}
                           >
                             View case study
                             <ArrowUpRight className="w-3 h-3" />
@@ -517,9 +516,9 @@ export function AskPortfolio() {
                     <button
                       onClick={handleReset}
                       className="mt-5 inline-flex items-center gap-1.5 text-xs cursor-pointer transition-colors"
-                      style={{ color: "var(--color-pg-text-3)" }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-pg-text-2)")}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-pg-text-3)")}
+                      style={{ color: "var(--pg-text-3)" }}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = "var(--pg-text-2)")}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = "var(--pg-text-3)")}
                     >
                       <RotateCcw className="w-3 h-3" />
                       Ask another question
@@ -530,7 +529,7 @@ export function AskPortfolio() {
                 {/* ── Skills result ── */}
                 {result.kind === "skills" && (
                   <div>
-                    <p className="text-xs font-medium mb-5" style={{ color: "var(--color-pg-text-2)" }}>
+                    <p className="text-xs font-medium mb-5" style={{ color: "var(--pg-text-2)" }}>
                       {result.headline}
                     </p>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -542,11 +541,11 @@ export function AskPortfolio() {
                           transition={{ duration: 0.25, delay: i * 0.05 }}
                           className="rounded-xl p-4"
                           style={{
-                            background: "rgba(255,255,255,0.03)",
-                            border: "1px solid rgba(255,255,255,0.07)",
+                            background: "var(--pg-surface)",
+                            border: "1px solid var(--pg-border)",
                           }}
                         >
-                          <p className="text-[11px] font-semibold uppercase tracking-wide mb-2.5" style={{ color: "var(--color-pg-accent)" }}>
+                          <p className="text-[11px] font-semibold uppercase tracking-wide mb-2.5" style={{ color: "var(--pg-accent)" }}>
                             {group.category}
                           </p>
                           <div className="flex flex-wrap gap-1">
@@ -555,9 +554,9 @@ export function AskPortfolio() {
                                 key={skill}
                                 className="text-[10px] px-1.5 py-0.5 rounded"
                                 style={{
-                                  background: "rgba(255,255,255,0.04)",
-                                  border: "1px solid rgba(255,255,255,0.08)",
-                                  color: "var(--color-pg-text-2)",
+                                  background: "color-mix(in srgb, var(--pg-text-1) 5%, transparent)",
+                                  border: "1px solid var(--pg-border)",
+                                  color: "var(--pg-text-2)",
                                 }}
                               >
                                 {skill}
@@ -571,9 +570,9 @@ export function AskPortfolio() {
                     <button
                       onClick={handleReset}
                       className="mt-5 inline-flex items-center gap-1.5 text-xs cursor-pointer transition-colors"
-                      style={{ color: "var(--color-pg-text-3)" }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-pg-text-2)")}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-pg-text-3)")}
+                      style={{ color: "var(--pg-text-3)" }}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = "var(--pg-text-2)")}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = "var(--pg-text-3)")}
                     >
                       <RotateCcw className="w-3 h-3" />
                       Ask another question
@@ -588,10 +587,10 @@ export function AskPortfolio() {
           {/* Disclaimer */}
           <div
             className="px-6 sm:px-8 py-3 flex items-center gap-2"
-            style={{ borderTop: "1px solid rgba(255,255,255,0.04)", background: "rgba(0,0,0,0.25)" }}
+            style={{ borderTop: "1px solid var(--pg-border)", background: "color-mix(in srgb, var(--pg-text-1) 3%, transparent)" }}
           >
-            <Sparkles className="w-3 h-3 shrink-0" style={{ color: "var(--color-pg-text-3)" }} />
-            <p className="text-[11px]" style={{ color: "var(--color-pg-text-3)" }}>
+            <Sparkles className="w-3 h-3 shrink-0" style={{ color: "var(--pg-text-3)" }} />
+            <p className="text-[11px]" style={{ color: "var(--pg-text-3)" }}>
               This assistant searches only local portfolio content — no external AI API, no backend, no API keys.
             </p>
           </div>

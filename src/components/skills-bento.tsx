@@ -18,8 +18,7 @@ export function SkillsBento() {
   return (
     <section
       id="skills"
-      className="py-24"
-      style={{ backgroundColor: "#000000" }}
+      className="section-primary py-24"
     >
       <div className="section-container">
 
@@ -31,10 +30,10 @@ export function SkillsBento() {
           className="mb-12"
         >
           <p className="section-label mb-3">Stack</p>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-pg-text-1">
             <MaskText text="Technical Skills" />
           </h2>
-          <p className="mt-3 max-w-xl text-sm leading-relaxed" style={{ color: "var(--color-pg-text-2)" }}>
+          <p className="mt-3 max-w-xl text-sm leading-relaxed" style={{ color: "var(--pg-text-2)" }}>
             A toolkit spanning AI research, systems engineering, and full-stack development.
           </p>
         </motion.div>
@@ -63,7 +62,7 @@ export function SkillsBento() {
                 {/* Hover glow */}
                 <div
                   className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  style={{ background: "rgba(126,184,247,0.02)", filter: "blur(20px)" }}
+                  style={{ background: "color-mix(in srgb, var(--pg-accent) 4%, transparent)", filter: "blur(20px)" }}
                 />
 
                 {/* Category header */}
@@ -71,13 +70,13 @@ export function SkillsBento() {
                   <div
                     className="flex items-center justify-center w-9 h-9 rounded-xl shrink-0"
                     style={{
-                      background: "rgba(126,184,247,0.08)",
-                      border: "1px solid rgba(126,184,247,0.15)",
+                      background: "color-mix(in srgb, var(--pg-accent) 10%, transparent)",
+                      border: "1px solid color-mix(in srgb, var(--pg-accent) 18%, transparent)",
                     }}
                   >
-                    <span style={{ color: "var(--color-pg-accent)" }}><Icon className="w-4 h-4" /></span>
+                    <span style={{ color: "var(--pg-accent)" }}><Icon className="w-4 h-4" /></span>
                   </div>
-                  <h3 className="text-sm font-semibold text-white">{group.category}</h3>
+                  <h3 className="text-sm font-semibold text-pg-text-1">{group.category}</h3>
                 </div>
 
                 {/* Skill chips */}
@@ -107,14 +106,14 @@ export function SkillsBento() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
           className="mt-10 text-sm text-center"
-          style={{ color: "var(--color-pg-text-2)" }}
+          style={{ color: "var(--pg-text-2)" }}
         >
           Currently exploring{" "}
-          <span style={{ color: "var(--color-pg-accent)" }}>Rust</span>
+          <span style={{ color: "var(--pg-accent)" }}>Rust</span>
           {", "}
-          <span style={{ color: "var(--color-pg-accent)" }}>WebAssembly</span>
+          <span style={{ color: "var(--pg-accent)" }}>WebAssembly</span>
           {", and "}
-          <span style={{ color: "var(--color-pg-accent)" }}>Reinforcement Learning</span>
+          <span style={{ color: "var(--pg-accent)" }}>Reinforcement Learning</span>
           {" — feel free to ask about those too."}
         </motion.p>
 

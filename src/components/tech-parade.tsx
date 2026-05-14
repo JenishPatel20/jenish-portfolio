@@ -36,9 +36,9 @@ export function TechParade() {
   return (
     <div
       style={{
-        backgroundColor: "#000000",
-        borderTop: "1px solid rgba(255,255,255,0.05)",
-        borderBottom: "1px solid rgba(255,255,255,0.05)",
+        backgroundColor: "var(--pg-section)",
+        borderTop: "1px solid var(--pg-border)",
+        borderBottom: "1px solid var(--pg-border)",
         overflow: "hidden",
         padding: "16px 0",
         maskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
@@ -77,15 +77,15 @@ export function TechParade() {
               gap: "8px",
               padding: "5px 14px 5px 6px",
               borderRadius: "999px",
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.07)",
+              background: "var(--pg-surface)",
+              border: "1px solid var(--pg-border)",
               flexShrink: 0,
               cursor: "default",
               userSelect: "none",
               transition: "border-color 0.2s ease",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)")}
-            onMouseLeave={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)")}
+            onMouseEnter={(e) => (e.currentTarget.style.borderColor = "var(--pg-border-hover)")}
+            onMouseLeave={(e) => (e.currentTarget.style.borderColor = "var(--pg-border)")}
           >
             {/* Branded icon badge */}
             <span
@@ -113,7 +113,7 @@ export function TechParade() {
               style={{
                 fontSize: 12,
                 fontWeight: 500,
-                color: "rgba(255,255,255,0.65)",
+                color: "var(--pg-text-2)",
                 whiteSpace: "nowrap",
               }}
             >

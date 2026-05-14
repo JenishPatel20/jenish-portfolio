@@ -14,16 +14,16 @@ export default function ProjectsPage() {
   return (
     <>
       <SiteHeader />
-      <main className="min-h-screen pt-24 pb-20" style={{ backgroundColor: "#09090f" }}>
+      <main className="min-h-screen bg-pg-section-alt pt-24 pb-20">
         <div className="section-container">
 
-          <a
+          <Link
             href="/"
             className="inline-flex items-center gap-1.5 text-sm mb-10 transition-colors duration-200 text-pg-text-3 hover:text-pg-text-1"
           >
             <ArrowLeft className="w-4 h-4" />
             Back home
-          </a>
+          </Link>
 
           <div className="mb-10">
             <p className="section-label mb-2">Work</p>
