@@ -74,7 +74,7 @@ export function Hero({ onRecruiterMode }: HeroProps) {
                   style={{ backgroundColor: "var(--pg-accent)" }}
                 />
               </span>
-              Open to SWE &amp; AI/ML roles
+              Open to New Grad SWE, Backend &amp; AI/ML roles
             </motion.div>
 
             {/* Name */}
@@ -91,7 +91,7 @@ export function Hero({ onRecruiterMode }: HeroProps) {
 
             {/* Subtitle — mask reveal + split colour (Effect 01 + 14) */}
             <p className="text-lg font-medium mb-4 flex flex-wrap gap-x-[0.27em]">
-              {/* "Software Engineer ·" — white */}
+              {/* "AI/ML Engineer · Backend & Software Systems ·" — white */}
               <span style={{ overflow: "hidden", display: "inline-block" }}>
                 <motion.span
                   style={{ display: "inline-block", color: "var(--pg-text-2)" }}
@@ -102,7 +102,7 @@ export function Hero({ onRecruiterMode }: HeroProps) {
                   Software Engineer ·
                 </motion.span>
               </span>
-              {/* "MS CS @ Rutgers" — accent blue */}
+              {/* "MS CS @ Rutgers · Dec 2026" — accent blue */}
               <span style={{ overflow: "hidden", display: "inline-block" }}>
                 <motion.span
                   style={{ display: "inline-block", color: "var(--pg-accent)" }}
@@ -123,8 +123,8 @@ export function Hero({ onRecruiterMode }: HeroProps) {
               className="text-base leading-relaxed mb-8 max-w-md"
               style={{ color: "var(--pg-text-2)" }}
             >
-              Building intelligent systems at the intersection of AI, high-performance computing,
-              and full-stack engineering. MS CS @ Rutgers, graduating Fall 2026.
+              Building applied AI/ML and backend systems — from LLM-powered workflows and data pipelines
+              to machine learning experiments and production-oriented APIs. M.S. Computer Science at Rutgers, graduating December 2026.
             </motion.p>
 
             {/* CTAs */}
