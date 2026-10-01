@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "motion/react";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft, ExternalLink, ListTree } from "lucide-react";
 import type { Project, RoleFilter } from "@/data/projects";
 import { ProjectMockup } from "@/components/project-mockup";
 
@@ -108,7 +108,7 @@ export function CaseStudyClient({ project, prev, next }: Props) {
 
 
   return (
-    <main className="min-h-screen bg-pg-section-alt">
+    <main className="min-h-screen bg-pg-section-alt case-study-page">
 
       {/* Scroll-driven reading progress bar */}
       <ReadingProgress color={cfg.bar} />
@@ -322,7 +322,7 @@ export function CaseStudyClient({ project, prev, next }: Props) {
                     {prev && (
                       <Link
                         href={`/projects/${prev.id}`}
-                        className="group flex flex-col gap-1 p-4 rounded-xl transition-all duration-200"
+                        className="group flex flex-col gap-1 p-4 rounded-xl transition-all duration-200 hover:-translate-y-0.5"
                         style={{ background: "var(--pg-surface)", border: "1px solid var(--pg-border)" }}
                         onMouseEnter={(e) => (e.currentTarget.style.borderColor = cfg.border)}
                         onMouseLeave={(e) => (e.currentTarget.style.borderColor = "var(--pg-border)")}
@@ -338,7 +338,7 @@ export function CaseStudyClient({ project, prev, next }: Props) {
                     {next && (
                       <Link
                         href={`/projects/${next.id}`}
-                        className="group flex flex-col gap-1 p-4 rounded-xl text-right transition-all duration-200 w-full"
+                        className="group flex flex-col gap-1 p-4 rounded-xl text-right transition-all duration-200 hover:-translate-y-0.5 w-full"
                         style={{ background: "var(--pg-surface)", border: "1px solid var(--pg-border)" }}
                         onMouseEnter={(e) => (e.currentTarget.style.borderColor = cfg.border)}
                         onMouseLeave={(e) => (e.currentTarget.style.borderColor = "var(--pg-border)")}
@@ -358,6 +358,34 @@ export function CaseStudyClient({ project, prev, next }: Props) {
           {/* ── Sidebar ── */}
           <aside className="hidden lg:block" aria-label="Project details">
             <div className="sticky top-24 flex flex-col gap-4">
+
+              <nav
+                className="rounded-2xl p-4"
+                aria-label="Case study sections"
+                style={{ background: "var(--pg-surface)", border: "1px solid var(--pg-border)" }}
+              >
+                <div className="mb-3 flex items-center gap-2">
+                  <ListTree className="h-3.5 w-3.5" style={{ color: cfg.color }} />
+                  <SidebarLabel>Case Study</SidebarLabel>
+                </div>
+                <div className="space-y-1">
+                  {contentSections.map((section, index) => (
+                    <a
+                      key={section.id}
+                      href={`#${section.id}`}
+                      className="group flex items-center gap-2 rounded-lg px-2.5 py-2 text-xs transition-all duration-200"
+                      style={{ color: "var(--pg-text-3)" }}
+                    >
+                      <span className="font-mono text-[10px] opacity-50" style={{ color: cfg.color }}>
+                        0{index + 1}
+                      </span>
+                      <span className="group-hover:text-pg-text-1 transition-colors duration-200">
+                        {section.heading}
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </nav>
 
               {/* Details card — role-tinted border + top strip */}
               <div
