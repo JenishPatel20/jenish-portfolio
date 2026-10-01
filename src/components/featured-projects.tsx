@@ -24,11 +24,23 @@ export function FeaturedProjects({ recruiterMode }: FeaturedProjectsProps) {
   const [activeFilter, setActiveFilter] = useState<RoleFilter | "all">("all");
 
   const displayed = useMemo(() => {
-    return projects.filter((project) => {
-      if (recruiterMode && !project.featured) return false;
-      if (activeFilter === "all") return true;
-      return project.roles.includes(activeFilter);
-    });
+    const priority = [
+      "edge-ai-benchmark",
+      "industrial-anomaly-detection",
+      "auction-master",
+      "customer-churn",
+      "ai-localization",
+      "android-photo-manager",
+      "chess-engine",
+    ];
+
+    return projects
+      .filter((project) => {
+        if (recruiterMode && !project.featured) return false;
+        if (activeFilter === "all") return true;
+        return project.roles.includes(activeFilter);
+      })
+      .sort((a, b) => priority.indexOf(a.id) - priority.indexOf(b.id));
   }, [activeFilter, recruiterMode]);
 
   return (
