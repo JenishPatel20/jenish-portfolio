@@ -101,12 +101,11 @@ export function FeaturedProjects({ recruiterMode }: FeaturedProjectsProps) {
               <motion.div
                 key={project.id}
                 layout
-
                 initial={{ opacity: 0, y: 16, filter: "blur(10px)" }}
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                viewport={{ once: false, amount: 0.08 }}
+                viewport={{ once: true, amount: 0.08 }}
                 exit={{ opacity: 0, scale: 0.96, filter: "blur(6px)" }}
-                transition={{ duration: 0.5, delay: index * 0.12 }}
+                transition={{ duration: 0.45, delay: Math.min(index * 0.07, 0.28), ease: [0.16, 1, 0.3, 1] }}
               >
                 <ProjectCard project={project} />
               </motion.div>
