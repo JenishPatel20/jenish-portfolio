@@ -56,8 +56,11 @@ export function FeaturedProjects({ recruiterMode }: FeaturedProjectsProps) {
           <div>
             <p className="section-label mb-2">Work</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: "var(--pg-text-1)" }}>
-              <MaskText text="Projects" />
+              <MaskText text="Selected engineering work" />
             </h2>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed" style={{ color: "var(--pg-text-2)" }}>
+              Evidence-first case studies across applied AI/ML, backend systems, and software engineering.
+            </p>
           </div>
 
           <Link
@@ -98,13 +101,14 @@ export function FeaturedProjects({ recruiterMode }: FeaturedProjectsProps) {
               <motion.div
                 key={project.id}
                 layout
+                className={index === 0 && activeFilter === "all" ? "md:col-span-2 lg:col-span-2" : ""}
                 initial={{ opacity: 0, y: 16, filter: "blur(10px)" }}
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: false, amount: 0.08 }}
                 exit={{ opacity: 0, scale: 0.96, filter: "blur(6px)" }}
                 transition={{ duration: 0.5, delay: index * 0.12 }}
               >
-                <ProjectCard project={project} />
+                <ProjectCard project={project} spotlight={index === 0 && activeFilter === "all"} />
               </motion.div>
             ))}
           </AnimatePresence>
