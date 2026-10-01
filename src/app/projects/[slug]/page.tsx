@@ -17,8 +17,20 @@ export async function generateMetadata({
   const project = projects.find((p) => p.id === slug);
   if (!project) return {};
   return {
-    title: `${project.title} — Jenish Patel`,
+    title: project.title,
     description: project.description,
+    alternates: { canonical: `/projects/${project.id}` },
+    openGraph: {
+      type: "article",
+      url: `/projects/${project.id}`,
+      title: `${project.title} | Jenish Patel`,
+      description: project.description,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} | Jenish Patel`,
+      description: project.description,
+    },
   };
 }
 

@@ -43,7 +43,7 @@ export function RecruiterModeBanner({ onDismiss }: RecruiterModeBannerProps) {
 const stats = [
   { value: "20+",       label: "FastAPI endpoints · Greenlit", Icon: Briefcase     },
   { value: "48–52",     label: "TPS · Llama 3.2 1B",          Icon: Zap           },
-  { value: "AUC ≥ .85", label: "Telco + BankChurners",        Icon: FolderOpen    },
+  { value: "0.993",     label: "BankChurners holdout AUC",   Icon: FolderOpen    },
   { value: "Dec '26",   label: "M.S. CS graduation",           Icon: GraduationCap },
 ];
 
