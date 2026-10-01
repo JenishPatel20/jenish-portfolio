@@ -12,12 +12,12 @@ const OrbitalSphereScene = dynamic(
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 const TECH_CHIPS: { label: string; top: string; left: string; delay: number }[] = [
-  { label: "AI/ML",      top: "3%",  left: "5%",  delay: 0.9 },
-  { label: "WebGPU",     top: "5%",  left: "62%", delay: 1.0 },
-  { label: "Full Stack", top: "42%", left: "87%", delay: 1.1 },
-  { label: "Systems",    top: "80%", left: "65%", delay: 1.2 },
-  { label: "Mobile",     top: "83%", left: "5%",  delay: 1.3 },
-  { label: "Algorithms", top: "40%", left: "-2%", delay: 1.4 },
+  { label: "Applied AI", top: "3%",  left: "4%",  delay: 0.9 },
+  { label: "WebGPU",     top: "4%",  left: "67%", delay: 1.0 },
+  { label: "FastAPI",    top: "40%", left: "86%", delay: 1.1 },
+  { label: "PostgreSQL", top: "80%", left: "62%", delay: 1.2 },
+  { label: "PyTorch",    top: "82%", left: "5%",  delay: 1.3 },
+  { label: "TypeScript", top: "41%", left: "-2%", delay: 1.4 },
 ];
 
 const STAT_CARDS: {
@@ -29,10 +29,10 @@ const STAT_CARDS: {
   floatY: number[];
   delay: number;
 }[] = [
-  { value: "7",   label: "Projects",     top: "2%",  right: "16%", floatY: [0, -7, 0], delay: 1.0 },
-  { value: "30+", label: "Skills",       top: "38%", left: "2%",   floatY: [0,  5, 0], delay: 1.1 },
-  { value: "4",   label: "Live Demos",   top: "38%", right: "2%",  floatY: [0, -6, 0], delay: 1.2 },
-  { value: "7",   label: "Case Studies", top: "76%", right: "14%", floatY: [0,  6, 0], delay: 1.3 },
+  { value: "20+",      label: "API endpoints", top: "2%",  right: "12%", floatY: [0, -7, 0], delay: 1.0 },
+  { value: "48–52",    label: "LLM TPS",       top: "38%", left: "0%",   floatY: [0,  5, 0], delay: 1.1 },
+  { value: "AUC ≥ .85",label: "ML results",    top: "38%", right: "0%",  floatY: [0, -6, 0], delay: 1.2 },
+  { value: "Dec '26",  label: "M.S. CS",       top: "76%", right: "10%", floatY: [0,  6, 0], delay: 1.3 },
 ];
 
 // SVG hex nodes — viewBox 0 0 200 200, center (100,100), ring r=46
@@ -138,26 +138,40 @@ function PlaceholderScene() {
           </motion.span>
         </div>
         <span className="font-mono text-[10px] tracking-widest" style={{ color: "var(--pg-text-3)" }}>
-          sys.neural_v2
+          jenish.dev / signal-map
         </span>
       </div>
 
-      {/* Orbital diagram */}
+      {/* Developer identity signal map */}
       <div className="relative flex items-center justify-center flex-1 py-4 px-6" style={{ height: "calc(100% - 88px)" }}>
         <motion.div
           className="absolute rounded-full pointer-events-none"
-          style={{ width: "140px", height: "140px", background: "rgba(126,184,247,0.06)", filter: "blur(28px)" }}
-          animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0.9, 0.5] }}
-          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+          style={{ width: "150px", height: "150px", background: "rgba(126,184,247,0.07)", filter: "blur(30px)" }}
+          animate={{ scale: [1, 1.24, 1], opacity: [0.45, 0.85, 0.45] }}
+          transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
         />
-        <div className="relative w-[175px] h-[175px]">
+        <div className="relative w-[185px] h-[185px]">
           <OrbitalDiagram />
+          <div
+            className="absolute inset-0 m-auto flex h-20 w-20 flex-col items-center justify-center rounded-2xl"
+            style={{
+              background: "color-mix(in srgb, var(--pg-surface) 92%, transparent)",
+              border: "1px solid color-mix(in srgb, var(--pg-accent) 34%, var(--pg-border))",
+              boxShadow: "0 14px 36px var(--pg-shadow), inset 0 1px 0 color-mix(in srgb, var(--pg-text-1) 7%, transparent)",
+              backdropFilter: "blur(16px)",
+            }}
+          >
+            <span className="text-2xl font-bold tracking-[-0.08em]" style={{ color: "var(--pg-text-1)" }}>JP</span>
+            <span className="mt-1 text-[8px] font-mono uppercase tracking-[0.18em]" style={{ color: "var(--pg-accent)" }}>
+              build · measure
+            </span>
+          </div>
         </div>
       </div>
 
       {/* Footer tech strip */}
       <div className="relative flex items-center gap-2 px-5 py-3" style={{ borderTop: "1px solid var(--pg-border)" }}>
-        {["Python", "PyTorch", "WebGPU", "Node.js"].map((t) => (
+        {["Python", "FastAPI", "PyTorch", "PostgreSQL"].map((t) => (
           <span key={t} className="text-[9px] px-2 py-0.5 rounded font-medium" style={{
             background: "rgba(126,184,247,0.05)",
             border: "1px solid rgba(126,184,247,0.10)",
