@@ -42,9 +42,9 @@ export function RecruiterModeBanner({ onDismiss }: RecruiterModeBannerProps) {
 // ─── Stats ────────────────────────────────────────────────────────────────────
 const stats = [
   { value: "7",        label: "Projects Built",  Icon: FolderOpen    },
-  { value: "Co-op",    label: "Greenlit · AI/ML", Icon: Briefcase     },
+  { value: "Internship", label: "Greenlit · AI/ML", Icon: Briefcase     },
   { value: "MS + BS",  label: "CS @ Rutgers",     Icon: GraduationCap },
-  { value: "Fall '26", label: "Available",         Icon: Code2         },
+  { value: "Dec '26",  label: "Graduation",        Icon: Code2         },
 ];
 
 const ACC = "var(--pg-accent)";
