@@ -29,7 +29,7 @@ export const projects: Project[] = [
     id: "auction-master",
     title: "Auction Master",
     description:
-      "Team-built full-stack auction platform with authentication, auction creation, manual and auto-bidding, image uploads, email notifications, real-time refresh behavior, and an admin dashboard."
+      "Team-built full-stack auction platform with authentication, auction creation, manual and auto-bidding, image uploads, email notifications, real-time refresh behavior, and an admin dashboard.",
     tags: ["Node.js", "Express", "MySQL", "Firebase", "JavaScript", "Multer", "Nodemailer", "REST API"],
     roles: ["full-stack"],
     featured: true,
@@ -37,7 +37,7 @@ export const projects: Project[] = [
     collaboration: "Team project",
     repoNote: "Team repository is private; implementation details are summarized from the project source and README.",
     year: 2025,
-    highlight: "Node.js/Express + MySQL · Firebase auth/storage · bidding, email notifications, admin reporting"
+    highlight: "Node.js/Express + MySQL · Firebase auth/storage · bidding, email notifications, admin reporting",
     overview:
       "Auction Master is a team-built auction marketplace covering account access, auction creation, bidding, notifications, user profiles, and administrative reporting. The repository README documents manual and auto-bidding, image-backed listings, search/filtering, email notifications, profile management, and CSV export.",
     approach:
@@ -134,8 +134,7 @@ export const projects: Project[] = [
     status: "research",
     year: 2025,
     collaboration: "3-person academic project",
-    collaboration: "3-person academic project",
-    highlight: "Holdout AUC: BankChurners 0.993 · Telco 0.824 · SaaS 0.769 · SHAP explanations"
+    highlight: "Holdout AUC: BankChurners 0.993 · Telco 0.824 · SaaS 0.769 · SHAP explanations",
     overview:
       "A multi-dataset churn prediction system that goes beyond a single accuracy number — the goal is to understand which features drive churn at the individual customer level. Three industry datasets are used (telecom, SaaS, banking), each with different class imbalance ratios and feature sets. Three classifiers are compared: Logistic Regression (baseline), Random Forest (900 estimators), and XGBoost (2000 estimators). SHAP (SHapley Additive exPlanations) is applied to every trained model to produce feature importance visualizations that explain predictions, not just make them. Academic project under Prof. Dr. Ruixiang Tang.",
     approach:
@@ -167,7 +166,7 @@ export const projects: Project[] = [
     collaboration: "Team AI project",
     repoNote: "Repository is private; the case study reflects verified source files accessible in the project fork.",
     year: 2025,
-    highlight: "6-channel CNN cost model · π₀/π₁/π₂ policy comparison across belief sizes 1–20"
+    highlight: "6-channel CNN cost model · π₀/π₁/π₂ policy comparison across belief sizes 1–20",
     overview:
       "A 4-phase AI project tackling the fundamental problem of robot localization under uncertainty: an agent moves through a grid maze without knowing its exact position. Instead of a single known position, it maintains a belief set L — the set of all cells where it could possibly be. The agent must take actions to reduce |L| to 1 (localized). This mirrors real-world robotics where sensor noise and map uncertainty mean a robot can only reason probabilistically about its location.",
     approach:
