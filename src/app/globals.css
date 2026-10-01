@@ -317,3 +317,36 @@
     color: var(--pg-accent);
   }
 }
+
+
+/* Portfolio depth + motion polish */
+@layer utilities {
+  .project-spotlight-shell {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .project-spotlight-shell::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: 1rem;
+    background:
+      radial-gradient(circle at 18% 0%, color-mix(in srgb, var(--pg-accent) 16%, transparent), transparent 38%),
+      linear-gradient(135deg, color-mix(in srgb, var(--pg-accent) 8%, transparent), transparent 55%);
+    opacity: 0.7;
+    filter: blur(18px);
+    pointer-events: none;
+  }
+
+  .section-container {
+    scroll-margin-top: 5rem;
+  }
+
+  @media (max-width: 640px) {
+    .section-container {
+      @apply px-4;
+    }
+  }
+}

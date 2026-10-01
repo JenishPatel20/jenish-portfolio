@@ -68,9 +68,10 @@ const roleConfig: Record<RoleFilter, {
 
 interface ProjectCardProps {
   project: Project;
+  spotlight?: boolean;
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, spotlight = false }: ProjectCardProps) {
   const primaryRole = project.roles[0];
   const cfg = roleConfig[primaryRole];
 
@@ -84,14 +85,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <motion.article
       ref={cardRef}
-      className="group relative flex flex-col rounded-2xl overflow-hidden"
+      className="group relative flex h-full flex-col overflow-hidden rounded-2xl"
       style={{
         background: "var(--pg-surface)",
         border: "1px solid var(--pg-border)",
         willChange: "transform",
         transition: "background 0.25s ease, border-color 0.25s ease, box-shadow 0.3s ease",
       }}
-      whileHover={{ y: -5 }}
+      whileHover={{ y: spotlight ? -7 : -5, scale: spotlight ? 1.005 : 1 }}
       transition={{ duration: 0.22, ease: "easeOut" }}
       onMouseEnter={(e) => {
         const el = e.currentTarget;
@@ -116,7 +117,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
       {/* Parallax mockup panel */}
       <div
-        style={{ height: 180, overflow: "hidden", position: "relative", flexShrink: 0 }}
+        style={{ height: spotlight ? 240 : 180, overflow: "hidden", position: "relative", flexShrink: 0 }}
       >
         <motion.div
           style={{ y: mockupY, height: "calc(100% + 44px)", marginTop: -22, width: "100%" }}
@@ -150,7 +151,19 @@ export function ProjectCard({ project }: ProjectCardProps) {
             >
               {cfg.label}
             </span>
-            {project.featured && (
+            {spotlight ? (
+              <span
+                className="flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full"
+                style={{
+                  color: cfg.color,
+                  background: cfg.bg,
+                  border: `1px solid ${cfg.border}`,
+                }}
+              >
+                <Star className="w-2.5 h-2.5" />
+                Flagship
+              </span>
+            ) : project.featured && (
               <span
                 className="flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-full"
                 style={{
@@ -171,7 +184,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
         {/* Title */}
         <h3
-          className="text-base font-bold leading-snug mb-2.5"
+          className={`${spotlight ? "text-xl sm:text-2xl" : "text-base"} font-bold leading-snug mb-2.5`}
           style={{ color: "var(--pg-text-1)" }}
         >
           {project.title}
@@ -179,7 +192,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
         {/* Description */}
         <p
-          className="text-sm leading-relaxed flex-1 line-clamp-3"
+          className={`text-sm leading-relaxed flex-1 ${spotlight ? "line-clamp-4 max-w-2xl" : "line-clamp-3"}`}
           style={{ color: "var(--pg-text-2)" }}
         >
           {project.description}
@@ -200,14 +213,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
         {/* Tech tags */}
         <div className="flex flex-wrap gap-1.5 mt-4">
-          {project.tags.slice(0, 4).map((tag) => (
+          {project.tags.slice(0, spotlight ? 6 : 4).map((tag) => (
             <span key={tag} className="skill-chip text-xs px-2 py-0.5">
               {tag}
             </span>
           ))}
-          {project.tags.length > 4 && (
+          {project.tags.length > (spotlight ? 6 : 4) && (
             <span className="px-2 py-0.5 text-xs" style={{ color: "var(--pg-text-3)" }}>
-              +{project.tags.length - 4}
+              +{project.tags.length - (spotlight ? 6 : 4)}
             </span>
           )}
         </div>

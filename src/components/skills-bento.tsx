@@ -9,7 +9,7 @@ const categoryIcons: Record<string, React.ComponentType<{ className?: string }>>
   "Core Stack":      Layers,
   "AI & ML":         Brain,
   "Languages":       Code2,
-  "Systems":         Cpu,
+  "Data":            Cpu,
   "Frontend":        Monitor,
   "Backend & Infra": Database,
 };
@@ -34,7 +34,7 @@ export function SkillsBento() {
             <MaskText text="Technical Skills" />
           </h2>
           <p className="mt-3 max-w-xl text-sm leading-relaxed" style={{ color: "var(--pg-text-2)" }}>
-            A toolkit spanning AI research, systems engineering, and full-stack development.
+            A toolkit spanning applied AI/ML, backend engineering, data workflows, and software development.
           </p>
         </motion.div>
 
@@ -108,13 +108,12 @@ export function SkillsBento() {
           className="mt-10 text-sm text-center"
           style={{ color: "var(--pg-text-2)" }}
         >
-          Currently exploring{" "}
-          <span style={{ color: "var(--pg-accent)" }}>Rust</span>
+          Current focus:{" "}
+          <span style={{ color: "var(--pg-accent)" }}>applied AI/ML</span>
           {", "}
-          <span style={{ color: "var(--pg-accent)" }}>WebAssembly</span>
+          <span style={{ color: "var(--pg-accent)" }}>backend systems</span>
           {", and "}
-          <span style={{ color: "var(--pg-accent)" }}>Reinforcement Learning</span>
-          {" — feel free to ask about those too."}
+          <span style={{ color: "var(--pg-accent)" }}>model evaluation</span>.
         </motion.p>
 
       </div>

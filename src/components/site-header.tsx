@@ -10,7 +10,7 @@ import { ThemeModeToggle } from "@/components/theme-mode-toggle";
 const navLinks = [
   { label: "Experience", href: "/#experience", sectionId: "experience" },
   { label: "Projects",   href: "/#projects",   sectionId: "projects"   },
-  { label: "Live Demo",  href: "/#demos",      sectionId: "demos"      },
+  { label: "Previews",   href: "/#demos",      sectionId: "demos"      },
   { label: "Skills",     href: "/#skills",     sectionId: "skills"     },
   { label: "Ask",        href: "/#ask",        sectionId: "ask"        },
   { label: "Contact",    href: "/#contact",    sectionId: "contact"    },
@@ -88,7 +88,7 @@ export function SiteHeader({ onRecruiterMode, recruiterMode }: SiteHeaderProps =
           : undefined
       }
     >
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 
         {/* Terminal cursor logo */}
         <Link

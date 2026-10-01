@@ -56,7 +56,7 @@ export const projects: Project[] = [
     year: 2026,
     highlight: "Llama 3.2 1B: 73–172ms TTFT · 48–52 TPS · $0 vs. measurable cloud API cost per 20 queries",
     overview:
-      "A research tool that benchmarks small language models running entirely inside the browser using WebGPU acceleration — no backend, no API keys, no inference cost. Models are loaded via @mlc-ai/web-llm and cached in IndexedDB so subsequent runs skip the download. The tool also benchmarks cloud APIs (Gemini 2.5 Flash, Gemini 3 Flash, Claude Haiku 4.5) using Python scripts and compares them on latency, throughput, and per-query cost. Results are exportable as CSV.",
+      "A research tool that benchmarks small language models running entirely inside the browser using WebGPU acceleration — no backend inference server and no local-model API cost. Models are loaded via @mlc-ai/web-llm and cached in IndexedDB so subsequent runs skip the download. Companion Python scripts benchmark cloud APIs and compare latency, throughput, quality, and per-query cost. Results are exportable as CSV.",
     approach:
       "The web frontend is built in Vanilla JS with ES6 modules. Model cards let users select from Llama 3.2 1B, Qwen 2.5 1.5B, SmolLM2 1.7B, or Llama 3.1 8B (q4f16/q4f32 quantized). Each benchmark run records TTFT and TPS for 20 standardized queries across 8 categories (factual, technical, math, code, etc.). Thermal throttling is detected by comparing the first and last 5 queries. MMLU quality is measured using 57 subjects × 2 questions each, scored against ground-truth answers. The Python scripts (gemini_testing.py, anthropic_testing.py, mmlu_benchmark.py) call the respective APIs with temperature=0 and max_tokens=10 for consistent multiple-choice evaluation. All results are exported to timestamped CSVs from multiple hardware profiles (Windows NVIDIA GPU, Mac M1, Mac M2 Pro).",
     results:
@@ -108,7 +108,7 @@ export const projects: Project[] = [
     title: "Belief-State Robot Localization",
     description:
       "AI research project implementing robot self-localization under uncertainty across 4 phases: optimal BFS over belief-set state space → greedy strategy → CNN regressor trained to predict localization cost → 3-policy comparison. The agent navigates a maze without knowing its position, narrowing a belief set to a single cell.",
-    tags: ["Python", "PyTorch", "BFS", "CNN", "Reinforcement Learning", "NumPy", "matplotlib"],
+    tags: ["Python", "PyTorch", "BFS", "CNN", "NumPy", "matplotlib"],
     roles: ["ai-ml"],
     featured: false,
     github: "https://github.com/JenishPatel20/introtoai2",

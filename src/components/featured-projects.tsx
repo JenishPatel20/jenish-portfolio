@@ -24,11 +24,23 @@ export function FeaturedProjects({ recruiterMode }: FeaturedProjectsProps) {
   const [activeFilter, setActiveFilter] = useState<RoleFilter | "all">("all");
 
   const displayed = useMemo(() => {
-    return projects.filter((project) => {
-      if (recruiterMode && !project.featured) return false;
-      if (activeFilter === "all") return true;
-      return project.roles.includes(activeFilter);
-    });
+    const priority = [
+      "edge-ai-benchmark",
+      "industrial-anomaly-detection",
+      "auction-master",
+      "customer-churn",
+      "ai-localization",
+      "android-photo-manager",
+      "chess-engine",
+    ];
+
+    return projects
+      .filter((project) => {
+        if (recruiterMode && !project.featured) return false;
+        if (activeFilter === "all") return true;
+        return project.roles.includes(activeFilter);
+      })
+      .sort((a, b) => priority.indexOf(a.id) - priority.indexOf(b.id));
   }, [activeFilter, recruiterMode]);
 
   return (
@@ -44,8 +56,11 @@ export function FeaturedProjects({ recruiterMode }: FeaturedProjectsProps) {
           <div>
             <p className="section-label mb-2">Work</p>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: "var(--pg-text-1)" }}>
-              <MaskText text="Projects" />
+              <MaskText text="Selected engineering work" />
             </h2>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed" style={{ color: "var(--pg-text-2)" }}>
+              Evidence-first case studies across applied AI/ML, backend systems, and software engineering.
+            </p>
           </div>
 
           <Link
@@ -86,6 +101,7 @@ export function FeaturedProjects({ recruiterMode }: FeaturedProjectsProps) {
               <motion.div
                 key={project.id}
                 layout
+
                 initial={{ opacity: 0, y: 16, filter: "blur(10px)" }}
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: false, amount: 0.08 }}

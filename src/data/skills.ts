@@ -7,32 +7,32 @@ export interface SkillGroup {
 export const skillGroups: SkillGroup[] = [
   {
     category: "Core Stack",
-    skills: ["Python", "TypeScript", "React", "Next.js", "PyTorch", "FastAPI"],
+    skills: ["Python", "FastAPI", "PostgreSQL", "PyTorch", "TypeScript", "Node.js"],
     span: "double",
   },
   {
     category: "AI & ML",
-    skills: ["PyTorch", "HuggingFace", "WebGPU", "ONNX", "LangChain", "FAISS", "scikit-learn"],
+    skills: ["PyTorch", "scikit-learn", "XGBoost", "SHAP", "TensorFlow/Keras", "WebGPU", "WebLLM"],
     span: "single",
   },
   {
     category: "Languages",
-    skills: ["Python", "TypeScript", "JavaScript", "C++", "Go", "Rust", "Swift"],
+    skills: ["Python", "JavaScript", "TypeScript", "Java", "C++", "SQL", "HTML/CSS"],
     span: "single",
   },
   {
-    category: "Systems",
-    skills: ["CUDA", "WASM", "Linux", "SIMD", "Concurrency", "Memory Allocators"],
+    category: "Data",
+    skills: ["pandas", "NumPy", "matplotlib", "Jupyter"],
     span: "single",
   },
   {
     category: "Frontend",
-    skills: ["React", "Next.js", "Tailwind CSS", "React Native", "Expo"],
+    skills: ["React", "Next.js", "Tailwind CSS", "JavaScript"],
     span: "single",
   },
   {
     category: "Backend & Infra",
-    skills: ["Node.js", "FastAPI", "Flask", "PostgreSQL", "Redis", "Docker", "gRPC"],
+    skills: ["FastAPI", "Node.js", "Express.js", "REST APIs", "PostgreSQL", "MySQL", "Firebase", "S3", "Docker"],
     span: "double",
   },
 ];

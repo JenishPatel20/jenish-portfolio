@@ -172,7 +172,7 @@ export function CaseStudyClient({ project, prev, next }: Props) {
           {/* Description */}
           <motion.p
             initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.21 }}
-            className="text-base sm:text-lg leading-relaxed mb-8 max-w-2xl"
+            className="text-base sm:text-lg leading-relaxed mb-8 max-w-3xl"
             style={{ color: "var(--pg-text-2)" }}
           >
             {project.description}
@@ -188,7 +188,7 @@ export function CaseStudyClient({ project, prev, next }: Props) {
               <div className="w-[3px] shrink-0" style={{ background: cfg.bar }} />
               <div className="px-4 py-3.5">
                 <p className="text-[10px] font-semibold uppercase tracking-widest mb-1.5" style={{ color: cfg.color }}>
-                  Key Metric
+                  Evidence
                 </p>
                 <p className="text-sm font-mono leading-relaxed" style={{ color: "var(--pg-text-2)" }}>
                   {project.highlight}
@@ -196,6 +196,22 @@ export function CaseStudyClient({ project, prev, next }: Props) {
               </div>
             </motion.div>
           )}
+
+          {/* Evidence stack */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, delay: 0.31 }}
+            className="mb-8 flex flex-wrap gap-2"
+          >
+            {project.tags.slice(0, 5).map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full px-3 py-1 text-xs font-medium"
+                style={{ background: "var(--pg-surface)", border: "1px solid var(--pg-border)", color: "var(--pg-text-2)" }}
+              >
+                {tag}
+              </span>
+            ))}
+          </motion.div>
 
           {/* Action buttons */}
           <motion.div

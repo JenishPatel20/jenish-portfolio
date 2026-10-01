@@ -35,9 +35,9 @@ const demos = [
   },
   {
     id: "auction",
-    title: "Auction Master Live Feed",
+    title: "Auction Master UI Preview",
     description:
-      "Static frontend snapshot of the auction platform — a fake live auction with a countdown timer, animated bid feed, and reserve price indicator.",
+      "Interactive UI recreation of the auction platform showing a countdown timer, sample bid feed, and reserve-price indicator. This is a portfolio preview, not the deployed application.",
     tech: ["Node.js", "MySQL", "Firebase", "Vanilla JS"],
     Component: AuctionMasterMiniDemo,
   },
@@ -63,13 +63,13 @@ export function LiveDemoLab() {
         >
           <div className="flex items-center gap-2 mb-3">
             <Beaker className="w-4 h-4" style={{ color: "var(--pg-accent)" }} />
-            <p className="section-label">Interactive Experiments</p>
+            <p className="section-label">Project Evidence</p>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-pg-text-1">
-            Live Demo Lab
+            Interactive Project Previews
           </h2>
           <p className="mt-3 max-w-xl text-sm leading-relaxed" style={{ color: "var(--pg-text-2)" }}>
-            Click play on any card to run the demo directly in the browser — no install, no API keys.
+            Explore lightweight recreations and visualizations based on project outputs. These previews demonstrate concepts and measured results; they are not presented as full deployed applications.
           </p>
         </motion.div>
 
