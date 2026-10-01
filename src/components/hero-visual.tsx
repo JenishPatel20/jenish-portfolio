@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import dynamic from "next/dynamic";
 
 // Lazy-load the WebGL scene — SSR-safe, PlaceholderScene is the fallback
@@ -31,7 +32,7 @@ const STAT_CARDS: {
 }[] = [
   { value: "20+",      label: "API endpoints", top: "2%",  right: "12%", floatY: [0, -7, 0], delay: 1.0 },
   { value: "48–52",    label: "LLM TPS",       top: "38%", left: "0%",   floatY: [0,  5, 0], delay: 1.1 },
-  { value: "AUC ≥ .85",label: "ML results",    top: "38%", right: "0%",  floatY: [0, -6, 0], delay: 1.2 },
+  { value: "0.993",    label: "Bank AUC",      top: "38%", right: "0%",  floatY: [0, -6, 0], delay: 1.2 },
   { value: "Dec '26",  label: "M.S. CS",       top: "76%", right: "10%", floatY: [0,  6, 0], delay: 1.3 },
 ];
 
@@ -189,6 +190,17 @@ function PlaceholderScene() {
 // ─── Main export ──────────────────────────────────────────────────────────────
 
 export function HeroVisual() {
+  const reduceMotion = useReducedMotion();
+  const [canRender3D, setCanRender3D] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 1024px)");
+    const sync = () => setCanRender3D(media.matches && !reduceMotion);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, [reduceMotion]);
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 24 }}
@@ -207,7 +219,7 @@ export function HeroVisual() {
       />
 
       <div className="absolute inset-x-8 top-12 bottom-8" style={{ borderRadius: "1.75rem", overflow: "hidden" }}>
-        <OrbitalSphereScene />
+        {canRender3D ? <OrbitalSphereScene /> : <PlaceholderScene />}
       </div>
 
       {/* Floating stat cards + tech chips */}
