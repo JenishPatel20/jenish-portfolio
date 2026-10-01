@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "motion/react";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, ListTree } from "lucide-react";
+import { ArrowLeft, ExternalLink, ListTree, CheckCircle2, GitBranch } from "lucide-react";
 import type { Project, RoleFilter } from "@/data/projects";
 import { ProjectMockup } from "@/components/project-mockup";
 
@@ -101,9 +101,9 @@ export function CaseStudyClient({ project, prev, next }: Props) {
 
   // Build ordered content sections (only those with data)
   const contentSections = [
-    { id: "cs-overview",  heading: "Overview",               content: project.overview ?? project.description },
+    { id: "cs-overview",  heading: "Overview",                content: project.overview ?? project.description },
     { id: "cs-approach",  heading: "Architecture & Approach", content: project.approach },
-    { id: "cs-results",   heading: "Results & Outcome",      content: project.results ?? project.highlight },
+    { id: "cs-results",   heading: "Results & Evidence",      content: project.results ?? project.highlight },
   ].filter((s): s is { id: string; heading: string; content: string } => !!s.content);
 
 
@@ -194,6 +194,26 @@ export function CaseStudyClient({ project, prev, next }: Props) {
                   {project.highlight}
                 </p>
               </div>
+            </motion.div>
+          )}
+
+          {(project.collaboration || project.repoNote) && (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.3 }}
+              className="mb-6 flex flex-wrap items-center gap-2"
+            >
+              {project.collaboration && (
+                <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium"
+                  style={{ background: "var(--pg-surface)", border: "1px solid var(--pg-border)", color: "var(--pg-text-2)" }}>
+                  <GitBranch className="h-3.5 w-3.5" />
+                  {project.collaboration}
+                </span>
+              )}
+              {project.repoNote && (
+                <span className="text-xs leading-relaxed" style={{ color: "var(--pg-text-3)" }}>
+                  {project.repoNote}
+                </span>
+              )}
             </motion.div>
           )}
 
@@ -292,6 +312,45 @@ export function CaseStudyClient({ project, prev, next }: Props) {
               </ContentSection>
             ))}
 
+              {project.architecture && project.architecture.length > 0 && (
+              <ContentSection id="cs-system" number="04" heading="System Flow" accentColor={cfg.bar}>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {project.architecture.map((step, index) => (
+                    <div
+                      key={step.label}
+                      className="relative rounded-xl p-4"
+                      style={{ background: "var(--pg-surface)", border: "1px solid var(--pg-border)" }}
+                    >
+                      <div className="mb-2 flex items-center gap-2">
+                        <span
+                          className="flex h-6 w-6 items-center justify-center rounded-full font-mono text-[10px] font-semibold"
+                          style={{ background: cfg.bg, color: cfg.color, border: `1px solid ${cfg.border}` }}
+                        >
+                          {index + 1}
+                        </span>
+                        <h3 className="text-sm font-semibold" style={{ color: "var(--pg-text-1)" }}>{step.label}</h3>
+                      </div>
+                      <p className="text-sm leading-relaxed" style={{ color: "var(--pg-text-2)" }}>{step.detail}</p>
+                    </div>
+                  ))}
+                </div>
+              </ContentSection>
+            )}
+
+            {project.evidence && project.evidence.length > 0 && (
+              <ContentSection id="cs-proof" number="05" heading="Implementation Evidence" accentColor={cfg.bar}>
+                <div className="space-y-3">
+                  {project.evidence.map((item) => (
+                    <div key={item} className="flex gap-3 rounded-xl p-4"
+                      style={{ background: "var(--pg-surface)", border: "1px solid var(--pg-border)" }}>
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" style={{ color: cfg.color }} />
+                      <p className="text-sm leading-relaxed" style={{ color: "var(--pg-text-2)" }}>{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </ContentSection>
+            )}
+
             {/* Tech Stack — visible on mobile only */}
             <motion.div
               className="lg:hidden"
@@ -369,7 +428,11 @@ export function CaseStudyClient({ project, prev, next }: Props) {
                   <SidebarLabel>Case Study</SidebarLabel>
                 </div>
                 <div className="space-y-1">
-                  {contentSections.map((section, index) => (
+                  {[
+                    ...contentSections,
+                    ...(project.architecture?.length ? [{ id: "cs-system", heading: "System Flow" }] : []),
+                    ...(project.evidence?.length ? [{ id: "cs-proof", heading: "Implementation Evidence" }] : []),
+                  ].map((section, index) => (
                     <a
                       key={section.id}
                       href={`#${section.id}`}
