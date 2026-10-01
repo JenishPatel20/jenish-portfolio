@@ -410,3 +410,19 @@
     }
   }
 }
+
+
+/* Phase 3 CTA and touch-target polish */
+@layer utilities {
+  .btn-primary,
+  .btn-secondary {
+    min-height: 2.75rem;
+  }
+
+  @media (max-width: 640px) {
+    .btn-primary,
+    .btn-secondary {
+      min-height: 3rem;
+    }
+  }
+}
