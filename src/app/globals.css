@@ -319,34 +319,59 @@
 }
 
 
-/* Portfolio depth + motion polish */
+
+
+/* Phase 2 interaction polish */
 @layer utilities {
-  .project-spotlight-shell {
-    position: relative;
-    isolation: isolate;
-  }
-
-  .project-spotlight-shell::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    z-index: -1;
-    border-radius: 1rem;
-    background:
-      radial-gradient(circle at 18% 0%, color-mix(in srgb, var(--pg-accent) 16%, transparent), transparent 38%),
-      linear-gradient(135deg, color-mix(in srgb, var(--pg-accent) 8%, transparent), transparent 55%);
-    opacity: 0.7;
-    filter: blur(18px);
-    pointer-events: none;
-  }
-
   .section-container {
     scroll-margin-top: 5rem;
+  }
+
+  .project-media > div:first-child {
+    transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1), filter 420ms ease;
+  }
+
+  article:hover .project-media > div:first-child {
+    transform: scale(1.025);
+    filter: saturate(1.06);
+  }
+
+  .project-cta svg {
+    transition: transform 180ms ease;
+  }
+
+  article:hover .project-cta svg {
+    transform: translate(2px, -2px);
+  }
+
+  .case-study-page [id^="cs-"] {
+    scroll-margin-top: 6.5rem;
+  }
+
+  .case-study-page article > section {
+    position: relative;
+  }
+
+  .case-study-page article > section::after {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-top: 4rem;
+    background: linear-gradient(90deg, var(--pg-border), transparent 85%);
+  }
+
+  .case-study-page article > section:last-of-type::after {
+    display: none;
   }
 
   @media (max-width: 640px) {
     .section-container {
       @apply px-4;
+    }
+
+    article:hover .project-media > div:first-child {
+      transform: none;
+      filter: none;
     }
   }
 }
