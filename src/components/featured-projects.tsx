@@ -101,7 +101,7 @@ export function FeaturedProjects({ recruiterMode }: FeaturedProjectsProps) {
               <motion.div
                 key={project.id}
                 layout
-                className={index === 0 && activeFilter === "all" ? "md:col-span-2 lg:col-span-2" : ""}
+                className={index === 0 && activeFilter === "all" ? "project-spotlight-shell md:col-span-2 lg:col-span-2" : ""}
                 initial={{ opacity: 0, y: 16, filter: "blur(10px)" }}
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: false, amount: 0.08 }}
