@@ -375,3 +375,54 @@
     }
   }
 }
+
+
+/* Phase 3 homepage flow */
+@layer utilities {
+  .home-flow > section {
+    position: relative;
+  }
+
+  .home-flow > section + section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: min(72rem, calc(100% - 2rem));
+    height: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--pg-border) 85%, transparent) 18%,
+      color-mix(in srgb, var(--pg-accent) 16%, var(--pg-border)) 50%,
+      color-mix(in srgb, var(--pg-border) 85%, transparent) 82%,
+      transparent
+    );
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-flow *,
+    .home-flow *::before,
+    .home-flow *::after {
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+
+/* Phase 3 CTA and touch-target polish */
+@layer utilities {
+  .btn-primary,
+  .btn-secondary {
+    min-height: 2.75rem;
+  }
+
+  @media (max-width: 640px) {
+    .btn-primary,
+    .btn-secondary {
+      min-height: 3rem;
+    }
+  }
+}

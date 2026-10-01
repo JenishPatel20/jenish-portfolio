@@ -33,11 +33,34 @@ export function SiteHeader({ onRecruiterMode, recruiterMode }: SiteHeaderProps =
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Blinking cursor
+  // Blinking cursor (disabled for reduced-motion users)
   useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) {
+      setCursorOn(true);
+      return;
+    }
     const id = setInterval(() => setCursorOn((v) => !v), 530);
     return () => clearInterval(id);
   }, []);
+
+  // Keep mobile navigation accessible and prevent background scroll.
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMobileOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [mobileOpen]);
 
   // Active section detection via IntersectionObserver
   useEffect(() => {
@@ -65,11 +88,7 @@ export function SiteHeader({ onRecruiterMode, recruiterMode }: SiteHeaderProps =
     if (onRecruiterMode) {
       onRecruiterMode();
       setMobileOpen(false);
-      if (!recruiterMode) {
-        setTimeout(() => {
-          document.getElementById("recruiter-mode")?.scrollIntoView({ behavior: "smooth" });
-        }, 50);
-      }
+ 
     }
   };
 
@@ -195,6 +214,8 @@ export function SiteHeader({ onRecruiterMode, recruiterMode }: SiteHeaderProps =
           className="sm:hidden flex items-center justify-center w-9 h-9 rounded-lg transition-colors duration-200 cursor-pointer"
           onClick={() => setMobileOpen(true)}
           aria-label="Open navigation"
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-navigation"
           style={{ color: "var(--pg-text-2)", border: "1px solid var(--pg-border)" }}
           onMouseEnter={(e) => (e.currentTarget.style.color = "var(--pg-text-1)")}
           onMouseLeave={(e) => (e.currentTarget.style.color = "var(--pg-text-2)")}
@@ -227,7 +248,11 @@ export function SiteHeader({ onRecruiterMode, recruiterMode }: SiteHeaderProps =
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 28, stiffness: 280 }}
-            className="fixed right-0 top-0 bottom-0 z-50 w-72 flex flex-col sm:hidden"
+            id="mobile-navigation"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation"
+            className="fixed right-0 top-0 bottom-0 z-50 w-[min(20rem,88vw)] flex flex-col sm:hidden"
             style={{
               background: "var(--pg-elevated)",
               borderLeft: "1px solid var(--pg-border)",

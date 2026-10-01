@@ -48,7 +48,7 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      <main>
+      <main className="home-flow">
         <Hero onRecruiterMode={toggleRecruiterMode} />
 
         <AnimatePresence>
@@ -57,7 +57,7 @@ export default function Home() {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.35 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="overflow-hidden"
             >
               <RecruiterModeSection />

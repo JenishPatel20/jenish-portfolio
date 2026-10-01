@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useCallback } from "react";
-import { motion, useMotionValue, useSpring } from "motion/react";
+import { motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
 
 const STRENGTH = 0.38;
 
@@ -12,6 +12,7 @@ interface MagneticButtonProps {
 
 export function MagneticButton({ children, className }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
   const x = useSpring(rawX, { stiffness: 220, damping: 22, restDelta: 0.001 });
@@ -19,14 +20,14 @@ export function MagneticButton({ children, className }: MagneticButtonProps) {
 
   const handleMove = useCallback(
     (e: React.MouseEvent) => {
-      if (window.matchMedia("(hover: none)").matches) return;
+      if (reduceMotion || window.matchMedia("(hover: none)").matches) return;
       const el = ref.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
       rawX.set((e.clientX - (rect.left + rect.width / 2)) * STRENGTH);
       rawY.set((e.clientY - (rect.top + rect.height / 2)) * STRENGTH);
     },
-    [rawX, rawY],
+    [rawX, rawY, reduceMotion],
   );
 
   const handleLeave = useCallback(() => {

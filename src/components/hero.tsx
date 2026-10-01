@@ -99,7 +99,7 @@ export function Hero({ onRecruiterMode }: HeroProps) {
                   animate={{ y: 0 }}
                   transition={{ duration: 0.72, delay: 0.5, ease: EASE }}
                 >
-                  Software Engineer ·
+                  AI/ML Engineer · Backend & Software Systems ·
                 </motion.span>
               </span>
               {/* "MS CS @ Rutgers · Dec 2026" — accent blue */}
@@ -110,7 +110,7 @@ export function Hero({ onRecruiterMode }: HeroProps) {
                   animate={{ y: 0 }}
                   transition={{ duration: 0.72, delay: 0.62, ease: EASE }}
                 >
-                  MS CS @ Rutgers
+                  MS CS @ Rutgers · Dec 2026
                 </motion.span>
               </span>
             </p>
@@ -136,13 +136,13 @@ export function Hero({ onRecruiterMode }: HeroProps) {
             >
               <MagneticButton>
                 <a href="#projects" className="btn-primary">
-                  View Projects
+                  View Selected Work
                 </a>
               </MagneticButton>
               <MagneticButton>
                 <button onClick={onRecruiterMode} className="btn-secondary">
                   <Zap className="w-4 h-4" />
-                  Recruiter Mode
+                  Recruiter Quick View
                 </button>
               </MagneticButton>
             </motion.div>
