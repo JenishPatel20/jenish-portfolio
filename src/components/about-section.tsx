@@ -7,8 +7,8 @@ import { MaskText } from "@/components/mask-text";
 const facts = [
   {
     Icon: Briefcase,
-    label: "Current Role",
-    value: "AI/ML Co-op @ Greenlit",
+    label: "Recent Experience",
+    value: "AI/ML Engineer Intern @ Greenlit",
   },
   {
     Icon: GraduationCap,
@@ -18,7 +18,7 @@ const facts = [
   {
     Icon: Calendar,
     label: "Availability",
-    value: "Full-time · Fall 2026",
+    value: "New Grad · Dec 2026 / Jan 2027",
   },
   {
     Icon: MapPin,
@@ -66,15 +66,13 @@ export function AboutSection() {
                 API cost. I care about bridging the gap between research and production.
               </p>
               <p className="text-base leading-relaxed" style={{ color: "var(--pg-text-2)" }}>
-                On co-op at Greenlit, I&apos;ve shipped AI-powered genre market analysis tools
-                from scraping to a FastAPI service used in production decisions. Outside of
-                work, I&apos;m usually benchmarking something, building something, or both.
+                At Greenlit, I worked on AI-powered market intelligence tools spanning data collection,
+                LLM analysis, backend APIs, and analytics. Outside of work, I&apos;m usually
+                benchmarking something, building something, or both.
               </p>
               <p className="text-sm" style={{ color: "var(--pg-text-3)" }}>
-                Currently exploring{" "}
-                <span style={{ color: "var(--pg-accent)" }}>Rust</span>,{" "}
-                <span style={{ color: "var(--pg-accent)" }}>WebAssembly</span>, and{" "}
-                <span style={{ color: "var(--pg-accent)" }}>Reinforcement Learning</span>.
+                Current interests include applied AI systems, model evaluation, backend engineering,
+                and efficient local inference.
               </p>
             </div>
 
