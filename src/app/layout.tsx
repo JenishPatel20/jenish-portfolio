@@ -15,9 +15,41 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Jenish Patel — AI/ML & Software Engineer",
+  metadataBase: new URL("https://jenishpatel.vercel.app"),
+  title: {
+    default: "Jenish Patel — AI/ML, Backend & Software Engineer",
+    template: "%s | Jenish Patel",
+  },
   description:
-    "Portfolio of Jenish Patel — CS/MS student specializing in AI systems, full-stack engineering, and performance-critical software.",
+    "Jenish Patel is an M.S. Computer Science student at Rutgers graduating December 2026, building applied AI/ML, backend systems, data pipelines, and software projects.",
+  keywords: [
+    "Jenish Patel",
+    "AI Engineer",
+    "Machine Learning Engineer",
+    "Backend Engineer",
+    "Software Engineer",
+    "Rutgers Computer Science",
+    "FastAPI",
+    "PyTorch",
+    "WebGPU",
+  ],
+  authors: [{ name: "Jenish Patel" }],
+  creator: "Jenish Patel",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "/",
+    title: "Jenish Patel — AI/ML, Backend & Software Engineer",
+    description:
+      "Applied AI/ML, backend systems, and software engineering portfolio. Rutgers M.S. CS · December 2026.",
+    siteName: "Jenish Patel Portfolio",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jenish Patel — AI/ML, Backend & Software Engineer",
+    description:
+      "Applied AI/ML, backend systems, and software engineering portfolio. Rutgers M.S. CS · December 2026.",
+  },
 };
 
 export default function RootLayout({
