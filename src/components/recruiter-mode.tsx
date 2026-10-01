@@ -23,7 +23,7 @@ export function RecruiterModeBanner({ onDismiss }: RecruiterModeBannerProps) {
     >
       <Zap className="w-4 h-4 shrink-0" style={{ color: "var(--pg-accent)" }} />
       <span style={{ color: "var(--pg-accent)" }}>
-        <strong>Recruiter Mode</strong> — quick view of skills, experience &amp; highlights below.
+        <strong>Recruiter Mode</strong> — verified experience, strongest projects, and measurable results.
       </span>
       <button
         onClick={onDismiss}
@@ -444,15 +444,15 @@ export function RecruiterModeSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-4"
+          className="flex flex-col sm:flex-row justify-center gap-3"
         >
-          <a href="mailto:jenishvpatel4995@gmail.com" className="btn-primary flex items-center gap-2">
-            <Mail className="w-4 h-4" />
-            Get in Touch
-          </a>
-          <a href="/Resume.pdf" target="_blank" rel="noopener noreferrer" className="btn-secondary flex items-center gap-2">
+          <a href="/Resume.pdf" target="_blank" rel="noopener noreferrer" className="btn-primary flex items-center gap-2">
             <Download className="w-4 h-4" />
-            Download Resume
+            View Resume
+          </a>
+          <a href="mailto:jenishvpatel4995@gmail.com" className="btn-secondary flex items-center gap-2">
+            <Mail className="w-4 h-4" />
+            Contact Me
           </a>
         </motion.div>
 
