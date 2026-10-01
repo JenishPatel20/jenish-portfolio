@@ -99,10 +99,10 @@ export function Hero({ onRecruiterMode }: HeroProps) {
                   animate={{ y: 0 }}
                   transition={{ duration: 0.72, delay: 0.5, ease: EASE }}
                 >
-                  Software Engineer ·
+                  AI/ML Engineer · Backend & Software Systems ·
                 </motion.span>
               </span>
-              {/* "MS CS @ Rutgers · Dec 2026" — accent blue */}
+              {/* "MS CS @ Rutgers · Dec 2026 · Dec 2026" — accent blue */}
               <span style={{ overflow: "hidden", display: "inline-block" }}>
                 <motion.span
                   style={{ display: "inline-block", color: "var(--pg-accent)" }}
