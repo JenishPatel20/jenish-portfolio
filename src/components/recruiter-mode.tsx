@@ -41,10 +41,10 @@ export function RecruiterModeBanner({ onDismiss }: RecruiterModeBannerProps) {
 
 // ─── Stats ────────────────────────────────────────────────────────────────────
 const stats = [
-  { value: "7",        label: "Projects Built",  Icon: FolderOpen    },
-  { value: "Internship", label: "Greenlit · AI/ML", Icon: Briefcase     },
-  { value: "MS + BS",  label: "CS @ Rutgers",     Icon: GraduationCap },
-  { value: "Dec '26",  label: "Graduation",        Icon: Code2         },
+  { value: "20+",       label: "FastAPI endpoints · Greenlit", Icon: Briefcase     },
+  { value: "48–52",     label: "TPS · Llama 3.2 1B",          Icon: Zap           },
+  { value: "AUC ≥ .85", label: "Telco + BankChurners",        Icon: FolderOpen    },
+  { value: "Dec '26",   label: "M.S. CS graduation",           Icon: GraduationCap },
 ];
 
 const ACC = "var(--pg-accent)";
@@ -334,7 +334,10 @@ export function RecruiterModeSection() {
       return next;
     });
 
-  const featuredProjects = projects.filter((p) => p.featured);
+  const featuredPriority = ["edge-ai-benchmark", "industrial-anomaly-detection", "auction-master"];
+  const featuredProjects = projects
+    .filter((p) => p.featured)
+    .sort((a, b) => featuredPriority.indexOf(a.id) - featuredPriority.indexOf(b.id));
 
   return (
     <section
@@ -353,10 +356,10 @@ export function RecruiterModeSection() {
         >
           <p className="section-label mb-3">Recruiter Quick View</p>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-pg-text-1">
-            <MaskText text="Why hire me?" />
+            <MaskText text="Technical snapshot" />
           </h2>
           <p className="mt-3 text-base max-w-xl mx-auto" style={{ color: "var(--pg-text-2)" }}>
-            Click any card to expand — experience and projects with full details.
+            A recruiter-focused view of verified experience, measurable project results, and technical depth.
           </p>
         </motion.div>
 
