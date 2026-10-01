@@ -21,10 +21,10 @@ export const experiences: Experience[] = [
     roles: [
       {
         title: "AI/ML Engineer Intern",
-        type: "co-op",
+        type: "internship",
         location: "Remote",
         startDate: "Jan 2026",
-        endDate: "Present",
+        endDate: "Jul 2026",
         bullets: [
           "Built a configurable multi-source web scraping pipeline for Bollywood Hungama and BookMyShow using Python, BeautifulSoup, and Gemini API — enabling schema-driven structured extraction with content-addressed storage and S3 cloud sync.",
           "Developed a 20+ endpoint FastAPI market analysis service backed by PostgreSQL — covering movie search, sentiment timelines, genre health scoring, people intelligence, comparable film lookup, and cast ceiling estimation.",
